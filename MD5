@@ -1,0 +1,17 @@
+aa49ce791994589023e4af1c3d50b4ba *DESCRIPTION
+2bd9c6541c33ef545225852d2f46715e *NAMESPACE
+e02da47256f71187d88bb0db35ceeb40 *R/rPACI.R
+ce5291e7e4b78d2f15612e0c31d0b5c1 *demo/00Index
+0f29b56734a653f72f39aaaef79a0951 *demo/rPACIdemo.R
+050675ece79243088f22861edc0675cd *inst/extdata/K01.txt
+ea5e2ac46b75e73612718d62815ec71b *inst/extdata/K02.txt
+63721e8aac94b3714432f389dbf6a671 *inst/extdata/K03.txt
+329c41cefe2ec413749efb6f4df4199e *inst/extdata/K04.txt
+13fc87972f98f3a558a00e8d6c71d361 *inst/extdata/N01.txt
+5e9ff7c99d13b227ef5bd110287db754 *inst/extdata/N02.txt
+f4c9b7ad4dbc501c7e8753852480f813 *inst/extdata/S01.txt
+2ba602dee4194a1acaafb31bc6f67303 *man/analyzeFile.Rd
+fa6f2b4e8cd84a7504dc447a8d79c98a *man/analyzeFolder.Rd
+0988186e9a9ecaa760fcb865b25e05ac *man/computePlacidoIndices.Rd
+d25941b677441025e705800c2bccdac2 *man/plotSingleCornea.Rd
+51d0a04bfdef4f15c201c5e39dd8a034 *man/readCornealTopography.Rd

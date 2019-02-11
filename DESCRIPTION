@@ -1,0 +1,38 @@
+Package: rPACI
+Title: Placido Analysis of Corneal Irregularity
+Version: 0.1.1
+Authors@R: c(
+    person(given = "Darío",
+           family = "Ramos-López",
+           role = c("aut", "cre"),
+           email = "dario.ramos.lopez@urjc.es"),
+    person(given = "Ana D.",
+           family = "Maldonado",
+           role = c("aut"),
+           email = "ana.d.maldonado@ual.es"))
+Description: Analysis of corneal data obtained from a Placido disk corneal 
+    topographer with calculation of irregularity indices. A corneal topographer is 
+    an ophthalmic clinical device that obtains measurements in the cornea (the anterior 
+    part of the eye). A Placido disk corneal topographer makes use of the Placido disk 
+    (Rowsey et al. (1981), <doi:10.1001/archopht.1981.03930011093022>, Rand et al.
+    (1997), <doi:10.1016/S0886-3350(99)00355-7>), which produce a circular pattern
+    of measurement nodes. The raw information measured by such a topographer is 
+    used by practitioners to analyze curvatures, to study optical aberrations, or
+    to diagnose specific conditions of the eye. The rPACI package allows the 
+    calculation of the corneal irregularity indices described in Ramos-Lopez et al.
+    (2013), <doi:10.1097/OPX.0b013e3182843f2a>, and that were firstly introduced in
+    Ramos-Lopez et al. (2011), <doi:10.1097/OPX.0b013e3182843f2a>. It provides a 
+    simple interface to read corneal topography data files as exported by a typical
+    Placido disk topographer, to compute the irregularity indices mentioned before,
+    and to display summary plots that are easy to interpret for a clinician.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1.9000
+NeedsCompilation: no
+Packaged: 2019-02-05 16:04:34 UTC; Usuario
+Author: Darío Ramos-López [aut, cre],
+  Ana D. Maldonado [aut]
+Maintainer: Darío Ramos-López <dario.ramos.lopez@urjc.es>
+Repository: CRAN
+Date/Publication: 2019-02-11 21:40:03 UTC
