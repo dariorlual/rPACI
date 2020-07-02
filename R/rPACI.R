@@ -78,15 +78,18 @@ readCornealTopography <- function(filepath) {
 #' Compute the Placido irregularity indices of an eye
 #'
 #' This function calculates the individual Placido indices of corneal irregularity PI_1, PI_2, PI_3, SL,
-#' AR_1, AR_2, AR_3, AR_4, AR_5, and the global index GLPI (see references). It requires a dataset in
+#' AR_1, AR_2, AR_3, AR_4, AR_5, the global index GLPI, and the Naive Bayes Index (NBI) (see references). It requires a dataset in
 #' the format given by the function \link[rPACI]{readCornealTopography}. The results include the values
-#' of the indices plus a diagnose, which is one of the three labels: "Irregular cornea", "Suspect cornea"
+#' of the indices plus a diagnose, which is either "Irregular cornea", "Suspect cornea"
 #' or "Normal cornea", depending on the value of the global index GLPI.
 #'
+#' @references Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2019). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
 #' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
 #' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Pinero, D., & Alio', J. L. (2011). Placido-based indices of corneal irregularity. Optometry and Vision Science, 88(10), 1220-1231.
 #' @param datasetRings A dataset containing data of a corneal topography, as read by \link[rPACI]{readCornealTopography}.
-#' @return A dataset containg the results dataset (the irregularity indices plus the diagnose).
+#' @return A dataset containg the aforementioned irregularity indices as well as the diagnose.
+#' @importFrom bnlearn cpdist
+#' @importFrom stats lm pnorm sd
 #' @export
 #' @examples
 #' dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
@@ -148,7 +151,7 @@ computePlacidoIndices <- function(datasetRings) {
       print(k)
     }
 
-    linearRegression = lm(b ~ A)
+    linearRegression = stats::lm(b ~ A)
     coefficients = as.numeric(linearRegression$coefficients)
 
 
@@ -175,7 +178,7 @@ computePlacidoIndices <- function(datasetRings) {
     dataCentered[ringInit:ringEnd,2] = thetaDesp
   }
 
-  BC_distanceMatrix = .distanceMatrix(BC_centers)
+  BC_distanceMatrix = distanceMatrix(BC_centers)
 
   PlacidoCornealIndices[1] = 12368.3980719706*max(BC_distanceMatrix)/lastRing - 12.5200561911951
   PlacidoCornealIndices[2] = 9699.23915314471*mean( BC_distanceMatrix[row(BC_distanceMatrix) == (col(BC_distanceMatrix) - 1)] ) - 18.2916611541283
@@ -192,7 +195,7 @@ computePlacidoIndices <- function(datasetRings) {
     ringInit=1+dataPerRing*(k-1)
     ringEnd=dataPerRing*k
 
-    BE_eccen[k] = .ellipseEccentricity( x[ringInit:ringEnd], y[ringInit:ringEnd] )
+    BE_eccen[k] = ellipseEccentricity( x[ringInit:ringEnd], y[ringInit:ringEnd] )
   }
 
   PlacidoCornealIndices[3] = 5233.70399537826 * sd(BE_eccen) - 13.7375152045819
@@ -202,7 +205,7 @@ computePlacidoIndices <- function(datasetRings) {
   ########  LINEAR REGRESSION OF BC CENTERS COORDINATES
   ###################################################################
 
-  linearRegression = lm(BC_centers[,2] ~ BC_centers[,1])
+  linearRegression = stats::lm(BC_centers[,2] ~ BC_centers[,1])
   coefficients = as.numeric(linearRegression$coefficients)
 
   PlacidoCornealIndices[4] = 50 * abs(coefficients[2])
@@ -241,6 +244,7 @@ computePlacidoIndices <- function(datasetRings) {
   PI3 = PlacidoCornealIndices[3]
   PI4 = PlacidoCornealIndices[4]
 
+  AR1 = PlacidoCornealIndices_AR[1]
   AR4 = PlacidoCornealIndices_AR[4]
 
   erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
@@ -252,6 +256,30 @@ computePlacidoIndices <- function(datasetRings) {
   PlacidoCombinedDecision = 2*(GLPI>50) + 1*((GLPI<=50) && (PI4>50))
 
 
+
+
+  ############### NEW NAIVE BAYES INDEX #####################
+  fittedbn = NB_classifier
+  samples <- bnlearn::cpdist(fittedbn, nodes = "KTC", evidence = list(PI_1 = PI1, PI_2 = PI2, PI_3 = PI3, SL = PI4, AR_1 = AR1, AR_4 = AR4),
+                method = "lw", n = 5000)
+
+  assigned_classes = samples$KTC
+  assigned_classes = as.numeric(assigned_classes)
+  assigned_classes = assigned_classes-1
+  weights <- attr(samples, "weights")
+  NBI = 100*sum(assigned_classes*weights)/sum(weights)
+
+  # table(assigned_classes*weights)/length(assigned_classes)
+  #
+  # mean(weights[which(assigned_classes==0)])
+  # mean(weights[which(assigned_classes==1)])
+  #
+  # aggregate(weights, FUN = mean, by = list(assigned_classes))
+
+
+  ############### FINAL DIAGNOSE #####################
+
+
   if (GLPI>=70) {
     diagnose = "Irregular cornea"
   } else if (GLPI<70 && GLPI>=30) {
@@ -260,16 +288,20 @@ computePlacidoIndices <- function(datasetRings) {
     diagnose = "Normal cornea"
   }
 
-  PlacidoIndices = data.frame(matrix(NA, nrow = 1, ncol = 11))
-  colnames(PlacidoIndices) <- c("Diagnose","GLPI","PI_1","PI_2","PI_3","SL","AR_1","AR_2","AR_3","AR_4","AR_5")
 
-  PlacidoIndices[1,] = c(diagnose,PlacidoIndexGLPI,PlacidoCornealIndices,PlacidoCornealIndices_AR[c(1:5)])
+  ############### COMBINE RESULTS #####################
 
+  PlacidoIndices = data.frame(matrix(NA, nrow = 1, ncol = 12))
+  colnames(PlacidoIndices) <- c("Diagnose","NBI","GLPI","PI_1","PI_2","PI_3","SL","AR_1","AR_2","AR_3","AR_4","AR_5")
+
+  PlacidoIndices[1,] = c(diagnose,NBI,PlacidoIndexGLPI,PlacidoCornealIndices,PlacidoCornealIndices_AR[c(1:5)])
+
+  PlacidoIndices[,-1] <- as.numeric(PlacidoIndices[,-1])
   return(PlacidoIndices)
 }
 
-
-.ellipseEccentricity <- function(x,y) {
+#' @importFrom stats lm
+ellipseEccentricity <- function(x,y) {
 
   A=matrix(NA,nrow=length(x),ncol=5)
 
@@ -281,7 +313,7 @@ computePlacidoIndices <- function(datasetRings) {
 
   b = - matrix(1, length(x))
 
-  linearRegression = lm(b ~ A - 1)
+  linearRegression = stats::lm(b ~ A - 1)
 
   coefficients = as.numeric(linearRegression$coefficients)
   coefficients
@@ -304,7 +336,7 @@ computePlacidoIndices <- function(datasetRings) {
   }
 }
 
-.distanceMatrix = function(points) {
+distanceMatrix = function(points) {
   numPoints = dim(points)[1]
   result = matrix(NA, nrow = numPoints, ncol = numPoints)
   for(i in 1:numPoints) {
@@ -328,14 +360,18 @@ computePlacidoIndices <- function(datasetRings) {
 #' Draw a three-part plot summarizing the corneal topography analysis, based on the Placido irregularity indices calculated by the function \link[rPACI]{computePlacidoIndices}.
 #' @param dataset A dataset containing the read corneal topography.
 #' @param PlacidoIndices A dataset of results as given by the function \link[rPACI]{computePlacidoIndices} or \link[rPACI]{analyzeFile}.
-#' @param filename An optional filename, corresponding to the file containing the analyzed data.
+#' @param filename An optional character argument, corresponding to the file containing the analyzed data.
+#' If specified, the filename is displayed on the plot.
+#' @importFrom graphics barplot boxplot par plot rect text
+#' @importFrom grDevices rgb
 #' @export
 #' @examples
 #' dataset = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
 #' plotSingleCornea(dataset, results)
 plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
-
+  opar <- par(no.readonly =TRUE)
+  on.exit(par(opar))
   x=dataset[,"x"]
   y=dataset[,"y"]
 
@@ -395,11 +431,16 @@ analyzeFile <- function(path, drawplot=TRUE) {
 #'
 #' @param path The path of a folder which contains corneal topography files, as exported by Placido disks corneal topographers.
 #' @param fileExtension The file extension of the corneal topography files in the folder ('.txt' by default).
-#' @param individualPlots An optional parameter indicating whether the plot for each file should be displayed or not.
+#' @param individualPlots An optional logical parameter indicating whether the plot for each file should be displayed or not.
+#' @param summaryPlot An optional logical parameter indicating whether a summary plot should be displayed or not.
+#' @importFrom graphics barplot boxplot par plot rect text
+#' @importFrom grDevices rgb
 #' @export
 #' @examples
 #' analyzeFolder(system.file("extdata",package="rPACI"))
-analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE) {
+analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, summaryPlot = FALSE) {
+  opar <- par(no.readonly =TRUE)
+  on.exit(par(opar))
 
   if(!dir.exists(path)) {
     stop("Error: The specified directory does not exist or is invalid.")
@@ -425,6 +466,18 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE) {
     }
   }
 
-  return(results)
+  if(summaryPlot){
+    dignose<- factor(as.factor(results$Diagnose),
+                     levels= c("Irregular cornea", "Suspect cornea","Normal cornea"))
+
+    barplot(table(dignose),
+            col = c(rgb(1,0,0,alpha=0.15), rgb(1,0.5,0,alpha=0.18), rgb(0,1,0,alpha=0.15)))
+  }
+
+  res <-data.frame(Diagnose = results$Diagnose, sapply(results[,-c(1,13)], as.numeric), Filename = results$Filename)
+  ordered_results <- res[order(res$GLPI, decreasing = T),]
+
+  return(ordered_results)
+
 
 }

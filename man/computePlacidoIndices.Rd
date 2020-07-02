@@ -10,13 +10,13 @@ computePlacidoIndices(datasetRings)
 \item{datasetRings}{A dataset containing data of a corneal topography, as read by \link[rPACI]{readCornealTopography}.}
 }
 \value{
-A dataset containg the results dataset (the irregularity indices plus the diagnose).
+A dataset containg the aforementioned irregularity indices as well as the diagnose.
 }
 \description{
 This function calculates the individual Placido indices of corneal irregularity PI_1, PI_2, PI_3, SL,
-AR_1, AR_2, AR_3, AR_4, AR_5, and the global index GLPI (see references). It requires a dataset in
+AR_1, AR_2, AR_3, AR_4, AR_5, the global index GLPI, and the Naive Bayes Index (NBI) (see references). It requires a dataset in
 the format given by the function \link[rPACI]{readCornealTopography}. The results include the values
-of the indices plus a diagnose, which is one of the three labels: "Irregular cornea", "Suspect cornea"
+of the indices plus a diagnose, which is either "Irregular cornea", "Suspect cornea"
 or "Normal cornea", depending on the value of the global index GLPI.
 }
 \examples{
@@ -24,6 +24,8 @@ dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"
 results = computePlacidoIndices(dataset)
 }
 \references{
+Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2019). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
+
 Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
 
 Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Pinero, D., & Alio', J. L. (2011). Placido-based indices of corneal irregularity. Optometry and Vision Science, 88(10), 1220-1231.

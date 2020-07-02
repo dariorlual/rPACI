@@ -1,7 +1,7 @@
 require("rPACI")
 
 ##### EXAMPLE 1: NORMAL EYE ######
-# Read an example file with the corneal topography of a normal eye, from a file exported by a typical commercial Placido disk topographer 
+# Read an example file with the corneal topography of a normal eye, from a file exported by a typical commercial Placido disk topographer
 dataset_N = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
 
 # Now compute the Placido irregularity indices in Ramos-Lopez et al. (2013), <doi:10.1097/OPX.0b013e3182843f2a>
@@ -40,7 +40,8 @@ results_S$Diagnose
 
 ##### EXAMPLE 4: ANALYZE MULTIPLE FILES IN A FOLDER ######
 # Multiple files in a common folder can be analyzed at a time using the function 'analyzeFolder':
-resultsAll = analyzeFolder(system.file("extdata", package="rPACI"), individualPlots = FALSE)
+resultsAll = analyzeFolder(system.file("extdata", package="rPACI"), individualPlots = FALSE, summaryPlot = T)
 
 # Show the diagnose for each analyzed file
-resultsAll[,c(12,1)]
+resultsAll[,c(13,1)]
+

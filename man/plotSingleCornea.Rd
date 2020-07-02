@@ -11,7 +11,8 @@ plotSingleCornea(dataset, PlacidoIndices, filename = NULL)
 
 \item{PlacidoIndices}{A dataset of results as given by the function \link[rPACI]{computePlacidoIndices} or \link[rPACI]{analyzeFile}.}
 
-\item{filename}{An optional filename, corresponding to the file containing the analyzed data.}
+\item{filename}{An optional character argument, corresponding to the file containing the analyzed data.
+If specified, the filename is displayed on the plot.}
 }
 \description{
 Draw a three-part plot summarizing the corneal topography analysis, based on the Placido irregularity indices calculated by the function \link[rPACI]{computePlacidoIndices}.

@@ -1,8 +1,9 @@
-aa49ce791994589023e4af1c3d50b4ba *DESCRIPTION
-2bd9c6541c33ef545225852d2f46715e *NAMESPACE
-e02da47256f71187d88bb0db35ceeb40 *R/rPACI.R
+ae18fac5d7ee08d5ec73be2bec8ce286 *DESCRIPTION
+7e4787bf03aff11a0ab41660cc175f63 *NAMESPACE
+ce6bd7a9ac2527fd48e30134ee82264e *R/rPACI.R
+ef46e3ba462a17ef0ee30ddb27ba9fdc *R/sysdata.rda
 ce5291e7e4b78d2f15612e0c31d0b5c1 *demo/00Index
-0f29b56734a653f72f39aaaef79a0951 *demo/rPACIdemo.R
+c06d806b7e8ba908d5fa8e8e200a8a8b *demo/rPACIdemo.R
 050675ece79243088f22861edc0675cd *inst/extdata/K01.txt
 ea5e2ac46b75e73612718d62815ec71b *inst/extdata/K02.txt
 63721e8aac94b3714432f389dbf6a671 *inst/extdata/K03.txt
@@ -11,7 +12,7 @@ ea5e2ac46b75e73612718d62815ec71b *inst/extdata/K02.txt
 5e9ff7c99d13b227ef5bd110287db754 *inst/extdata/N02.txt
 f4c9b7ad4dbc501c7e8753852480f813 *inst/extdata/S01.txt
 2ba602dee4194a1acaafb31bc6f67303 *man/analyzeFile.Rd
-fa6f2b4e8cd84a7504dc447a8d79c98a *man/analyzeFolder.Rd
-0988186e9a9ecaa760fcb865b25e05ac *man/computePlacidoIndices.Rd
-d25941b677441025e705800c2bccdac2 *man/plotSingleCornea.Rd
+b0b9ba797e83466dfdd3d1f52754c0d8 *man/analyzeFolder.Rd
+b9edff9a47e7a2634e426826bc5da8be *man/computePlacidoIndices.Rd
+c6d322c0f7cca91a97b05ad1976aedc8 *man/plotSingleCornea.Rd
 51d0a04bfdef4f15c201c5e39dd8a034 *man/readCornealTopography.Rd

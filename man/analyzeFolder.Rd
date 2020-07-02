@@ -4,14 +4,21 @@
 \alias{analyzeFolder}
 \title{Analysis several corneal topography files in a common folder.}
 \usage{
-analyzeFolder(path, fileExtension = "txt", individualPlots = FALSE)
+analyzeFolder(
+  path,
+  fileExtension = "txt",
+  individualPlots = FALSE,
+  summaryPlot = FALSE
+)
 }
 \arguments{
 \item{path}{The path of a folder which contains corneal topography files, as exported by Placido disks corneal topographers.}
 
 \item{fileExtension}{The file extension of the corneal topography files in the folder ('.txt' by default).}
 
-\item{individualPlots}{An optional parameter indicating whether the plot for each file should be displayed or not.}
+\item{individualPlots}{An optional logical parameter indicating whether the plot for each file should be displayed or not.}
+
+\item{summaryPlot}{An optional logical parameter indicating whether a summary plot should be displayed or not.}
 }
 \description{
 Analyze all corneal topography files in a specific folder. It is equivalent to use \link[rPACI]{analyzeFile} for each file in the folder.
