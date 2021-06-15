@@ -4,8 +4,8 @@
 
   ## Contributors
   The contributors/developers of this project are:
-  * Darío Ramos-López,  Rey Juan Carlos University, Spain.  dario.ramos.lopez <at> urjc.es
-  * Ana D. Maldonado, University of Almería, Spain. ana.d.maldonado <at> ual.es
+  * Darío Ramos-López,  Rey Juan Carlos University, Spain.  dario.ramos.lopez at urjc.es
+  * Ana D. Maldonado, University of Almería, Spain. ana.d.maldonado at ual.es
 
   ## rPACI aim and description
   
