@@ -1,6 +1,6 @@
 # rPACI
 
-  This Github repository is devoted to the development of the R package "rPACI" (R Placido Analysis of Corneal Irregularity). 
+  This Github repository is devoted to the development of the R package "rPACI" (R Placido Analysis of Corneal Irregularity). See [the CRAN repository](https://cran.r-project.org/web/packages/rPACI/index.html).
 
   ## Contributors
   The contributors/developers of this project are:
