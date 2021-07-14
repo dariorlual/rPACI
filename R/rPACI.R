@@ -481,3 +481,24 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 
 
 }
+
+
+
+simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8) {
+  
+  dataPoints = dataPerRing * rings
+  
+  angles = seq(0,2*pi,length.out = 257)[1:256]
+  angles = rep(angles, times = rings)
+  
+  radii = seq(0,lastRingRadium,length.out = rings+1)[2:(rings+1)]
+  radii = rep(radii, each = dataPerRing)
+  
+  result=data.frame(matrix(NA, nrow = rings*dataPerRing, ncol = 0))
+  result["x"] = radii * cos(angles)
+  result["y"] = radii * sin(angles)
+  result["ring index"] = kronecker(1:rings,rep(1,dataPerRing))
+  
+  colnames(result) = c("x","y","ring index")
+  return(result)
+}
