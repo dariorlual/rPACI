@@ -486,8 +486,9 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 
 
 
-simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, maximumMireDisplacement = 0, 
-                         mireDisplacementAngle = 0, mireDisplacementNoise = 0, ellipticAxesRatio = 1, ellipticRotation = 0) {
+simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, ringRadiiNoise = 0, 
+                         maximumMireDisplacement = 0, mireDisplacementAngle = 0, mireDisplacementNoise = 0,
+                         ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0) {
   
   dataPoints = dataPerRing * rings
   
@@ -495,13 +496,14 @@ simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, maxi
   angles = rep(angles, times = rings)
   
   radii = seq(0,lastRingRadium,length.out = rings+1)[2:(rings+1)]
+  radii = radii + ringRadiiNoise * rnorm(rings, sd = radii[1]/6)
   radii = rep(radii, each = dataPerRing)
   
   # Adding a mire displacement in a certain direction (given by the angle )
   mireCentersRho = seq(0,maximumMireDisplacement,length.out = rings+1)[2:(rings+1)]
-  mireCentersRho
+  mireCentersRho = mireCentersRho + mireDisplacementNoise * rnorm(rings, sd = mireCentersRho[1]/6)
+  
   mireCentersAngle = rep(mireDisplacementAngle, each = rings)
-  mireCentersAngle
   
   mireCentersX = mireCentersRho * cos(mireCentersAngle)
   mireCentersY = mireCentersRho * sin(mireCentersAngle)  
@@ -511,8 +513,8 @@ simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, maxi
   
   
   result=data.frame(matrix(NA, nrow = rings*dataPerRing, ncol = 0))
-  result["x"] = mireCentersX + radii * cos(ellipticRotation) * cos(angles) - radii * ellipticAxesRatio * sin(ellipticRotation) * sin(angles)
-  result["y"] = mireCentersY + radii * sin(ellipticRotation) * cos(angles) + radii * ellipticAxesRatio * cos(ellipticRotation) * sin(angles)
+  result["x"] = mireCentersX + radii * cos(ellipticRotation) * cos(angles) - radii * ellipticAxesRatio * sin(ellipticRotation) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
+  result["y"] = mireCentersY + radii * sin(ellipticRotation) * cos(angles) + radii * ellipticAxesRatio * cos(ellipticRotation) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
   result["ring index"] = kronecker(1:rings,rep(1,dataPerRing))
   
   
