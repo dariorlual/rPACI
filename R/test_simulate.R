@@ -32,12 +32,13 @@
   
   setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
   source("rPACI.R")
-  dataset = simulateData(axesRatio = 1, eccentricityAngle = pi/4)
+  dataset = simulateData(axesRatio = 1, ellipticRotation = pi/4)
   plot(dataset$x,dataset$y,pch=20,cex=0.3,asp=1)    
   
   
   
   source("rPACI.R")
-  dataset = simulateData(maximumMireDisplacement = 3, mireDisplacementAngle = pi/2, axesRatio = 1.7, eccentricityAngle = pi/4)
+  dataset = simulateData(maximumMireDisplacement = 3, mireDisplacementAngle = 3*pi/4, ellipticAxesRatio = 1.7, ellipticRotation = pi/4)
   plot(dataset$x,dataset$y,pch=20,cex=0.3,asp=1)    
+  
   
