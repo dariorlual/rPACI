@@ -487,7 +487,7 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 
 
 simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, maximumMireDisplacement = 0, 
-                         mireDisplacementAngle = 0, mireDisplacementNoise = 0, axesRatio = 1, eccentricityAngle = 0) {
+                         mireDisplacementAngle = 0, mireDisplacementNoise = 0, ellipticAxesRatio = 1, ellipticRotation = 0) {
   
   dataPoints = dataPerRing * rings
   
@@ -511,8 +511,8 @@ simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, maxi
   
   
   result=data.frame(matrix(NA, nrow = rings*dataPerRing, ncol = 0))
-  result["x"] = mireCentersX + radii * cos(eccentricityAngle) * cos(angles) - radii * axesRatio * sin(eccentricityAngle) * sin(angles)
-  result["y"] = mireCentersY + radii * sin(eccentricityAngle) * cos(angles) + radii * axesRatio * cos(eccentricityAngle) * sin(angles)
+  result["x"] = mireCentersX + radii * cos(ellipticRotation) * cos(angles) - radii * ellipticAxesRatio * sin(ellipticRotation) * sin(angles)
+  result["y"] = mireCentersY + radii * sin(ellipticRotation) * cos(angles) + radii * ellipticAxesRatio * cos(ellipticRotation) * sin(angles)
   result["ring index"] = kronecker(1:rings,rep(1,dataPerRing))
   
   
