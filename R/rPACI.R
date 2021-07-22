@@ -15,7 +15,7 @@
 #' @examples
 #' datasetN = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
 #' datasetK = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
-readCornealTopography <- function(filepath) {
+readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, dropLines) {
   
   if(!file.exists(filepath)) {
     stop("Error: The specified file does not exist or is invalid.")
@@ -27,15 +27,16 @@ readCornealTopography <- function(filepath) {
   file_lines=readLines(connection, warn=FALSE)
   close(connection)
   
-  firstCharacter=substr(file_lines[1],1,1)
-  dropLines = switch(firstCharacter,
-                     "P" = 22,
-                     "[" = 4,
-                     "0" = 0)
-  dropLines
+  if(missing(dropLines)) {
+    firstCharacter=substr(file_lines[1],1,1)
+    dropLines = switch(firstCharacter,
+                       "P" = 22,
+                       "[" = 4,
+                       "0" = 0)
+  }
   
   if(is.null(dropLines)) {
-    stop("Uknown file type")
+    stop("Uknown file type. Please specify the number of header lines to drop")
   }
   
   numeric_lines = gsub(",",".", file_lines[-c(1:dropLines)])
@@ -44,32 +45,30 @@ readCornealTopography <- function(filepath) {
   
   length(numeric_lines)
   
-  ringsTotal = 24
-  ringsToUse = 15
-  dataPerRing = 256
-  dataPoints = dataPerRing * ringsTotal
+  
+  dataPoints = pointsPerRing * ringsTotal
   
   
-  angles = seq(0,2*pi,length.out = 257)[0:256]
+  angles = seq(0,2*pi,length.out = (pointsPerRing+1))[1:pointsPerRing]
   angles = rep(angles,ringsTotal)
   length(angles)
   
-  radii = as.numeric(numeric_lines[1:(ringsTotal*dataPerRing)])
+  radii = as.numeric(numeric_lines[1:(ringsTotal*pointsPerRing)])
   length(radii)
   
   firstNA = which(is.na(radii))[1]
   
-  if(is.null(firstNA) || firstNA > ringsToUse*dataPerRing) {
-    ringsActual = 15
+  if(is.null(firstNA) || firstNA > ringsToUse*pointsPerRing) {
+    ringsActual = ringsToUse
   } else {
-    ringsActual = floor(firstNA/256)
+    ringsActual = floor(firstNA/pointsPerRing)
   }
   
-  lastData = (dataPerRing*ringsActual)
-  result=data.frame(matrix(NA, nrow = ringsActual*dataPerRing, ncol = 0))
+  lastData = (pointsPerRing*ringsActual)
+  result=data.frame(matrix(NA, nrow = ringsActual*pointsPerRing, ncol = 0))
   result["x"] = radii[1:lastData] * cos(angles[1:lastData])
   result["y"] = radii[1:lastData] * sin(angles[1:lastData])
-  result["ring index"] = kronecker(1:ringsActual,rep(1,dataPerRing))
+  result["ring index"] = kronecker(1:ringsActual,rep(1,pointsPerRing))
   
   colnames(result) = c("x","y","ring index")
   return(result)
