@@ -483,7 +483,7 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 }
 
 
-
+#' @todo Add a seed for repeatability, make some periphery data missing at random
 simulateData <- function(rings = 24, pointsPerRing = 256, diameter = 12, ringRadiiPerturbation = 0, 
                          maximumMireDisplacement = 0, mireDisplacementAngle = 0, mireDisplacementNoise = 0,
                          ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0) {
