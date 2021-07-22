@@ -15,7 +15,7 @@
 #' @examples
 #' datasetN = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
 #' datasetK = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
-readCornealTopography <- function(filepath) {
+readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, dropLines) {
   
   if(!file.exists(filepath)) {
     stop("Error: The specified file does not exist or is invalid.")
@@ -27,15 +27,16 @@ readCornealTopography <- function(filepath) {
   file_lines=readLines(connection, warn=FALSE)
   close(connection)
   
-  firstCharacter=substr(file_lines[1],1,1)
-  dropLines = switch(firstCharacter,
-                     "P" = 22,
-                     "[" = 4,
-                     "0" = 0)
-  dropLines
+  if(missing(dropLines)) {
+    firstCharacter=substr(file_lines[1],1,1)
+    dropLines = switch(firstCharacter,
+                       "P" = 22,
+                       "[" = 4,
+                       "0" = 0)
+  }
   
   if(is.null(dropLines)) {
-    stop("Uknown file type")
+    stop("Uknown file type. Please specify the number of header lines to drop")
   }
   
   numeric_lines = gsub(",",".", file_lines[-c(1:dropLines)])
@@ -44,32 +45,29 @@ readCornealTopography <- function(filepath) {
   
   length(numeric_lines)
   
-  ringsTotal = 24
-  ringsToUse = 15
-  dataPerRing = 256
-  dataPoints = dataPerRing * ringsTotal
+  dataPoints = pointsPerRing * ringsTotal
   
   
-  angles = seq(0,2*pi,length.out = 257)[0:256]
+  angles = seq(0,2*pi,length.out = (pointsPerRing+1))[1:pointsPerRing]
   angles = rep(angles,ringsTotal)
   length(angles)
   
-  radii = as.numeric(numeric_lines[1:(ringsTotal*dataPerRing)])
+  radii = as.numeric(numeric_lines[1:(ringsTotal*pointsPerRing)])
   length(radii)
   
   firstNA = which(is.na(radii))[1]
   
-  if(is.null(firstNA) || firstNA > ringsToUse*dataPerRing) {
-    ringsActual = 15
+  if(is.null(firstNA) || firstNA > ringsToUse*pointsPerRing) {
+    ringsActual = ringsToUse
   } else {
-    ringsActual = floor(firstNA/256)
+    ringsActual = floor(firstNA/pointsPerRing)
   }
   
-  lastData = (dataPerRing*ringsActual)
-  result=data.frame(matrix(NA, nrow = ringsActual*dataPerRing, ncol = 0))
+  lastData = (pointsPerRing*ringsActual)
+  result=data.frame(matrix(NA, nrow = ringsActual*pointsPerRing, ncol = 0))
   result["x"] = radii[1:lastData] * cos(angles[1:lastData])
   result["y"] = radii[1:lastData] * sin(angles[1:lastData])
-  result["ring index"] = kronecker(1:ringsActual,rep(1,dataPerRing))
+  result["ring index"] = kronecker(1:ringsActual,rep(1,pointsPerRing))
   
   colnames(result) = c("x","y","ring index")
   return(result)
@@ -485,37 +483,43 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 }
 
 
-
-simulateData <- function(rings = 24, dataPerRing = 256, lastRingRadium = 8, ringRadiiNoise = 0, 
+#' @todo Add a seed for repeatability, make some periphery data missing at random
+simulateData <- function(rings = 24, pointsPerRing = 256, diameter = 12, ringRadiiPerturbation = 0, 
                          maximumMireDisplacement = 0, mireDisplacementAngle = 0, mireDisplacementNoise = 0,
                          ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0) {
   
-  dataPoints = dataPerRing * rings
+  dataPoints = pointsPerRing * rings
   
-  angles = seq(0,2*pi,length.out = 257)[1:256]
+  lastRingRadium = diameter/2
+  mireDisplacementAngleRad = pi/180*mireDisplacementAngle
+  ellipticRotationRad = pi/180*ellipticRotation  
+  
+  
+  angles = seq(0, 2*pi,length.out = (1+pointsPerRing))[1:pointsPerRing]
   angles = rep(angles, times = rings)
   
   radii = seq(0,lastRingRadium,length.out = rings+1)[2:(rings+1)]
-  radii = radii + ringRadiiNoise * rnorm(rings, sd = radii[1]/6)
-  radii = rep(radii, each = dataPerRing)
+  radii = radii + ringRadiiPerturbation * rnorm(rings, sd = radii[1]/6)
+  radii = sort(radii)
+  radii = rep(radii, each = pointsPerRing)
   
   # Adding a mire displacement in a certain direction (given by the angle )
   mireCentersRho = seq(0,maximumMireDisplacement,length.out = rings+1)[2:(rings+1)]
   mireCentersRho = mireCentersRho + mireDisplacementNoise * rnorm(rings, sd = mireCentersRho[1]/6)
   
-  mireCentersAngle = rep(mireDisplacementAngle, each = rings)
+  mireCentersAngle = rep(mireDisplacementAngleRad, each = rings)
   
   mireCentersX = mireCentersRho * cos(mireCentersAngle)
   mireCentersY = mireCentersRho * sin(mireCentersAngle)  
   
-  mireCentersX = rep(mireCentersX, each = dataPerRing)
-  mireCentersY = rep(mireCentersY, each = dataPerRing)
+  mireCentersX = rep(mireCentersX, each = pointsPerRing)
+  mireCentersY = rep(mireCentersY, each = pointsPerRing)
   
   
-  result=data.frame(matrix(NA, nrow = rings*dataPerRing, ncol = 0))
-  result["x"] = mireCentersX + radii * cos(ellipticRotation) * cos(angles) - radii * ellipticAxesRatio * sin(ellipticRotation) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
-  result["y"] = mireCentersY + radii * sin(ellipticRotation) * cos(angles) + radii * ellipticAxesRatio * cos(ellipticRotation) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
-  result["ring index"] = kronecker(1:rings,rep(1,dataPerRing))
+  result=data.frame(matrix(NA, nrow = rings*pointsPerRing, ncol = 0))
+  result["x"] = mireCentersX + radii * cos(ellipticRotationRad) * cos(angles) - radii * ellipticAxesRatio * sin(ellipticRotationRad) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
+  result["y"] = mireCentersY + radii * sin(ellipticRotationRad) * cos(angles) + radii * ellipticAxesRatio * cos(ellipticRotationRad) * sin(angles) + overallNoise * rnorm(dataPoints,sd=0.1)
+  result["ring index"] = kronecker(1:rings,rep(1,pointsPerRing))
   
   
   colnames(result) = c("x","y","ring index")
