@@ -94,7 +94,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' @examples
 #' dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
-computePlacidoIndices <- function(datasetRings) {
+computePlacidoIndices <- function(datasetRings, truncateIndices = TRUE) {
   
   x = datasetRings[,"x"]
   y = datasetRings[,"y"]
@@ -232,8 +232,10 @@ computePlacidoIndices <- function(datasetRings) {
   PlacidoCornealIndices_AR[PlacidoCornealIndices_AR<0]=0
   sprintf("%.2f",PlacidoCornealIndices_AR)
   
-  PlacidoCornealIndices[PlacidoCornealIndices>150] = 150
-  PlacidoCornealIndices_AR[PlacidoCornealIndices_AR>150] = 150
+  if (truncateIndices) {
+    PlacidoCornealIndices[PlacidoCornealIndices>150] = 150
+    PlacidoCornealIndices_AR[PlacidoCornealIndices_AR>150] = 150
+  }
   
   #******************************************
   ########  COMPOSITE INDICES
