@@ -94,7 +94,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' @examples
 #' dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
-computePlacidoIndices <- function(datasetRings, truncateIndices = TRUE) {
+computePlacidoIndices <- function(datasetRings, truncateIndicesAt150 = TRUE, useMax15Rings = TRUE) {
   
   x = datasetRings[,"x"]
   y = datasetRings[,"y"]
@@ -104,10 +104,12 @@ computePlacidoIndices <- function(datasetRings, truncateIndices = TRUE) {
     stop("Invalid dataset: a column named 'ring index' of type integer is required")
   }
   
-  lastRing = max(ringIndices)
-  if(lastRing>15) {
-    warning("Too many rings: using only the 15 innermost rings")
-    lastRing=15
+  if (useMax15Rings) {
+    lastRing = max(ringIndices)
+    if(lastRing>15) {
+      warning("Too many rings: using only the 15 innermost rings")
+      lastRing=15
+    }
   }
   
   if (length(ringIndices)/lastRing == floor(length(ringIndices)/lastRing)) {
@@ -232,7 +234,7 @@ computePlacidoIndices <- function(datasetRings, truncateIndices = TRUE) {
   PlacidoCornealIndices_AR[PlacidoCornealIndices_AR<0]=0
   sprintf("%.2f",PlacidoCornealIndices_AR)
   
-  if (truncateIndices) {
+  if (truncateIndicesAt150) {
     PlacidoCornealIndices[PlacidoCornealIndices>150] = 150
     PlacidoCornealIndices_AR[PlacidoCornealIndices_AR>150] = 150
   }
