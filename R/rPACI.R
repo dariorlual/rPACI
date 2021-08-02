@@ -15,7 +15,7 @@
 #' @examples
 #' datasetN = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
 #' datasetK = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
-readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, dropLines) {
+readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, dropLines, NAvalues=c(-1,-1000)) {
   
   if(!file.exists(filepath)) {
     stop("Error: The specified file does not exist or is invalid.")
@@ -40,8 +40,10 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   }
   
   numeric_lines = gsub(",",".", file_lines[-c(1:dropLines)])
-  numeric_lines[numeric_lines==-1] = NA
-  numeric_lines[numeric_lines==-1000] = NA
+  
+  for (j in NAvalues) {
+    numeric_lines[numeric_lines==j] = NA
+  }
   
   length(numeric_lines)
   
