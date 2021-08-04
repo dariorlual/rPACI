@@ -88,14 +88,16 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   
   # The radii are obtained from the file, corresponding to the first 'dataPoints' numeric lines
   radii = as.numeric(numeric_lines[1:dataPoints])
-  
+  if(any(radii<0)){
+    stop('Some radii are negative. Probably, the "NAvalues" argument is incorrect.')
+  }
   
   # If 'onlyCompleteRings', then discard whole rings starting from the first NA
   ringsActual = ringsToUse
   if (onlyCompleteRings) {
     firstNA = which(is.na(radii))[1]
     
-    if(!(is.null(firstNA) || firstNA > ringsToUse*pointsPerRing)) {
+    if(!(is.null(firstNA) || is.na(firstNA) || firstNA > ringsToUse*pointsPerRing)) {
       ringsActual = floor(firstNA/pointsPerRing)
     }
   }
