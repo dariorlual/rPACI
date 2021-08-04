@@ -585,9 +585,6 @@ simulateData <- function(rings = 24, pointsPerRing = 256, diameter = 12, ringRad
 }
 
 # analyzeDataset -----
-# The dataset must contain 3 columns
-# x and y are the cartesian coordinates
-# the last one is the ring index
 
 checkDataset <- function(dataset){
   # check if the number of columns equals 3
