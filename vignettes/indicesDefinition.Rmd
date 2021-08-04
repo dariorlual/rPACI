@@ -113,11 +113,11 @@ knitr::opts_chunk$set(
 
 The indices computed by `rPACI` allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in scientific papers (@dramoslopez2011, @dramoslopez2013). An additional index, based in a naive Bayes classifier, was added and tested with a different database in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
 
-The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by `rPACI`. They can be split into two categories: primary and combined indices. The primary indices are: PI_1, PI_2, PI_3, SL, AR_1, AR_2, AR_3, AR_4, AR_5. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: GLPI (a generalized linear model) and NBI (naive Bayes index).
+The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by `rPACI`. They can be split into two categories: primary and combined indices. The primary indices are: $PI_1$, $PI_2$, $PI_3$, $SL$, AR_1, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
 
 ## Data structure
 
-First, we assume a corneal dataframe is already available, which may have been obtained from the function `readCornealTopography` (see vignette entitled *Workflow of package rPACI*), using `simulateData` (see vignette entitled *Simulating corneal datasets*), or by other ways.
+First, we assume a corneal dataframe is already available, which may have been loaded from a file using the function `readCornealTopography` (see [Workflow of rPACI pacakge](packageUsage.html)), simulated using `simulateData` (see [Simulating corneal datasets](simulating.html)), or by other ways (as long as it meets the dataset requirements below).
 
 The dataset consist of three columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readCornealTopography` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readCornealTopography`, 15 by default).
 
