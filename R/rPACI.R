@@ -582,5 +582,36 @@ simulateData <- function(rings = 24, pointsPerRing = 256, diameter = 12, ringRad
   colnames(result) = c("x","y","ring index")
   return(result)
   
-  
 }
+
+# analyzeDataset -----
+# The dataset must contain 3 columns
+# x and y are the cartesian coordinates
+# the last one is the ring index
+
+checkDataset <- function(dataset){
+  # check if the number of columns equals 3
+  if(ncol(dataset) != 3){
+    stop('The dataset must contain 3 columns: x, y (cartesian coordinates of data points) and ring index (1, 2, …).')
+  }
+  
+  # check if third column contains integers
+  if(!all(dataset[,3] == round(dataset[,3]))){
+    stop('The third column must contain integers (ring index)')
+  }
+  
+  # look for NAs
+  if(any(is.na(dataset))){
+    stop('The dataset cannot contain NA values.')
+  }
+  
+  # check if all the rings contain the same number of points
+  pointsPerRing = aggregate(dataset, FUN = length, by = list(dataset[,3]))[,2]
+  # If length == 1, all the rings contain the same number of points
+  if(length(unique(pointsPerRing)) != 1){
+    stop('All the rings must contain the same number of data points.')
+  }
+  
+  return(T)
+}
+
