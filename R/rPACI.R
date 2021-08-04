@@ -133,24 +133,35 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' @examples
 #' dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
-computePlacidoIndices <- function(datasetRings, truncateIndicesAt150 = TRUE, useMax15Rings = TRUE) {
+computePlacidoIndices <- function(datasetRings, truncateIndicesAt150 = TRUE, useMaxRings = 15) {
   
   x = datasetRings[,"x"]
   y = datasetRings[,"y"]
   ringIndices = datasetRings[,"ring index"]
   
+  if(max(ringIndices) < 5){
+    stop('The number of rings must be at least 5. The dataset does not meet this requirement.')
+  }
+  if(useMaxRings < 5){
+    stop('Argument useMaxRings must be >= 5.')
+  }
+  
   if(sum(as.integer(ringIndices)!=ringIndices)>0) {
     stop("Invalid dataset: a column named 'ring index' of type integer is required")
   }
   
-  if (useMax15Rings) {
+  # if (useMax15Rings) {
     lastRing = max(ringIndices)
-    if(lastRing>15) {
-      warning("Too many rings: using only the 15 innermost rings")
-      lastRing=15
+    if(lastRing>useMaxRings) {
+      warning(paste("Too many rings: using only the", useMaxRings, "innermost rings"))
+      lastRing=useMaxRings
+      datasetRings = datasetRings[datasetRings$`ring index`<=useMaxRings,]
+      x = datasetRings[,"x"]
+      y = datasetRings[,"y"]
+      ringIndices = datasetRings[,"ring index"]
     }
-  }
-  
+  # }
+
   if (length(ringIndices)/lastRing == floor(length(ringIndices)/lastRing)) {
     dataPerRing = length(ringIndices)/lastRing
   } else {
