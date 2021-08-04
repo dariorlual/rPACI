@@ -88,10 +88,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-The **rPaci** package is developed to facilitate the calculation and interpretation of several indices for detecting corneal irregularities, and especially keratoconus. These indices were introduced in @dramoslopez2011, @dramoslopez2013 and @castroluna2020, and proved to be effective in detecting keratoconus and early keratoconus.
+The **rPACI** package is developed to facilitate the calculation and interpretation of several indices for detecting corneal irregularities, and especially keratoconus. These indices were introduced in @dramoslopez2011, @dramoslopez2013 and @castroluna2020, and proved to be effective in detecting keratoconus and early keratoconus.
 
 ## Package installation
-**rPaci** depends on the **bnlearn** package.
+**rPACI** depends on the **bnlearn** package.
 To install and load the package and its dependencies, open an R session and write the following code:
 
 ```{r, eval = F}
@@ -160,3 +160,5 @@ This function returns a `data.frame` containing 13 columns and as many rows as f
 resultsAll[,c(13,1)]
 ```
 Note that the rows are sorted from *Irregular* to *Normal* cornea. In this example, four eyes are diagnosed as *irregular*, one as *suspect* and two as *normal*. This is an easy and straightforward way to check if any patient potentially suffers from keratoconus.
+
+## References
