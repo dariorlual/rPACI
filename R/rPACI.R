@@ -88,7 +88,8 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   
   # The radii are obtained from the file, corresponding to the first 'dataPoints' numeric lines
   radii = as.numeric(numeric_lines[1:dataPoints])
-  if(any(radii<0)){
+  
+  if(any(radii<0, na.rm = T)){
     stop('Some radii are negative. Probably, the "NAvalues" argument is incorrect.')
   }
   
