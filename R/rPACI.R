@@ -615,3 +615,29 @@ checkDataset <- function(dataset){
   return(T)
 }
 
+
+#' Analysis of a single corneal topography dataset
+#'
+#' Analyze a corneal topography dataset This function combines the three operations of functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
+#' @param path A corneal topography datatset, loaded from a file using the function \link[rPACI]{readCornealTopography}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).
+#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not.
+#' @export
+#' @details The dataset must contain 3 columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, …). 
+#' The ring index column must contain integer numbers. 
+#' The dataset must not contain NA values. 
+#' Finally, all the rings must contain the same number of data points.
+#' @examples
+#' dataset = simulateData(rings = 15, ringRadiiPerturbation = 0.7)
+#' analyzeDataset(dataset)
+analyzeDataset <- function(dataset, drawplot=TRUE) {
+  
+  checkDataset(dataset)
+  
+  result = computePlacidoIndices(dataset)
+  
+  if(drawplot) {
+    plotSingleCornea(dataset, result)
+  }
+  
+  return(result)
+}
