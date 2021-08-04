@@ -1,0 +1,162 @@
+---
+title: "Workflow of the rPACI package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Workflow of the rPACI package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+references:
+  
+- id: dramoslopez2011
+  title: Placido-based indices of corneal irregularity
+  author:
+  - family: Ramos-López
+    given: Darío
+  - family: Martínez-Finkelshtein
+    given: Andrei
+  - family: Castro-Luna
+    given: Gracia M.
+  - family: Piñero
+    given: David
+  - family: Alió
+    given: Jorge L. 
+  container-title: Optometry and Vision Science
+  volume: 88
+  URL: 'https://doi.org/10.1097/opx.0b013e3182279ff8'
+  DOI: 10.1097/opx.0b013e3182279ff8
+  issue: 10
+  publisher: American Academy of Optometry
+  page: 1220-1231
+  type: article-journal
+  issued:
+    year: 2011
+    month: 10
+    
+- id: dramoslopez2013
+  title: Screening subclinical keratoconus with Placido-based corneal indices
+  author:
+  - family: Ramos-López
+    given: Darío
+  - family: Martínez-Finkelshtein
+    given: Andrei
+  - family: Castro-Luna
+    given: Gracia M.
+  - family: Burguera-Giménez
+    given: Neus
+  - family: Vega-Estrada
+    given: Alfredo
+  - family: Piñero
+    given: David
+  - family: Alió
+    given: Jorge L. 
+  container-title: Optometry and Vision Science
+  volume: 90
+  URL: 'https://doi.org/10.1097/opx.0b013e3182843f2a'
+  DOI: 10.1097/opx.0b013e3182843f2a
+  issue: 4
+  publisher: American Academy of Optometry
+  page: 335-343
+  type: article-journal
+  issued:
+    year: 2013
+    month: 4
+    
+- id: castroluna2020
+  title: Robust keratoconus detection with Bayesian network classifier for Placido based corneal indices
+  author:
+  - family: Castro-Luna
+    given: Gracia M.    
+  - family: Martínez-Finkelshtein
+    given: Andrei
+  - family: Ramos-López
+    given: Darío    
+  container-title: Contact Lens and Anterior Eye
+  volume: 43
+  URL: 'https://doi.org/10.1016/j.clae.2019.12.006'
+  DOI: 10.1016/j.clae.2019.12.006
+  issue: 4
+  publisher: Elsevier
+  page: 366-372
+  type: article-journal
+  issued:
+    year: 2020
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+The **rPaci** package is developed to facilitate the calculation and interpretation of several indices for detecting corneal irregularities, and especially keratoconus. These indices were introduced in @dramoslopez2011, @dramoslopez2013 and @castroluna2020, and proved to be effective in detecting keratoconus and early keratoconus.
+
+## Package installation
+**rPaci** depends on the **bnlearn** package.
+To install and load the package and its dependencies, open an R session and write the following code:
+
+```{r, eval = F}
+install.packages("rPACI", dependencies = T)
+library("rPACI")
+```
+```{r, echo = F, warning = F}
+library("rPACI")
+```
+## Reading data
+In order to begin with the analysis, the data exported by a typical commercial Placido disk topographer (formatted as described before) can be loaded using the function `readCornealTopography()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:
+
+```{r, eval = T}
+dataset_N = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
+```
+This function returns a `data.frame` conveniently formatted to be used in the next step of the analysis.
+
+
+## Computing the Placido irregularity indices
+
+We can now compute the [Placido irregularity indices](indicesDefinition.html) of this data set by calling function `computePlacidoIndices()`, which takes the object returned by `readCornealTopography()` as its only argument:
+<!-- (see this [vignette](indicesDefinition.html) for a detailed definition of the indices) -->
+
+```{r, eval = T}
+results_N = computePlacidoIndices(dataset_N)
+results_N
+```
+
+The object returned by `computePlacidoIndices()` is of class `data.frame` and contains 12 columns and 1 row (because we are analyzing only one eye).
+The first column of the returned `data.frame` is the diagnosis, based on the GLPI index, which can be either `Irregular cornea` (GLPI $\geq$ 70), `Suspect cornea` (30 $\leq$ GLPI <70) or `Normal cornea` (GLPI <30). The next column is the Naive Bayes Index (NBI), which ranges between 0 and 100 and can be interpreted as the probability of suffering from keratoconus. The remaining columns correspond to the other indices (see definitions in the previous sections).
+
+## Plotting the results
+The results of the analysis can be plotted using function `plotSingleCornea()`, which takes 3 arguments: `dataset`, a `data.frame` containing the corneal topography data, i.e., the object returned by `readCornealTopography()`; `PlacidoIndices`, a `data.frame` containing the computed Placido indices, i.e., the object returned by `computePlacidoIndices()`; and, optionally, `filename`, a character vector to be displayed on the plot (for instance, the filename of the corneal topography dataset).
+
+
+```{r, eval = T, fig.width = 7, fig.height = 4}
+  plotSingleCornea(dataset_N, results_N, filename = "N01.txt")
+```
+
+The left-hand side of the figure shows the input data, whereas the right-hand side shows two charts: the GLPI index plot, which visually indicates the value taken by this index on a colored scale of possible values, and the PI indices distribution, which shows the distribution of the GLPI, PI-1, PI-2 and PI-3 indices in a boxplot placed on a scale of possible values. The color of the charts indicate whether the indices fall within the *normal cornea* region (green color), *suspicious cornea* region (orange color), or *irregular cornea* region (red color). In the example shown, we can clearly see that the eye is diagnosed as normal.
+
+## Using the wrapper function
+Alternatively to the aforementioned 3 functions, the wrapper function `analyzeFile()` can be used instead, which takes 2 arguments: `path`, which is a character element indicating the location of the corneal topography file, and `drawplot`, which is a logical argument indicating whether the results should be plotted or not.
+This function returns a `data.frame` containing the same information as the object returned by `computePlacidoIndices()` and, optionally, the plot returned by `plotSingleCornea()` if the argument 
+`drawplot` is `TRUE`. 
+
+```{r, eval = T, fig.width = 7, fig.height = 4}
+  res_K = analyzeFile(system.file("extdata","K01.txt", package="rPACI"), drawplot=TRUE)
+res_K
+```
+
+
+The results indicate that the patient's cornea is irregular. In this case, the plot shows a GLPI index of 100 and a distribution of PI indices ranging from 100 to 130.
+
+## Analizing multiple patients simoultaneously
+
+So far, these functions can only be used to analyze one file at a time. In order to analyze multiple files simultaneously, the function `analyzeFolder()` can be used. This function takes 4 arguments: `path`, to indicate the location of the folder containing the files; `fileExtension`, which indicates the extension of the files, is set to 'txt' by default; `individualPlots`, which is an optional logical argument indicating whether the plot for each file should be displayed or not; and `summaryPlot`, which is an optional logical argument indicating whether a summary plot of all files analyzed should be displayed or not. If the argument `summaryPlot()` is `TRUE`, then a barplot showing the absolute frequency of each possible value of diagnosis is depicted.
+
+```{r, eval = T, fig.width = 7, fig.height = 4}
+resultsAll = analyzeFolder(system.file("extdata", package="rPACI"), individualPlots = T, summaryPlot = T)  
+resultsAll
+```
+
+This function returns a `data.frame` containing 13 columns and as many rows as files analyzed. The first 12 columns correspond to the diagnosis and the indices, as in the object returned by `computePlacidoIndices()`. The last column corresponds to the file name so that a specific patient can be easily found. To see the diagnosis for each analyzed file, the first and last columns can be selected:
+```{r, eval = T}
+resultsAll[,c(13,1)]
+```
+Note that the rows are sorted from *Irregular* to *Normal* cornea. In this example, four eyes are diagnosed as *irregular*, one as *suspect* and two as *normal*. This is an easy and straightforward way to check if any patient potentially suffers from keratoconus.
