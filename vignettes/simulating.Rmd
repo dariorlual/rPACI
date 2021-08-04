@@ -2,7 +2,7 @@
 title: "Simulating corneal datasets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{simulating}
+  %\VignetteIndexEntry{Simulating corneal datasets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
