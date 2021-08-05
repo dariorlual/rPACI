@@ -47,7 +47,10 @@ plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
 }
 
 
-
+#' Plot indices over time
+#' @import ggplot2
+#' @importFrom tidyr gather
+#' @importFrom ggpubr ggarrange
 plotEvolution <- function(df){
   df_l = gather(df, 'var', 'value', 4:7)
   p1 = ggplot()+
