@@ -222,12 +222,23 @@ The primary Placido indices described above, $PI_1$, $PI_2$, $PI_3$, $SL$, and $
 A brief description of them is given as follows (see the aforementioned references for more details):
 
 ### GLPI index 
+
 The $GLPI$ index (from Generalized Linear Placido Index) (@dramoslopez2013) is a generalized linear model computed using some of the primary indices, in the following way:
 $$ GLPI = 100 \Phi \left( \left(-224.90 + 1.69 PI_1 + 1.28 PI_3 + 1.89 AR(4) + 0.19 SL \right)/20 \right) $$
 
 where $\Phi$ stands for the cumulative distribution function of the standard normal distribution. This corresponds to a generalized linear regression model with the *probit* ($\Phi^{-1}$) link function. Therefore, $GLPI$ has values between $0$ and $100$. The coefficients in the formula above were obtained by fitting a real-world dataset of normal and keratoconic corneas (@dramoslopez2013). The index $GLPI$ was validated giving an excellent discrimination capability of irregular corneas.
 
 ### NBI index 
+
+The compound index $NBI$ (from Naïve Bayes Index; see @castroluna2020) is a Bayesian classifier, more precisely, it is a Bayesian network with the naïve Bayes structure depicted below.
+
+![](dag.png)
+
+This Bayesian network is a conditional linear Gaussian (CLG) network, with its root node ($KC$) being a discrete binary variable and the rest of the nodes being continuous. The parameters of the model (their conditional probability distributions) were reported in @castroluna2020. This model can be used for predicting whether a specific cornea (whose values of the primary indices are known) is a normal cornea or a keratoconic cornea. 
+
+Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling \citep{Fung1990,Cheng2000, RamosLopez2018}. Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For more details, we refer the readers to @castroluna2020.
+
+Thus, the posterior probability estimation can be computed efficiently with several approaches. In `rPACI`, we make use of the R package [**bnlearn**](https://cran.r-project.org/web/packages/bnlearn/index.html)  (@scutari2010 @scutari2019) includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the indices values of the bottom nodes.
 
 ## References
 
