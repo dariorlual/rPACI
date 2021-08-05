@@ -113,7 +113,7 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #' (loaded from a file using the function \link[rPACI]{readCornealTopography}, 
 #' simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).
 #' @param fileExtension If data is a path, specify the file extension of the corneal topography files 
-#' in the folder. It assumes all files with the given extension are corneal topography files.
+#' in the folder. It assumes all files with the given extension are corneal topography files of a single patient.
 #' @details If the data are loaded from a folder, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
 #' Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
 #' Moreover, the folder should contain data measures of one patient only since the function 
