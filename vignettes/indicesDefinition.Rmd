@@ -217,6 +217,17 @@ Thus, after the normalization (and possible truncation of extremely high or low 
 
 ## Combined indices
 
+The primary Placido indices described above, $PI_1$, $PI_2$, $PI_3$, $SL$, and $AR_k$, show sensitivity to detecting various irregularities in the cornea, such as keratoconus (@dramoslopez2011, @dramoslopez2013). However, a single index does not reach sufficient accuracy in the task, and compound indices have been proposed and tested (@dramoslopez2013, @castroluna2020) in order to improve the performance and precision of the individual indices. These compound indices showed a significant improvement in accuracy when predicting keratoconus. 
+
+A brief description of them is given as follows (see the aforementioned references for more details):
+
+### GLPI index 
+The $GLPI$ index (from Generalized Linear Placido Index) (@dramoslopez2013) is a generalized linear model computed using some of the primary indices, in the following way:
+$$ GLPI = 100 \Phi \left( \left(-224.90 + 1.69 PI_1 + 1.28 PI_3 + 1.89 AR(4) + 0.19 SL \right)/20 \right) $$
+
+where $\Phi$ stands for the cumulative distribution function of the standard normal distribution. This corresponds to a generalized linear regression model with the *probit* ($\Phi^{-1}$) link function. Therefore, $GLPI$ has values between $0$ and $100$. The coefficients in the formula above were obtained by fitting a real-world dataset of normal and keratoconic corneas (@dramoslopez2013). The index $GLPI$ was validated giving an excellent discrimination capability of irregular corneas.
+
+### NBI index 
 
 ## References
 
