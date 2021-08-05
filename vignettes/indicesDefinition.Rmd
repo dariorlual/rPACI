@@ -101,6 +101,38 @@ references:
   issued:
     year: 2001  
     month: 12  
+
+- id: cheng2000
+  title: 'AIS-BN: an adaptive importance sampling algorithm for evidential reasoning in large Bayesian networks'
+  author:
+  - family: Cheng
+    given: Jian
+  - family: Druzdel
+    given: Marek J.
+  container-title: Journal of Artificial Intelligence Research
+  volume: 13
+  URL: 'https://doi.org/10.1613/jair.764'
+  DOI: 10.1613/jair.764
+  issue: 1
+  page: 155-188
+  type: article-journal
+  issued:
+    year: 2000 
+     
+- id: scutari2010
+  title: Learning Bayesian networks with the bnlearn R package
+  author:
+  - family: Scutari
+    given: Marco
+  container-title: Journal of Statistical Software
+  volume: 35
+  URL: 'https://doi.org/10.18637/jss.v035.i03'
+  DOI: 10.18637/jss.v035.i03
+  issue: 3
+  page: 1-22
+  type: article-journal
+  issued:
+    year: 2010 
 ---
 
 
@@ -111,9 +143,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The indices computed by `rPACI` allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in scientific papers (@dramoslopez2011, @dramoslopez2013). An additional index, based in a naive Bayes classifier, was added and tested with a different database in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
+The indices computed by **rPACI** allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in scientific papers (@dramoslopez2011, @dramoslopez2013). An additional index, based in a naive Bayes classifier, was added and tested with a different database in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
 
-The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by `rPACI`. They can be split into two categories: primary and combined indices. The primary indices are: $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
+The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by **rPACI**. They can be split into two categories: primary and combined indices. The primary indices are: $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
 
 ## Data structure
 
@@ -230,15 +262,15 @@ where $\Phi$ stands for the cumulative distribution function of the standard nor
 
 ### NBI index 
 
-The compound index $NBI$ (from Naïve Bayes Index; see @castroluna2020) is a Bayesian classifier, more precisely, it is a Bayesian network with the naïve Bayes structure depicted below.
+The compound index $NBI$ (from Naïve Bayes Index), introduced in @castroluna2020, is a Bayesian classifier. More precisely, it is a Bayesian network with the naïve Bayes structure depicted below.
 
 ![](dag.png)
 
-This Bayesian network is a conditional linear Gaussian (CLG) network, with its root node ($KC$) being a discrete binary variable and the rest of the nodes being continuous. The parameters of the model (their conditional probability distributions) were reported in @castroluna2020. This model can be used for predicting whether a specific cornea (whose values of the primary indices are known) is a normal cornea or a keratoconic cornea. 
+This Bayesian network is a conditional linear Gaussian (CLG) network, with its root node ($KC$) being a discrete binary variable and the rest of the nodes (which are some of the primary indices introduced above) being continuous. The parameters of the model (their conditional probability distributions) were reported in @castroluna2020. This model can be used for predicting whether a specific cornea (whose values of the primary indices are known) is a normal cornea or a keratoconic cornea. 
 
-Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling \citep{Fung1990,Cheng2000, RamosLopez2018}. Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For more details, we refer the readers to @castroluna2020.
+Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling (@cheng2000). Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For a deeper explanation, we refer the readers to @castroluna2020.
 
-Thus, the posterior probability estimation can be computed efficiently with several approaches. In `rPACI`, we make use of the R package [**bnlearn**](https://cran.r-project.org/web/packages/bnlearn/index.html)  (@scutari2010 @scutari2019) includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the indices values of the bottom nodes.
+Thus, the posterior probability estimation can be computed efficiently with several approaches. In **rPACI**, we make use of the R package [**bnlearn**](https://cran.r-project.org/web/packages/bnlearn/index.html)  (@scutari2010), which includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the primary indices values of the bottom nodes.
 
 ## References
 
