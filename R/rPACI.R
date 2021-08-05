@@ -18,23 +18,23 @@
 readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, onlyCompleteRings = TRUE, NAvalues=c(-1,-1000)) {
   
   if (!file.exists(filepath)) {
-    stop("Error: The specified file does not exist or the path is invalid.")
+    stop("The specified file does not exist or the path is invalid.")
   }
   
   if (ringsToUse>ringsTotal) {
-    stop("Error: number of rings to use must be less or equan than the total number of rings.")  
+    stop("Number of rings to use must be less or equan than the total number of rings.")  
   }
   
   if (round(ringsTotal)!=ringsTotal || ringsTotal<=0) {
-    stop("Error: the total number of rings must be a positive integer")  
+    stop("The total number of rings must be a positive integer")  
   }  
   
   if (round(pointsPerRing)!=pointsPerRing || pointsPerRing<=0) {
-    stop("Error: the number of points per rings must be a positive integer")  
+    stop("The number of points per rings must be a positive integer")  
   }  
   
   if (round(ringsToUse)!=ringsToUse || ringsToUse<=0) {
-    stop("Error: the number of rings to use must be a positive integer")  
+    stop("The number of rings to use must be a positive integer")  
   }  
   
   # Open file and extract its lines
@@ -216,7 +216,7 @@ computePlacidoIndices <- function(datasetRings, truncateIndicesAt150 = TRUE, use
     radius = sqrt( sum(center**2)-coefficients[1] )
     
     if(radius<=0) {
-      stop("Error: Best-fit circle with negative radius")
+      stop("Best-fit circle with negative radius")
     }
     BC_radii[k,] = radius
     
@@ -500,7 +500,7 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
   on.exit(par(opar))
   
   if(!dir.exists(path)) {
-    stop("Error: The specified directory does not exist or is invalid.")
+    stop("The specified directory does not exist or is invalid.")
   }
   
   pattern = paste("\\.", fileExtension, "$", sep="")
