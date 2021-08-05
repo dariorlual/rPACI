@@ -126,8 +126,8 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #' @examples
 #' # EXAMPLE 1
 #' # Simulate the patient's measures over time
-#'  dataT1 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 10),
-#'  dataT2 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 45),
+#'  dataT1 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 10)
+#'  dataT2 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 45)
 #'  dataT3 = simulateData(rings = 12, maximumMireDisplacement = 0.2, mireDisplacementAngle = 50)
 #'  
 #' # Create a list containing the data
