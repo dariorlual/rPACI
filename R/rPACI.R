@@ -638,3 +638,114 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
   
   return(result)
 }
+
+
+#' Analysis of repeated measures of the same patient over time
+#' Analyze the evolution of a patient over time. This function returns the Placido irregularity indices per time step
+#' and two temporal plots.
+#'
+#' @param data Either 1) the path of a folder that contains corneal topography files, 
+#' as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data
+#' (loaded from a file using the function \link[rPACI]{readCornealTopography}, 
+#' simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).
+#' @param fileExtension If data is a path, specify the file extension of the corneal topography files 
+#' in the folder. It assumes all files with the given extension are corneal topography files.
+#' @details If the data are loaded from a folder, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
+#' Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
+#' Moreover, the folder should contain data measures of one patient only since the function 
+#' will read all the files (with the given extension) of the specified folder.
+#' On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of the dataset in the list.
+#' @import ggplot2
+#' @importFrom tidyr gather
+#' @importFrom ggpubr ggarrange
+#' @export
+#' @examples
+#' # EXAMPLE 1
+#' # Simulate the patient's measures over time
+#'  dataT1 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 10),
+#'  dataT2 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 45),
+#'  dataT3 = simulateData(rings = 12, maximumMireDisplacement = 0.2, mireDisplacementAngle = 50)
+#'  
+#' # Create a list containing the data
+#' data = list(
+#'  dataT1 = dataT1,
+#'  dataT2 = dataT2,
+#'  dataT3 = dataT3
+#' )
+#' 
+#' # Analyze the data over time
+#' analizeEvolution(data)
+#' 
+#' # EXAMPLE 2
+#' # Specify a folder path to analyze a patient's evolution over time
+#' analizeEvolution(system.file("extdata", package="rPACI"), fileExtension = 'txt')
+
+analizeEvolution <- function(data, fileExtension = NULL) {
+  
+  # check wheter 'data' is character path or list
+  if(is.character(data)){
+    # check if directory exists
+    if(!dir.exists(data)) {
+      stop("The specified directory does not exist or is invalid.")
+    }
+    if(is.null(fileExtension)){
+      stop("The 'fileExtension' argument must be specified.")
+    }
+    pattern = paste("\\.", fileExtension, "$", sep="")
+    fileList = list.files(data, pattern, full.names = T)
+    res = lapply(fileList, analyzeFile, drawplot = F)
+    
+  }else if(is.list(data)){
+    
+    if(all(sapply(data, checkDataset))){
+      fileList = data
+      res = lapply(fileList, analyzeDataset, drawplot = F)
+    }
+    
+  }
+  
+  
+  df = do.call("rbind", res)
+  
+  df$Time = factor(1:nrow(df))
+  
+  df_l = gather(df, 'var', 'value', 4:7)
+  p1 = ggplot()+
+    geom_boxplot(data = df_l, aes(x = Time, y = value, color = 'PI indices'))+
+    geom_point(data = df_l, aes(x = Time, y = GLPI, color = 'GLPI'))+
+    geom_line(data = df_l, aes(x = as.numeric(Time), y = GLPI, color = 'GLPI'))+
+    labs(y = '', color = '')+
+    theme_bw()+
+    scale_color_manual(values = c('PI indices'="black", "GLPI"="red"))+
+    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=0,ymax=30, fill = 'normal'))+
+    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
+    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
+    scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
+                      limits = c("normal", "suspected", "irregular"),
+                      labels=c("Normal","Suspected","Irregular"))+
+    guides(color = guide_legend(order = 1),
+           fill = guide_legend(order = 2)) 
+  
+  df_l2 = gather(df, 'var', 'value', 3:7)
+  
+  p2 = ggplot()+
+    geom_point(data = df_l2, aes(x = as.numeric(Time), y = value, color = var))+
+    geom_line(data = df_l2, aes(x = as.numeric(Time), y = value, color = var))+
+    labs(y = '', x = 'Time', color = '')+
+    theme_bw()+
+    scale_x_continuous(breaks = as.numeric(df$Time))+
+    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=0,ymax=30, fill = 'normal'), color = NA)+
+    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
+    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
+    scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
+                      limits = c("normal", "suspected", "irregular"),
+                      labels=c("Normal","Suspected","Irregular"))+
+    guides(color = guide_legend(order = 1),
+           fill = guide_legend(order = 2)) 
+  
+  
+  print(ggarrange(p1,p2))
+  
+  return(df)
+  
+}
