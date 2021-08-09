@@ -120,9 +120,9 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' Read a dataset in the format used by rPACI
 #'
 #' Read a corneal topography dataset from a file, assuming it has the format used in rPACI. This function
-#' is useful to read datasets that have been saved with \link[rPACI]{saveDataset} after they were simulated using
+#' is useful to read datasets that have been saved with \link[rPACI]{writeDataset} after they were simulated using
 #' \link[rPACI]{simulateData} or previously read using \link[rPACI]{readCornealTopography}. 
-#' This format consist of an optional header of any length (its size is automatically detected) and afterwards, 
+#' This format consists of an optional header of any length (its size is automatically detected) and afterwards, 
 #' three tab-separated columns (x and y coordinates of each point and its ring index) and a row per data point.
 #'  
 #' @param filepath A file path to a corneal topography dataset exported by a Placido disk corneal topographer.
@@ -132,7 +132,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #'   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
 #'   \code{ring index}  \tab\tab Number or index of the ring to which each point belongs\cr
 #' }
-#' The resulting \code{data.frame} may also include in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation (only if it was generated with \code{simulateData} and saved with \code{saveDataset}). 
+#' The resulting \code{data.frame} may also include in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation (only if it was generated with \code{simulateData} and saved with \code{writeDataset}). 
 #' @export
 #' @examples
 #' # A dataset that was read from a corneal topographer file was later saved in the rPACI format.
