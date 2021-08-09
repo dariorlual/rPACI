@@ -2,7 +2,7 @@
 #'
 #' The function \code{simulateData} permits to simulate a wide variety of datasets that appear in clinical 
 #' practice, as a result of measuring an individual eye with a Placido disk corneal topographer 
-#' (see vignette("topographersDataFormat.Rmd")).
+#' (see \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}).
 #'
 #' This function produces a dataset in the same format as the one read by \link[rPACI]{readCornealTopography}
 #' from a file, i.e., a list with three columns (x and y coordinates of each point and its ring index) and a
