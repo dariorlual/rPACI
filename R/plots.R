@@ -51,12 +51,13 @@ plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
 #' @importFrom ggplot2 ggplot aes geom_boxplot geom_point geom_line labs theme_bw scale_color_manual geom_rect scale_fill_manual guides guide_legend
 #' @importFrom tidyr gather
 #' @importFrom ggpubr ggarrange
+#' @importFrom rlang .data
 plotEvolution <- function(df){
   df_l = tidyr::gather(df, 'var', 'value', 4:7)
   p1 = ggplot2::ggplot()+
-    ggplot2::geom_boxplot(data = df_l, ggplot2::aes(x = Time, y = value, color = 'PI indices'))+
-    ggplot2::geom_point(data = df_l, ggplot2::aes(x = Time, y = GLPI, color = 'GLPI'))+
-    ggplot2::geom_line(data = df_l, ggplot2::aes(x = as.numeric(Time), y = GLPI, color = 'GLPI'))+
+    ggplot2::geom_boxplot(data = df_l, ggplot2::aes(x = .data$Time, y = value, color = 'PI indices'))+
+    ggplot2::geom_point(data = df_l, ggplot2::aes(x = .data$Time, y = .data$GLPI, color = 'GLPI'))+
+    ggplot2::geom_line(data = df_l, ggplot2::aes(x = as.numeric(.data$Time), y = .data$GLPI, color = 'GLPI'))+
     ggplot2::labs(y = '', color = '')+
     ggplot2::theme_bw()+
     ggplot2::scale_color_manual(values = c('PI indices'="black", "GLPI"="red"))+
@@ -72,8 +73,8 @@ plotEvolution <- function(df){
   df_l2 = tidyr::gather(df, 'var', 'value', 3:7)
   
   p2 = ggplot2::ggplot()+
-    ggplot2::geom_point(data = df_l2, ggplot2::aes(x = as.numeric(Time), y = value, color = var))+
-    ggplot2::geom_line(data = df_l2, ggplot2::aes(x = as.numeric(Time), y = value, color = var))+
+    ggplot2::geom_point(data = df_l2, ggplot2::aes(x = as.numeric(.data$Time), y = value, color = .data$var))+
+    ggplot2::geom_line(data = df_l2, ggplot2::aes(x = as.numeric(.data$Time), y = value, color = .data$var))+
     ggplot2::labs(y = '', x = 'Time', color = '')+
     ggplot2::theme_bw()+
     ggplot2::scale_x_continuous(breaks = as.numeric(df$Time))+
