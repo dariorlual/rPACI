@@ -119,9 +119,6 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #' Moreover, the folder should contain data measures of one patient only since the function 
 #' will read all the files (with the given extension) of the specified folder.
 #' On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of the dataset in the list.
-#' @import ggplot2
-#' @importFrom tidyr gather
-#' @importFrom ggpubr ggarrange
 #' @export
 #' @examples
 #' # EXAMPLE 1
