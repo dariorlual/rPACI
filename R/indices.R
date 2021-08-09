@@ -1,16 +1,49 @@
-#' Compute the Placido irregularity indices of an eye
+#' Compute the Placido irregularity indices of a corneal dataset
 #'
-#' This function calculates the individual Placido indices of corneal irregularity PI_1, PI_2, PI_3, SL,
-#' AR_1, AR_2, AR_3, AR_4, AR_5, the global index GLPI, and the Naive Bayes Index (NBI) (see references). It requires a dataset in
-#' the format given by the function \link[rPACI]{readCornealTopography}. The results include the values
-#' of the indices plus a diagnose, which is either "Irregular cornea", "Suspect cornea"
-#' or "Normal cornea", depending on the value of the global index GLPI.
+#' This function computes a set of indices or metrics from a dataset which contains points measured from the cornea,
+#' and which is usually read from a corneal topographer file. 
+#' These indices allow to discriminate between normal and irregular corneas. They were introduced and 
+#' validated with real datasets in 3 scientific papers (see the references below). In these papers,
+#' all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
+#' See \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}
+#' for more details about corneal topography and keratoconus.
+#'  
+#' The Placido irregularity indices can be computed from a \code{data.frame} in the format given by the functions
+#' \link[rPACI]{readCornealTopography}, \link[rPACI]{readDataset} or \link[rPACI]{simulateData}.
+#' 
+#' The indices can be split into two categories: primary and combined indices. The primary indices are: 
+#' $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical
+#' properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ 
+#' (a generalized linear model) and $NBI$ (naive Bayes index).
+#' 
+#' For more information on the indices and their precise mathematical definitions, see 
+#' \href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the papers
+#' in the references below.
+#' 
+#' The results include the values of the indices plus a diagnose, which is either "Irregular cornea", 
+#' "Suspect cornea" or "Normal cornea", depending on the value of the global index GLPI.
 #'
-#' @references Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2019). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
-#' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
+#' @references Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2020). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
+#' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with Placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
 #' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Pinero, D., & Alio', J. L. (2011). Placido-based indices of corneal irregularity. Optometry and Vision Science, 88(10), 1220-1231.
-#' @param datasetRings A dataset containing data of a corneal topography, as read by \link[rPACI]{readCornealTopography}.
-#' @return A dataset containg the aforementioned irregularity indices as well as the diagnose.
+#' @param datasetRings A dataset containing data points of a corneal topography, as given by \link[rPACI]{readCornealTopography} or \link[rPACI]{simulateData}.
+#' @param truncateIndicesAt150 A boolean value (by default \code{TRUE}) indicating whether the primary indices should be truncated at 150 (so they are in the range 0-150) or not.
+#' @param useMaxRings A positive integer value (by default 15) to choose the maximum number of innermost rings to use (as long as there are enough).
+#' @return A \code{data.frame} containing the aforementioned irregularity indices as well as the diagnose, with columns:
+#' \tabular{lll}{
+#'   \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
+#'   \code{NBI}   \tab\tab The value of NBI index (in the range 0-100).\cr
+#'   \code{GLPI}  \tab\tab The value of GLPI index (in the range 0-100).\cr
+#'   \code{PI_1}  \tab\tab The value of PI_1 index (usually in the range 0-150).\cr   
+#'   \code{PI_2}  \tab\tab The value of PI_2 index (usually in the range 0-150).\cr   
+#'   \code{PI_3}  \tab\tab The value of PI_3 index (usually in the range 0-150).\cr   
+#'   \code{SL}  \tab\tab The value of SL index (usually in the range 0-150).\cr   
+#'   \code{AR_1}  \tab\tab The value of AR_1 index (usually in the range 0-150).\cr
+#'   \code{AR_2}  \tab\tab The value of AR_2 index (usually in the range 0-150).\cr   
+#'   \code{AR_3}  \tab\tab The value of AR_3 index (usually in the range 0-150).\cr   
+#'   \code{AR_4}  \tab\tab The value of AR_4 index (usually in the range 0-150).\cr   
+#'   \code{AR_5}  \tab\tab The value of AR_5 index (usually in the range 0-150).\cr      
+#' }
 #' @importFrom bnlearn cpdist
 #' @importFrom stats lm pnorm sd
 #' @export
