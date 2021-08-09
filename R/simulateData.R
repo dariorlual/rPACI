@@ -1,7 +1,21 @@
+#' Simulate data measured from a Placido disk corneal topographer
+#'
+#' Read corneal topography files as exported by Placido disk corneal topographer.
+#' A corneal topographer is an ophthalmic clinical device that obtains measurements
+#' in the cornea (the anterior part of the eye). A Placido disk corneal topographer
+#' makes use of the Placido disk (see references), which produce a circular pattern of
+#' measurement nodes.
+#' This function assumes a file structure of 24 rings * 256 angles per ring,
+#' which is the typical distribution of commercial Placido disk topographers.
+#' @references Rowsey, J. J., Reynolds, A. E., & Brown, R. (1981). Corneal topography: corneascope. Archives of Ophthalmology, 99(6), 1093-1100
+#' @references Rand, R. H., Howland, H. C., & Applegate, R. A. (1997). Keratometer and Its Implications for Recovery of Corneal Topography. Optometry and vision science, 74(11).
+#' @param filepath A file path to a corneal topography file exported by a Placido disk corneal topographer.
 #' @todo Add a seed for repeatability, make some periphery data missing at random
 simulateData <- function(rings = 15, pointsPerRing = 256, diameter = 12, ringRadiiPerturbation = 0, 
                          maximumMireDisplacement = 0, mireDisplacementAngle = 0, mireDisplacementNoise = 0,
-                         ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0) {
+                         ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0, seed = 0) {
+  
+  set.seed(seed)
   
   dataPoints = pointsPerRing * rings
   
@@ -41,7 +55,7 @@ simulateData <- function(rings = 15, pointsPerRing = 256, diameter = 12, ringRad
   
   attr(result, 'Parameters') = list(rings = rings, pointsPerRing = pointsPerRing, diameter = diameter, ringRadiiPerturbation = ringRadiiPerturbation, 
                                     maximumMireDisplacement = maximumMireDisplacement, mireDisplacementAngle = mireDisplacementAngle, mireDisplacementNoise = mireDisplacementNoise,
-                                    ellipticAxesRatio = ellipticAxesRatio, ellipticRotation = ellipticRotation, overallNoise = overallNoise)
+                                    ellipticAxesRatio = ellipticAxesRatio, ellipticRotation = ellipticRotation, overallNoise = overallNoise, seed = seed)
   return(result)
   
 }
