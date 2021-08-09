@@ -133,7 +133,6 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #'   \code{ring index}  \tab\tab Number or index of the ring to which each point belongs\cr
 #' }
 #' The resulting \code{data.frame} may also include in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation (only if it was generated with \code{simulateData} and saved with \code{saveDataset}). 
-
 #' @export
 #' @examples
 #' A dataset that was read from a corneal topographer file was later saved in the rPACI format. It can be read with:
