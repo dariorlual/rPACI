@@ -15,7 +15,13 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(rPACI)
+  library(rPACI)
+  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  source("simulateData.R")
+  source("indices.R")
+  source("plots.R")
+  source("readData.R")
+  source("wrapperFunctions.R")
 ```
 
 The function `simulateData` permits to simulate a wide variety of datasets that appear in clinical practice, as a result of measuring an individual eye with a Placido-disk corneal topographer. 
@@ -30,8 +36,7 @@ If the function is used with default parameters, the dataset simulated consists 
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+
 ```
 ```{r, eval=FALSE}
   dataset = simulateData()
@@ -51,7 +56,7 @@ Through the parameters `rings` and `pointsPerRing`, the number of rings or mires
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(rings = 15, pointsPerRing = 128, diameter = 8)
@@ -71,7 +76,7 @@ The function allows to change the distribution of circles radii by using the par
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(rings = 15, ringRadiiPerturbation = 0.7)
@@ -91,7 +96,7 @@ In a real measurement, the centers of the mires are not the same, they are off-c
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(rings = 12, maximumMireDisplacement = 2, mireDisplacementAngle = 45)
@@ -107,14 +112,14 @@ In the previous example, the drift magnitude between consecutive rings is consta
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
-  dataset = simulateData(rings = 12, maximumMireDisplacement = 2, mireDisplacementAngle = 45, mireDisplacementNoise = 1.2)
+  dataset = simulateData(rings = 12, maximumMireDisplacement = 2, mireDisplacementAngle = 45, mireDisplacementPerturbation = 1.2)
   plot(dataset$x,dataset$y)
 ```
 ```{r, echo=FALSE}
-  dataset = simulateData(rings = 12, maximumMireDisplacement = 2, mireDisplacementAngle = 45, mireDisplacementNoise = 1.2)
+  dataset = simulateData(rings = 12, maximumMireDisplacement = 2, mireDisplacementAngle = 45, mireDisplacementPerturbation = 1.2)
   par(mar=c(1.5,1.6,.1,.1), mgp=c(0,0.5,0))
   plot(dataset$x,dataset$y,pch=20,cex=0.3,cex.axis=0.5,asp=1, xlab="", ylab="") 
 ```
@@ -129,7 +134,7 @@ Another common measurement pattern is one consisting of elliptic, or nearly elli
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(ellipticAxesRatio = 0.8, ellipticRotation = 30)
@@ -148,7 +153,7 @@ The function `simulateData` also permits to introduce random, white noise of a c
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(overallNoise = 0.2)
@@ -168,14 +173,14 @@ Finally, we present an example where most of the previous transformations or per
 
 ```{r, echo=FALSE, warning=FALSE}
   setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("rPACI.R")
+  # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
-  dataset = simulateData(maximumMireDisplacement = 1.5, mireDisplacementAngle = 135, ringRadiiPerturbation = 1, mireDisplacementNoise = 0.8, ellipticAxesRatio = 0.8, ellipticRotation = 30)
+  dataset = simulateData(maximumMireDisplacement = 1.5, mireDisplacementAngle = 135, ringRadiiPerturbation = 1, mireDisplacementPerturbation = 0.8, ellipticAxesRatio = 0.8, ellipticRotation = 30)
   plot(dataset$x,dataset$y)
 ```
 ```{r, echo=FALSE}
-  dataset = simulateData(maximumMireDisplacement = 1.5, mireDisplacementAngle = 135, ringRadiiPerturbation = 1, mireDisplacementNoise = 0.8, ellipticAxesRatio = 0.8, ellipticRotation = 30)
+  dataset = simulateData(maximumMireDisplacement = 1.5, mireDisplacementAngle = 135, ringRadiiPerturbation = 1, mireDisplacementPerturbation = 0.8, ellipticAxesRatio = 0.8, ellipticRotation = 30)
   par(mar=c(1.5,1.6,.1,.1), mgp=c(0,0.5,0))
   plot(dataset$x,dataset$y,pch=20,cex=0.3,cex.axis=0.5,asp=1, xlab="", ylab="") 
 ```
