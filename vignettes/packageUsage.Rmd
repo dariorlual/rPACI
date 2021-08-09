@@ -101,7 +101,7 @@ The **rPACI** package is developed to facilitate the calculation and interpretat
 To install and load the package and its dependencies, open an R session and write the following code:
 
 ```{r, eval = F}
-install.packages("rPACI", dependencies = T)
+install.packages("rPACI", dependencies = TRUE)
 library("rPACI")
 ```
 ```{r, echo = F, warning = F, message=F}
