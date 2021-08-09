@@ -140,7 +140,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' 
 #  Another dataset (simulated and saved in the rPACI format) can be read with: 
 #' dataset2 = readDataset(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
-readDataset <- function(filepath) {
+readDataset <- function(filepath, sep = ",") {
   
   if (!file.exists(filepath)) {
     stop("The specified file does not exist or the path is invalid.")
@@ -180,15 +180,18 @@ readDataset <- function(filepath) {
     numeric_lines = file_lines[-c(1:linesToDrop)]
   }
   
-  res = sapply(numeric_lines, strsplit, split = ",")
+  res = sapply(numeric_lines, strsplit, split = sep, USE.NAMES = F)
   res2  = lapply(res, as.numeric)
   result = as.data.frame(do.call("rbind", res2))
-  row.names(result) = NULL
+
   
   if (!checkDataset(result)) {
     stop("The dataset could not be read properly. Please revise its format.")
   }
   colnames(result) = c("x","y","ring index")
+  
+  #******** parameters as attributes *********
+  header = numeric_lines = file_lines[c(1:linesToDrop)]
   
   return(result)
 }
