@@ -8,14 +8,14 @@
 #' See \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}
 #' for more details about corneal topography and keratoconus.
 #'  
-#' The Placido irregularity indices can be computed from a \code{data.frame} in the format given by the functions
+#' The indices can be computed from a \code{data.frame} in the format given by the functions
 #' \link[rPACI]{readCornealTopography}, \link[rPACI]{readDataset} or \link[rPACI]{simulateData}.
 #' 
-#' The indices can be split into two categories: primary and combined indices. The primary indices are: 
-#' $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical
-#' properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ 
-#' (a generalized linear model) and $NBI$ (naive Bayes index).
-#' 
+#' The Placido irregularity indices can be split into two categories: primary and combined indices. 
+#' The primary indices are: 
+#' $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain 
+#' geometrical properties of the data distribution. Based on them, other combined indices are 
+#' computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
 #' For more information on the indices and their precise mathematical definitions, see 
 #' \href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the papers
 #' in the references below.
