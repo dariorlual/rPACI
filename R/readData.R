@@ -106,7 +106,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   
   # Build the 'result' dataframe with the selected data
   lastDataIndex = (pointsPerRing*ringsActual)
-  result=data.frame(matrix(NA, nrow = lastDataIndex, ncol = 0))
+  result = data.frame(matrix(NA, nrow = lastDataIndex, ncol = 0))
   result["x"] = radii[1:lastDataIndex] * cos(angles[1:lastDataIndex])
   result["y"] = radii[1:lastDataIndex] * sin(angles[1:lastDataIndex])
   result["ring index"] = kronecker(1:ringsActual,rep(1,pointsPerRing))
@@ -181,7 +181,7 @@ readDataset <- function(filepath) {
     numeric_lines = file_lines[-c(1:linesToDrop)]
   }
   
-  res  =sapply(numeric_lines, strsplit, split = ",")
+  res = sapply(numeric_lines, strsplit, split = ",")
   res2  = lapply(res, as.numeric)
   result = as.data.frame(do.call("rbind", res2))
   row.names(result) = NULL
