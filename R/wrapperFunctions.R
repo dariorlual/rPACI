@@ -138,13 +138,13 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #' )
 #' 
 #' # Analyze the data over time
-#' analizeEvolution(data)
+#' analyzeEvolution(data)
 #' 
 #' # EXAMPLE 2
 #' # Specify a folder path to analyze a patient's evolution over time
-#' analizeEvolution(system.file("extdata", package="rPACI"), fileExtension = 'txt')
+#' analyzeEvolution(system.file("extdata", package="rPACI"), fileExtension = 'txt')
 
-analizeEvolution <- function(data, fileExtension = NULL) {
+analyzeEvolution <- function(data, fileExtension = NULL) {
   
   # check wheter 'data' is character path or list
   if(is.character(data)){
