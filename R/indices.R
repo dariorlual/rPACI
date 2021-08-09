@@ -29,7 +29,7 @@
 #' @param datasetRings A dataset containing data points of a corneal topography, as given by \link[rPACI]{readCornealTopography} or \link[rPACI]{simulateData}.
 #' @param truncateIndicesAt150 A boolean value (by default \code{TRUE}) indicating whether the primary indices should be truncated at 150 (so they are in the range 0-150) or not.
 #' @param useMaxRings A positive integer value (by default 15) to choose the maximum number of innermost rings to use (as long as there are enough).
-#' @return A \code{data.frame} containing the aforementioned irregularity indices as well as the diagnose, with columns:
+#' @return A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with columns:
 #' \tabular{lll}{
 #'   \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
 #'   \code{NBI}   \tab\tab The value of NBI index (in the range 0-100).\cr
