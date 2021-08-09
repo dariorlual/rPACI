@@ -137,10 +137,10 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' @export
 #' @examples
 #' A dataset that was read from a corneal topographer file was later saved in the rPACI format. It can be read with:
-#' dataset1 = readDataset(system.file("extdata","ds1.txt", package="rPACI"))
+#' dataset1 = readDataset(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
 #' 
 #  Another dataset (simulated and saved in the rPACI format) can be read with: 
-#' dataset2 = readDataset(system.file("extdata","ds2.txt", package="rPACI"))
+#' dataset2 = readDataset(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
 readDataset <- function(filepath) {
   
   if (!file.exists(filepath)) {
