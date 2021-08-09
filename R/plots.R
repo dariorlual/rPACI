@@ -48,44 +48,44 @@ plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
 
 
 #' Plot indices over time
-#' @import ggplot2
+#' @importFrom ggplot2 ggplot aes geom_boxplot geom_point geom_line labs theme_bw scale_color_manual geom_rect scale_fill_manual guides guide_legend
 #' @importFrom tidyr gather
 #' @importFrom ggpubr ggarrange
 plotEvolution <- function(df){
-  df_l = gather(df, 'var', 'value', 4:7)
-  p1 = ggplot()+
-    geom_boxplot(data = df_l, aes(x = Time, y = value, color = 'PI indices'))+
-    geom_point(data = df_l, aes(x = Time, y = GLPI, color = 'GLPI'))+
-    geom_line(data = df_l, aes(x = as.numeric(Time), y = GLPI, color = 'GLPI'))+
-    labs(y = '', color = '')+
-    theme_bw()+
-    scale_color_manual(values = c('PI indices'="black", "GLPI"="red"))+
-    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=0,ymax=30, fill = 'normal'))+
-    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
-    geom_rect(aes(xmin=0,xmax=nrow(df)+1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
-    scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
+  df_l = tidyr::gather(df, 'var', 'value', 4:7)
+  p1 = ggplot2::ggplot()+
+    ggplot2::geom_boxplot(data = df_l, ggplot2::aes(x = Time, y = value, color = 'PI indices'))+
+    ggplot2::geom_point(data = df_l, ggplot2::aes(x = Time, y = GLPI, color = 'GLPI'))+
+    ggplot2::geom_line(data = df_l, ggplot2::aes(x = as.numeric(Time), y = GLPI, color = 'GLPI'))+
+    ggplot2::labs(y = '', color = '')+
+    ggplot2::theme_bw()+
+    ggplot2::scale_color_manual(values = c('PI indices'="black", "GLPI"="red"))+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0,xmax=nrow(df)+1,ymin=0,ymax=30, fill = 'normal'))+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0,xmax=nrow(df)+1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0,xmax=nrow(df)+1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
+    ggplot2::scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
                       limits = c("normal", "suspected", "irregular"),
                       labels=c("Normal","Suspected","Irregular"))+
-    guides(color = guide_legend(order = 1),
-           fill = guide_legend(order = 2)) 
+    ggplot2::guides(color = ggplot2::guide_legend(order = 1),
+           fill = ggplot2::guide_legend(order = 2)) 
   
-  df_l2 = gather(df, 'var', 'value', 3:7)
+  df_l2 = tidyr::gather(df, 'var', 'value', 3:7)
   
-  p2 = ggplot()+
-    geom_point(data = df_l2, aes(x = as.numeric(Time), y = value, color = var))+
-    geom_line(data = df_l2, aes(x = as.numeric(Time), y = value, color = var))+
-    labs(y = '', x = 'Time', color = '')+
-    theme_bw()+
-    scale_x_continuous(breaks = as.numeric(df$Time))+
-    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=0,ymax=30, fill = 'normal'), color = NA)+
-    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
-    geom_rect(aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
-    scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
+  p2 = ggplot2::ggplot()+
+    ggplot2::geom_point(data = df_l2, ggplot2::aes(x = as.numeric(Time), y = value, color = var))+
+    ggplot2::geom_line(data = df_l2, ggplot2::aes(x = as.numeric(Time), y = value, color = var))+
+    ggplot2::labs(y = '', x = 'Time', color = '')+
+    ggplot2::theme_bw()+
+    ggplot2::scale_x_continuous(breaks = as.numeric(df$Time))+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=0,ymax=30, fill = 'normal'), color = NA)+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=30,ymax=70, fill = 'suspected'), color = NA)+
+    ggplot2::geom_rect(ggplot2::aes(xmin=0.9,xmax=nrow(df)+0.1,ymin=70,ymax=max(150, df_l2$value), fill = "irregular"), color = NA)+
+    ggplot2::scale_fill_manual(name="Diagnosis", values = c("normal"=rgb(0,1,0,alpha=0.15), "suspected"=rgb(1,0.5,0,alpha=0.18), 'irregular' = rgb(1,0,0,alpha=0.15)),
                       limits = c("normal", "suspected", "irregular"),
                       labels=c("Normal","Suspected","Irregular"))+
-    guides(color = guide_legend(order = 1),
-           fill = guide_legend(order = 2)) 
+    ggplot2::guides(color = ggplot2::guide_legend(order = 1),
+           fill = ggplot2::guide_legend(order = 2)) 
   
   
-  return(ggarrange(p1,p2))
+  return(ggpubr::ggarrange(p1,p2))
 }
