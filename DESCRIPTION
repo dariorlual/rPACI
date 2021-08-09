@@ -29,7 +29,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
-Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr
+Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr, rlang
 RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2020-07-01 20:07:13 UTC; Usuario

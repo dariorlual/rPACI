@@ -6,8 +6,7 @@
 #'
 #' See vignette("simulating.Rmd") for additional details. The examples included there show different ways of using \code{simulateData}, by adding different transformations or perturbations to the basic circular pattern. Some of the obtained patterns can correlate with certain clinical conditions, such as keratoconus, comma, or others.
 #' 
-#' The simulated dataset can be later used according to the package workflow explained in the
-#' \code{vignette("packageUsage", package = "rPACI")} and \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}} vignette [Workflow of the rPACI package](../doc/packageUsage.html).
+#' The simulated dataset can be later used according to the package workflow explained in the \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}} vignette [Workflow of the rPACI package](../doc/packageUsage.html).
 #' 
 #' @param rings The total number of rings of mires in the sample (typically in the range 18-30, around 24).
 #' @param pointsPerRing The number of points to be sampled in each ring (typically 256 or 360).
@@ -27,6 +26,7 @@
 #'   \code{ring index}  \tab\tab Number or index of the ring from which each point is sampled\cr
 #' }
 #' The resulting \code{data.frame} also includes in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation. 
+#' @importFrom stats rnorm
 #' @export
 #' @examples
 #' # Simulating with default parameters

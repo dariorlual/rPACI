@@ -115,7 +115,8 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   return(result)
 }
 
-
+# Check that a dataset fits the format required by rPACI
+#' @importFrom stats aggregate
 checkDataset <- function(dataset){
   # check if the number of columns equals 3
   if(ncol(dataset) != 3){
@@ -139,5 +140,5 @@ checkDataset <- function(dataset){
     stop('All the rings must contain the same number of data points.')
   }
   
-  return(T)
+  return(TRUE)
 }
