@@ -88,14 +88,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-```{r, echo = F, warning = F}
-source('../R/simulateData.R')
-source('../R/wrapperFunctions.R')
-source('../R/plots.R')
-source('../R/indices.R')
-source('../R/readData.R')
-load("../R/sysdata.rda")
-```
 
 ```{r, echo = F, warning = F}
 library(tidyr)
