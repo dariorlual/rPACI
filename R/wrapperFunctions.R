@@ -1,11 +1,40 @@
-#' Analysis of a single corneal topography files
+#' Analysis of a single corneal topography file
 #'
-#' Analyze a corneal topography file. This function combines the three operations of functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
+#' Analyze a corneal topography file. This function combines together the three operations performed
+#' by the functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices},
+#' and \link[rPACI]{plotSingleCornea}.
+#' The result is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+#'  
+#' More details about supported file formats can be found in 
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+#' 
 #' @param path A corneal topography file, as exported by a Placido disk corneal topographer.
-#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not.
+#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not (by default, TRUE).
+#' @return A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with a single row and columns:
+#' \tabular{lll}{
+#'   \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
+#'   \code{NBI}   \tab\tab The value of NBI index (in the range 0-100).\cr
+#'   \code{GLPI}  \tab\tab The value of GLPI index (in the range 0-100).\cr
+#'   \code{PI_1}  \tab\tab The value of PI_1 index (usually in the range 0-150).\cr   
+#'   \code{PI_2}  \tab\tab The value of PI_2 index (usually in the range 0-150).\cr   
+#'   \code{PI_3}  \tab\tab The value of PI_3 index (usually in the range 0-150).\cr   
+#'   \code{SL}  \tab\tab The value of SL index (usually in the range 0-150).\cr   
+#'   \code{AR_1}  \tab\tab The value of AR_1 index (usually in the range 0-150).\cr
+#'   \code{AR_2}  \tab\tab The value of AR_2 index (usually in the range 0-150).\cr   
+#'   \code{AR_3}  \tab\tab The value of AR_3 index (usually in the range 0-150).\cr   
+#'   \code{AR_4}  \tab\tab The value of AR_4 index (usually in the range 0-150).\cr   
+#'   \code{AR_5}  \tab\tab The value of AR_5 index (usually in the range 0-150).\cr      
+#' } 
 #' @export
 #' @examples
-#' analyzeFile(system.file("extdata","N01.txt", package="rPACI"))
+#' # Read the file, compute the indices and show results in one step with:
+#' results = analyzeFile(system.file("extdata","N01.txt", package="rPACI"))
+#' 
+#' # The previous command is equivalent to:
+#' dataset = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
+#' results = computePlacidoIndices(dataset)
+#' # If drawplot=TRUE, then it also performs:
+#' plotSingleCornea(dataset, results)
 analyzeFile <- function(path, drawplot=TRUE) {
   
   data = readCornealTopography(path)
@@ -19,19 +48,41 @@ analyzeFile <- function(path, drawplot=TRUE) {
   return(result)
 }
 
-#' Analysis several corneal topography files in a common folder.
+#' Analysis of all corneal topography files in a folder
 #'
-#' Analyze all corneal topography files in a specific folder. It is equivalent to use \link[rPACI]{analyzeFile} for each file in the folder.
-#' It assumes all files with the given extension ('.txt' by defualt) are corneal topography files.
-#'
+#' This function analyze all corneal topography files that are stored in a common folder. It is 
+#' equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results. 
+#' 
+#' It assumes all files in the folder that have the given extension ('.txt' by default) are corneal topography files.
+#' The result, for each file, is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+#' 
+#' More details about supported file formats can be found in 
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+#' 
 #' @param path The path of a folder which contains corneal topography files, as exported by Placido disks corneal topographers.
 #' @param fileExtension The file extension of the corneal topography files in the folder ('.txt' by default).
-#' @param individualPlots An optional logical parameter indicating whether the plot for each file should be displayed or not.
-#' @param summaryPlot An optional logical parameter indicating whether a summary plot should be displayed or not.
+#' @param individualPlots An optional logical parameter (by default, FALSE) indicating whether the plot for each file should be displayed or not.
+#' @param summaryPlot An optional logical parameter (by default, FALSE) indicating whether a summary plot should be displayed or not.
 #' @importFrom graphics barplot boxplot par plot rect text
 #' @importFrom grDevices rgb
+#' @return A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with as many rows as data files in the folder, and columns:
+#' \tabular{lll}{
+#'   \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
+#'   \code{NBI}   \tab\tab The value of NBI index (in the range 0-100).\cr
+#'   \code{GLPI}  \tab\tab The value of GLPI index (in the range 0-100).\cr
+#'   \code{PI_1}  \tab\tab The value of PI_1 index (usually in the range 0-150).\cr   
+#'   \code{PI_2}  \tab\tab The value of PI_2 index (usually in the range 0-150).\cr   
+#'   \code{PI_3}  \tab\tab The value of PI_3 index (usually in the range 0-150).\cr   
+#'   \code{SL}  \tab\tab The value of SL index (usually in the range 0-150).\cr   
+#'   \code{AR_1}  \tab\tab The value of AR_1 index (usually in the range 0-150).\cr
+#'   \code{AR_2}  \tab\tab The value of AR_2 index (usually in the range 0-150).\cr   
+#'   \code{AR_3}  \tab\tab The value of AR_3 index (usually in the range 0-150).\cr   
+#'   \code{AR_4}  \tab\tab The value of AR_4 index (usually in the range 0-150).\cr   
+#'   \code{AR_5}  \tab\tab The value of AR_5 index (usually in the range 0-150).\cr      
+#' } 
 #' @export
 #' @examples
+#' # This analyzes together all the corneal topography example files included in rPACI:
 #' analyzeFolder(system.file("extdata",package="rPACI"))
 analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, summaryPlot = FALSE) {
   opar <- par(no.readonly =TRUE)
@@ -73,7 +124,6 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
   ordered_results <- res[order(res$GLPI, decreasing = T),]
   
   return(ordered_results)
-  
   
 }
 
