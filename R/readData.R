@@ -115,6 +115,88 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
   return(result)
 }
 
+
+
+#' Read a dataset in the format used by rPACI
+#'
+#' Read a corneal topography dataset from a file, assuming it has the format used in rPACI. This function
+#' is useful to read datasets that have been saved with \link[rPACI]{saveDataset} after they were simulated using
+#' \link[rPACI]{simulateData} or previously read using \link[rPACI]{readCornealTopography}. 
+#' This format consist of an optional header of any length (its size is automatically detected) and afterwards, 
+#' three tab-separated columns (x and y coordinates of each point and its ring index) and a row per data point.
+#'  
+#' @param filepath A file path to a corneal topography dataset exported by a Placido disk corneal topographer.
+#' @return A \code{data.frame} containing the corneal topography points, with columns:
+#' \tabular{lll}{
+#'   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr
+#'   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
+#'   \code{ring index}  \tab\tab Number or index of the ring to which each point belongs\cr
+#' }
+#' The resulting \code{data.frame} may also include in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation (only if it was generated with \code{simulateData} and saved with \code{saveDataset}). 
+
+#' @export
+#' @examples
+#' A dataset that was read from a corneal topographer file was later saved in the rPACI format. It can be read with:
+#' dataset1 = readDataset(system.file("extdata","ds1.txt", package="rPACI"))
+#' 
+#  Another dataset (simulated and saved in the rPACI format) can be read with: 
+#' dataset2 = readDataset(system.file("extdata","ds2.txt", package="rPACI"))
+readDataset <- function(filepath) {
+  
+  if (!file.exists(filepath)) {
+    stop("The specified file does not exist or the path is invalid.")
+  }
+  
+  # Open file and extract its lines
+  connection=file(filepath,open="r")
+  close(connection)
+  connection=file(filepath,open="r")
+  file_lines=readLines(connection, warn=FALSE)
+  close(connection)
+  
+  
+  # Identify and discard the file header (lines at the beginning of the file
+  # that are not convertible to vectors)
+  linesToDrop = 0
+  headerEnd = FALSE
+  j = 1
+  while(linesToDrop < length(file_lines) && headerEnd == FALSE) {
+    lineNumeric = suppressWarnings(as.numeric(strsplit(file_lines[j], split=",")[[1]]))
+    if (any(is.na(lineNumeric)) || !is.numeric(lineNumeric) || length(lineNumeric)!=3) {
+      linesToDrop = linesToDrop+1
+    }
+    else {
+      headerEnd = TRUE
+    }
+    j=j+1
+  }
+  
+  if (linesToDrop = length(file_lines)) {
+    stop("The dataset could not be read properly. Please revise its format.")
+  }  
+  
+  # Save separately the lines that are convertible to numbers
+  numeric_lines = file_lines
+  if (linesToDrop>0) {
+    numeric_lines = file_lines[-c(1:linesToDrop)]
+  }
+  
+  result = do.call("strsplit", args = list(as.list(numeric_lines),split=","))
+  res  =sapply(numeric_lines, strsplit, split = ",")
+  res2  =lapply(res, as.numeric)
+  result = as.data.frame(do.call("rbind", res2))
+  row.names(result) = NULL
+  
+  if (!checkDataset(result)) {
+    stop("The dataset could not be read properly. Please revise its format.")
+  }
+  colnames(result) = c("x","y","ring index")
+  
+  return(result)
+}
+
+
+
 # Check that a dataset fits the format required by rPACI
 #' @importFrom stats aggregate
 checkDataset <- function(dataset){
