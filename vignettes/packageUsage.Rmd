@@ -206,7 +206,7 @@ data = list(
 )
 
 # Analyze the data over time
-analizeEvolution(data)
+analyzeEvolution(data)
 ````
 This function returns a `data.frame` containing 13 columns and as many rows as files analyzed. The first 12 columns correspond to the diagnosis and the indices, as in the object returned by `computePlacidoIndices()`. The last column corresponds to the time step at which the measures were taken. 
 Moreover, two temporal plots are returned. The left-hand side plot shows the $GLPI$ index, represented by a red line, and the boxplots of the primary indices $PI_1$, $PI_2$, $PI_3$ and $SL$ over time. The right-hand side plot shows the times series of these five indices, $GLPI$, $PI_1$, $PI_2$, $PI_3$ and $SL$, individually. Finally, both plots present a colored background, corresponding with the final diagnosis of the patient. 
