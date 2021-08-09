@@ -58,8 +58,7 @@ This function produces a dataset in the same format as the one read by \link[rPA
 
 See vignette("simulating.Rmd") for additional details. The examples included there show different ways of using \code{simulateData}, by adding different transformations or perturbations to the basic circular pattern. Some of the obtained patterns can correlate with certain clinical conditions, such as keratoconus, comma, or others.
 
-The simulated dataset can be later used according to the package workflow explained in the
-\code{vignette("packageUsage", package = "rPACI")} and \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}} vignette [Workflow of the rPACI package](../doc/packageUsage.html).
+The simulated dataset can be later used according to the package workflow explained in the \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}} vignette [Workflow of the rPACI package](../doc/packageUsage.html).
 }
 \examples{
 # Simulating with default parameters
