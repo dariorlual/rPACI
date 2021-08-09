@@ -171,7 +171,7 @@ readDataset <- function(filepath) {
     j=j+1
   }
   
-  if (linesToDrop = length(file_lines)) {
+  if (linesToDrop == length(file_lines)) {
     stop("The dataset could not be read properly. Please revise its format.")
   }  
   
@@ -181,9 +181,8 @@ readDataset <- function(filepath) {
     numeric_lines = file_lines[-c(1:linesToDrop)]
   }
   
-  result = do.call("strsplit", args = list(as.list(numeric_lines),split=","))
   res  =sapply(numeric_lines, strsplit, split = ",")
-  res2  =lapply(res, as.numeric)
+  res2  = lapply(res, as.numeric)
   result = as.data.frame(do.call("rbind", res2))
   row.names(result) = NULL
   
