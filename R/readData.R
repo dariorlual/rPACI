@@ -119,7 +119,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 checkDataset <- function(dataset){
   # check if the number of columns equals 3
   if(ncol(dataset) != 3){
-    stop('The dataset must contain 3 columns: x, y (cartesian coordinates of data points) and ring index (1, 2, …).')
+    stop('The dataset must contain 3 columns: x, y (cartesian coordinates of data points) and ring index (1, 2, ...).')
   }
   
   # check if third column contains integers
