@@ -1,4 +1,4 @@
-#' Simulate data measured from a Placido disk corneal topographer
+#' Simulate data as measured by a Placido disk corneal topographer
 #'
 #' Read corneal topography files as exported by Placido disk corneal topographer.
 #' A corneal topographer is an ophthalmic clinical device that obtains measurements
@@ -9,8 +9,16 @@
 #' which is the typical distribution of commercial Placido disk topographers.
 #' @references Rowsey, J. J., Reynolds, A. E., & Brown, R. (1981). Corneal topography: corneascope. Archives of Ophthalmology, 99(6), 1093-1100
 #' @references Rand, R. H., Howland, H. C., & Applegate, R. A. (1997). Keratometer and Its Implications for Recovery of Corneal Topography. Optometry and vision science, 74(11).
-#' @param filepath A file path to a corneal topography file exported by a Placido disk corneal topographer.
-#' @todo Add a seed for repeatability, make some periphery data missing at random
+#' @param rings The total number of rings of mires in the sample
+#' @param pointsPerRing The number of points to be sampled in each ring 
+#' @param diameter 
+#' @return A \code{data.frame} with columns:
+#'   \tabular{ll}{
+#' [,1] \tab \code{x}   \tab X Cartesian coordinate of sampled points\cr
+#' [,2] \tab \code{y}   \tab Y Cartesian coordinate of sampled points\cr
+#' [,3] \tab \code{ring index}  \tab Number of ring from which each point is sampled\cr
+#' }
+#' The result \code{data.frame} also includes in the 'Parameters' attribute the list of parameters used for the simulation. 
 simulateData <- function(rings = 15, pointsPerRing = 256, diameter = 12, ringRadiiPerturbation = 0, 
                          maximumMireDisplacement = 0, mireDisplacementAngle = 0, mireDisplacementNoise = 0,
                          ellipticAxesRatio = 1, ellipticRotation = 0, overallNoise = 0, seed = 0) {
