@@ -38,6 +38,10 @@ simulateData <- function(rings = 15, pointsPerRing = 256, diameter = 12, ringRad
   
   
   colnames(result) = c("x","y","ring index")
+  
+  attr(result, 'Parameters') = list(rings = rings, pointsPerRing = pointsPerRing, diameter = diameter, ringRadiiPerturbation = ringRadiiPerturbation, 
+                                    maximumMireDisplacement = maximumMireDisplacement, mireDisplacementAngle = mireDisplacementAngle, mireDisplacementNoise = mireDisplacementNoise,
+                                    ellipticAxesRatio = ellipticAxesRatio, ellipticRotation = ellipticRotation, overallNoise = overallNoise)
   return(result)
   
 }
