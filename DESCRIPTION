@@ -1,6 +1,6 @@
 Package: rPACI
 Title: Placido Analysis of Corneal Irregularity
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person(given = "Darío",
            family = "Ramos-López",
@@ -29,7 +29,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
-Imports: stats, graphics, grDevices, bnlearn
+Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr
 RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2020-07-01 20:07:13 UTC; Usuario
