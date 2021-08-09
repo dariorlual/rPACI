@@ -16,12 +16,12 @@ knitr::opts_chunk$set(
 
 ```{r setup}
   library(rPACI)
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("simulateData.R")
-  source("indices.R")
-  source("plots.R")
-  source("readData.R")
-  source("wrapperFunctions.R")
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # source("simulateData.R")
+  # source("indices.R")
+  # source("plots.R")
+  # source("readData.R")
+  # source("wrapperFunctions.R")
 ```
 
 The function `simulateData` permits to simulate a wide variety of datasets that appear in clinical practice, as a result of measuring an individual eye with a Placido-disk corneal topographer. 
@@ -55,7 +55,7 @@ Through the parameters `rings` and `pointsPerRing`, the number of rings or mires
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -75,7 +75,7 @@ The function allows to change the distribution of circles radii by using the par
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -95,7 +95,7 @@ In a real measurement, the centers of the mires are not the same, they are off-c
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -111,7 +111,7 @@ In a real measurement, the centers of the mires are not the same, they are off-c
 In the previous example, the drift magnitude between consecutive rings is constant. In addition, the function allows to perturb this equally-spaced distribution of drifts by setting the parameter `mireDisplacementNoise`. Typical values of `mireDisplacementNoise` would be between 0 (no perturbation) and 1 (high perturbation):
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -133,7 +133,7 @@ Another common measurement pattern is one consisting of elliptic, or nearly elli
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -152,7 +152,7 @@ The function `simulateData` also permits to introduce random, white noise of a c
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}
@@ -172,7 +172,7 @@ Finally, we present an example where most of the previous transformations or per
 
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
   # source("rPACI.R")
 ```
 ```{r, eval=FALSE}

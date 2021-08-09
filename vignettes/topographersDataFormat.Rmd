@@ -180,6 +180,9 @@ Ziemer      | [Galilei G6](https://www.ziemergroup.com/en/products/galilei/)   |
 
 It is important to notice that irregularity indices in **rPACI** requires a *raw* measurement, i.e., the data points obtained before any internal processing, interpolation or resampling. Since most technical documentation is not public, we cannot assure if all these devices allow to export the raw measurements. Please consult the user operating manual to determine it, or ask the manufacturer's technical support.
 
+## Export data from a topographer
+
+
 
 ## Data file format read by rPACI
 

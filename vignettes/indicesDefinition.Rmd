@@ -154,12 +154,13 @@ First, we assume a corneal dataframe is already available, which may have been l
 The dataset consist of three columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readCornealTopography` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readCornealTopography`, 15 by default).
 
 ```{r, echo=FALSE, warning=FALSE}
-  setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  source("simulateData.R")
-  source("indices.R")
-  source("plots.R")
-  source("readData.R")
-  source("wrapperFunctions.R")
+  library(rPACI)
+  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+  # source("simulateData.R")
+  # source("indices.R")
+  # source("plots.R")
+  # source("readData.R")
+  # source("wrapperFunctions.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(rings = 13)
@@ -234,7 +235,7 @@ Apart from these 4 indices, we also take as irregularity indices the values of $
 
 In order to obtain indices with values in the same range (more easily comparable and to prevent scale problems when combining them), a normalization of each primary index was performed (@dramoslopez2011 and @dramoslopez2013). To do it, these indices were tested on a real dataset of corneas of different conditions. Then, their values were linearly translated to $[0,100]$, so that the value corresponding to the best possible condition (less irregularity) was transformed to $0$, and the worst (more irregularity) to $100$. Therefore, in the test dataset, the values of all primary indices were between $0$ (best-case) and $100$ (worst-case). 
 
-In practice, after the transformation, most index values for any cornea will be in $[0,100]$, but in some particular cases they may be outside that interval. To facilitate their interpretration, we can assume that values below zero correspond to zero, and the maximum irregularity is attained at a certain value (e.g. 150, this value is discussed in @dramoslopez2011).
+In practice, after the transformation, most index values for any cornea will be in $[0,100]$, but in some particular cases they may be outside that interval. To facilitate their interpretation, we can assume that values below zero correspond to zero, and the maximum irregularity is attained at a certain value (e.g. 150, this value is discussed in @dramoslopez2011).
 
 The normalization coefficients used in the previous studies (@dramoslopez2011 and @dramoslopez2013) were the following (for notation simplicity, values on the left-hand side of the expressions represent normalized values whereas values on the right-hand side are values before the normalization (as computed by their definitions above)):
 
@@ -266,7 +267,7 @@ where $\Phi$ stands for the cumulative distribution function of the standard nor
 
 ### NBI index 
 
-The compound index $NBI$ (from Naïve Bayes Index), introduced in @castroluna2020, is a Bayesian classifier. More precisely, it is a Bayesian network with the naïve Bayes structure depicted below.
+The compound index $NBI$ (from Naive Bayes Index), introduced in @castroluna2020, is a Bayesian classifier. More precisely, it is a Bayesian network with the naïve Bayes structure depicted below.
 
 ![](dag.png)
 
