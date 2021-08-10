@@ -1,15 +1,16 @@
 #' Analysis of a single corneal topography file
 #'
 #' Analyze a corneal topography file. This function combines together the three operations performed
-#' by the functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices},
+#' by the functions \link[rPACI]{readFile}, \link[rPACI]{computePlacidoIndices},
 #' and \link[rPACI]{plotSingleCornea}.
-#' The result is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+#' The result is a \code{data.frame} in the same format given by \link[rPACI]{computePlacidoIndices}.
 #'  
 #' More details about supported file formats can be found in 
-#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+#' and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 #' 
 #' @param path A corneal topography file, as exported by a Placido disk corneal topographer.
-#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not (by default, TRUE).
+#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not (by default, \code{TRUE}).
 #' @return A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with a single row and columns:
 #' \tabular{lll}{
 #'   \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
@@ -35,7 +36,7 @@
 #' results = computePlacidoIndices(dataset)
 #' # If drawplot=TRUE, then it also performs:
 #' plotSingleCornea(dataset, results)
-analyzeFile <- function(path, drawplot=TRUE) {
+analyzeFile <- function(path, drawplot = TRUE) {
   
   data = readFile(path)
   
@@ -53,14 +54,17 @@ analyzeFile <- function(path, drawplot=TRUE) {
 #' This function analyze all corneal topography files that are stored in a common folder. It is 
 #' equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results. 
 #' 
-#' It assumes all files in the folder that have the given extension ('.txt' by default) are corneal topography files.
-#' The result, for each file, is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+#' This function assumes all files in the folder that have the extension given by the argument \code{fileExtension} 
+#' ("txt", by default) are corneal topography files and are to be processed. 
+#' The result is a \code{data.frame} in the same format yield by \link[rPACI]{computePlacidoIndices} or \link[rPACI]{analyzeFile},
+#' but with as many rows as matching files were found in the folder.
 #' 
 #' More details about supported file formats can be found in 
-#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+#' and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 #' 
 #' @param path The path of a folder which contains corneal topography files, as exported by Placido disks corneal topographers.
-#' @param fileExtension The file extension of the corneal topography files in the folder ('.txt' by default).
+#' @param fileExtension The file extension of the corneal topography files in the folder ("txt" by default).
 #' @param individualPlots An optional logical parameter (by default, FALSE) indicating whether the plot for each file should be displayed or not.
 #' @param summaryPlot An optional logical parameter (by default, FALSE) indicating whether a summary plot should be displayed or not.
 #' @importFrom graphics barplot boxplot par plot rect text
@@ -83,7 +87,9 @@ analyzeFile <- function(path, drawplot=TRUE) {
 #' @export
 #' @examples
 #' # This analyzes together all the corneal topography example files included in rPACI:
+#' \dontrun{
 #' analyzeFolder(system.file("extdata",package="rPACI"))
+#' }
 analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, summaryPlot = FALSE) {
   opar <- par(no.readonly =TRUE)
   on.exit(par(opar))
@@ -129,18 +135,28 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 
 #' Analysis of a single corneal topography dataset
 #'
-#' Analyze a corneal topography dataset This function combines the three operations of functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
-#' @param path A corneal topography datatset, loaded from a file using the function \link[rPACI]{readCSO}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).
-#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not.
+#' Analyze a corneal topography dataset (a \code{data.frame} in the rPACI format). This function combines the two
+#' operations of functions \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}. It assumes a valid 
+#' rPACI \code{data.set} is already available on memory.
+#' 
+#' The dataset is checked to verify it matches the rPACI format: it must contain 3 columns: x, y (with the X and Y Cartesian
+#' coordinates of data points) and ring index (1, 2, ...). The ring index column must contain positive integer numbers. 
+#' The dataset must not contain \code{NA} values. Finally, all the rings must contain the same number of data points.
+#' 
+#' More details about supported file formats can be found in 
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+#' and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
+#' 
+#' @param dataset A corneal topography dataset, loaded from a file using the function \link[rPACI]{readFile}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).
+#' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not (by default, \code{TRUE}).
 #' @export
-#' @details The dataset must contain 3 columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, …). 
-#' The ring index column must contain integer numbers. 
-#' The dataset must not contain NA values. 
-#' Finally, all the rings must contain the same number of data points.
 #' @examples
+#' # Generate a sample dataset
 #' dataset = simulateData(rings = 15, ringRadiiPerturbation = 0.7)
+#' 
+#' # Analyze this dataset:
 #' analyzeDataset(dataset)
-analyzeDataset <- function(dataset, drawplot=TRUE) {
+analyzeDataset <- function(dataset, drawplot = TRUE) {
   
   checkDataset(dataset)
   
@@ -155,20 +171,30 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 
 
 #' Analysis of repeated measures of the same patient over time
+#' 
 #' Analyze the evolution of a patient over time. This function returns the Placido irregularity indices per time step
 #' and two temporal plots.
 #'
+#' If the data are loaded from a folder, it will assume that the temporal arrangement is the alphabetical order
+#' of the files' name. Therefore, it is advised to use proper file names, for instance using this date format: 
+#' 'YYYY-MM-DD.txt'.
+#' 
+#' Moreover, the folder should contain data measures of just one patient, since the function will read all the files
+#' (with the given extension) of the specified folder. On the other hand, if the data are stored in a list, it will
+#' be assumed that the temporal order corresponds with the index of the dataset in the list.
+#' 
+#' #' More details about supported file formats can be found in 
+#' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+#' and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
+#' 
 #' @param data Either 1) the path of a folder that contains corneal topography files, 
 #' as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data
-#' (loaded from a file using the function \link[rPACI]{readCSO}, 
+#' (loaded from a file using the function \link[rPACI]{readFile}, 
 #' simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).
 #' @param fileExtension If data is a path, specify the file extension of the corneal topography files 
-#' in the folder. It assumes all files with the given extension are corneal topography files of a single patient.
-#' @details If the data are loaded from a folder, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
-#' Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
-#' Moreover, the folder should contain data measures of one patient only since the function 
-#' will read all the files (with the given extension) of the specified folder.
-#' On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of the dataset in the list.
+#' in the folder. It assumes all files with the given extension are corneal topography files of a single patient 
+#' (by default, "txt").
+#' @details 
 #' @export
 #' @examples
 #' # EXAMPLE 1
@@ -189,11 +215,10 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #' 
 #' # EXAMPLE 2
 #' # Specify a folder path to analyze a patient's evolution over time
-#' analyzeEvolution(system.file("extdata", package="rPACI"), fileExtension = 'txt')
-
-analyzeEvolution <- function(data, fileExtension = NULL) {
+#' analyzeEvolution(paste(system.file("extdata", package="rPACI"),"/temporal/",sep=""))
+analyzeEvolution <- function(data, fileExtension = "txt") {
   
-  # check wheter 'data' is character path or list
+  # check whether 'data' is character path or list
   if(is.character(data)){
     # check if directory exists
     if(!dir.exists(data)) {
@@ -214,7 +239,6 @@ analyzeEvolution <- function(data, fileExtension = NULL) {
     }
     
   }
-  
   
   df = do.call("rbind", res)
   
