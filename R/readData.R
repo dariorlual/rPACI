@@ -191,10 +191,10 @@ readCSO <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse =
 #' @examples
 #' # A dataset that was read from a corneal topographer file was later saved in the rPACI format.
 #' # It can be read with:
-#' dataset1 = readrPACI(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
+#' dataset1 = readrPACI(system.file("extdata","ds1.txt", package="rPACI"))
 #' 
-#  # Another dataset (simulated and saved in the rPACI format) can be read with: 
-#' dataset2 = readrPACI(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
+#  # Read another dataset (simulated and saved in the rPACI format; it includes the simulation parameters in the header): 
+#' dataset2 = readrPACI(system.file("extdata","ds2.txt", package="rPACI"))
 readrPACI <- function(filepath, sep = ",") {
   
   if (!file.exists(filepath)) {
@@ -309,7 +309,7 @@ checkDataset <- function(dataset){
   return(TRUE)
 }
 
-#' (Default) Reading function for corneal topography files
+#' Read a corneal topography file in any available format (recommended by default)
 #'
 #' This function is a general wrapper function, able to read corneal topography files in any format supported 
 #' by \code{rPACI}. Internally, it analyzes the file and detects its format, and then it uses the appropriate 
@@ -352,7 +352,7 @@ checkDataset <- function(dataset){
 #' dataset1 = readFile(system.file("extdata","N01.txt", package="rPACI"))
 #' 
 #  # Read another example file "ds2.txt" (this file is in the rPACI file format)
-#' dataset2 = readFile(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
+#' dataset2 = readFile(system.file("extdata","ds2.txt", package="rPACI"))
 
 readFile <- function(filepath, sep = ",", ...){
  
