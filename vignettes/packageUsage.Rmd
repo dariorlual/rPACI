@@ -106,6 +106,7 @@ library("rPACI")
 ```
 ```{r, echo = F, warning = F, message=F}
 library("rPACI")
+source("../R/readData.R")
 ```
 ## Reading data
 In order to begin with the analysis, the data exported by a [typical commercial Placido disk topographer](topographersDataFormat.html) can be loaded using the function `readCSO()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:

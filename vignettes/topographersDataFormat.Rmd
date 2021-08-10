@@ -211,7 +211,7 @@ Most commercial topographers use proprietary, black-box software, specially desi
 
 In the case of CSO topographers (this may apply to other manufacturers as well), during the raw data exportation process the user is asked whether to store altimetry/elevations, axial curvatures or diopters (z coordinate). For its use in **rPACI**, the chosen magnitude is not important, since the information required by the package are the flat positions of the measured points (2D: x and y) and the third coordinate (z) is not used (@dramoslopez2011, @dramoslopez2013).
 
-If you have data from another Placido-based corneal topographer that do not fit the formats explained below, you can try to convert the data to fit any of them, or ask us to make a new specific reading function for them (to contact us, please open an issue through the [**rPACI**'s GitHub repository](https://github.com/dariorlual/rPACI)).
+If you have data from another Placido-based corneal topographer that do not fit the formats explained below, you can try to convert the data to fit any of them, or ask us to make a new specific reading function for them (to do that, please open an issue through the [**rPACI**'s GitHub repository](https://github.com/dariorlual/rPACI)).
 
 ## Data file formats read by rPACI
 
