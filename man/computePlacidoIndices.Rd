@@ -46,9 +46,9 @@ The Placido irregularity indices can be computed from a \code{data.frame} in the
 \link[rPACI]{readFile} (also with \link[rPACI]{readCSO} or \link[rPACI]{readrPACI}) or \link[rPACI]{simulateData}.
 
 These irregularity indices can be split into two categories: primary and combined indices. 
-The primary indices are: **PI_1**, **PI_2**, **PI_3**, **SL**, **AR_1**, **AR_2**, **AR_3**, **AR_4**, **AR_5**.
+The primary indices are: PI_1, PI_2, PI_3, SL, AR_1, AR_2, AR_3, AR_4, AR_5.
 They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are 
-computed: **GLPI** (a generalized linear model) and **NBI** (naive Bayes index).
+computed: GLPI (a generalized linear model) and NBI (naive Bayes index).
 
 For more information on these indices and their precise mathematical definitions, see 
 \href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the references below.
@@ -62,7 +62,8 @@ check the range for each index) plus a diagnose, which is either "Irregular corn
 "Normal cornea", depending on the value of the combined index GLPI.
 }
 \examples{
-# Read the file 'N02.txt' which is a real corneal topography (from a normal eye) measured with a CSO device:
+# Read the file 'N02.txt' which is a real corneal topography (from a normal eye)
+# that was measured with a CSO device:
 dataset = readFile(system.file("extdata","N02.txt", package="rPACI"))
 
 # Compute its Placido irregularity indices with this function:

@@ -4,10 +4,10 @@
 \alias{writerPACI}
 \title{Save to disk a dataset in the format used by rPACI}
 \usage{
-writerPACI(df, filename, sep = ",")
+writerPACI(dataset, filename, sep = ",")
 }
 \arguments{
-\item{df}{A \code{data.frame} containing the corneal topography points, with columns:
+\item{dataset}{A \code{data.frame} containing the corneal topography points, with columns:
 \tabular{lll}{
   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr
   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
@@ -29,11 +29,11 @@ This function writes the data in a \code{data.frame} in a plain text file to dis
 a header, followed by a block of three separated columns, according to the usual format used by \code{rPACI}, 
 i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point,
 
-If the given \code{data.frame} was produced using \link[rPACI]{simulateData}, the resulting text file will also 
-include in its header the \code{Parameters} attribute (\code{attr(result,'Parameters')}), i.e., the list of 
-parameters used for the simulation. 
+If the given \code{data.frame} (named \code{dataset}) was produced using \link[rPACI]{simulateData}, the resulting 
+text file will also include in its header the \code{Parameters} attribute (\code{attr(dataset,'Parameters')}),
+i.e., the list of parameters used for the simulation. 
 
-A file stored with \code{writerPACI} can be later be read using the general reader function \link[rPACI]{readFile}
+A file stored with \code{writerPACI} can later be read using the general reader function \link[rPACI]{readFile}
 or the specific reader function \link[rPACI]{readrPACI}.
 
 See more details about the file structure in \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
