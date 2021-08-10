@@ -10,9 +10,9 @@
 #' \link[rPACI]{readFile} (also with \link[rPACI]{readCSO} or \link[rPACI]{readrPACI}) or \link[rPACI]{simulateData}.
 #' 
 #' These irregularity indices can be split into two categories: primary and combined indices. 
-#' The primary indices are: **PI_1**, **PI_2**, **PI_3**, **SL**, **AR_1**, **AR_2**, **AR_3**, **AR_4**, **AR_5**.
+#' The primary indices are: PI_1, PI_2, PI_3, SL, AR_1, AR_2, AR_3, AR_4, AR_5.
 #' They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are 
-#' computed: **GLPI** (a generalized linear model) and **NBI** (naive Bayes index).
+#' computed: GLPI (a generalized linear model) and NBI (naive Bayes index).
 #' 
 #' For more information on these indices and their precise mathematical definitions, see 
 #' \href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the references below.
@@ -25,9 +25,9 @@
 #' check the range for each index) plus a diagnose, which is either "Irregular cornea", "Suspect cornea" or 
 #' "Normal cornea", depending on the value of the combined index GLPI.
 #'
-#' @references Castro-Luna, Gracia M., Andrei Martínez-Finkelshtein, and Darío Ramos-López. 2020. "Robust Keratoconus Detection with Bayesian Network Classifier for Placido Based Corneal Indices." Contact Lens and Anterior Eye 43 (4): 366-72. \href{https://doi.org/10.1016/j.clae.2019.12.006}{DOI link}. 
-#' @references Ramos-López, Darío, Andrei Martínez-Finkelshtein, Gracia M. Castro-Luna, Neus Burguera-Giménez, Alfredo Vega-Estrada, David Piñero, and Jorge L. Alió. 2013. "Screening Subclinical Keratoconus with Placido-Based Corneal Indices." Optometry and Vision Science 90 (4): 335-43. \href{https://doi.org/10.1097/opx.0b013e3182843f2a}{DOI link}. 
-#' @references Ramos-López, Darío, Andrei Martínez-Finkelshtein, Gracia M. Castro-Luna, David Piñero, and Jorge L. Alió. 2011. "Placido-Based Indices of Corneal Irregularity." Optometry and Vision Science 88 (10): 1220-31. \href{https://doi.org/10.1097/opx.0b013e3182279ff8}{DOI link}. 
+#' @references Castro-Luna, Gracia M., Andrei Martinez-Finkelshtein, and Dario Ramos-Lopez. 2020. "Robust Keratoconus Detection with Bayesian Network Classifier for Placido Based Corneal Indices." Contact Lens and Anterior Eye 43 (4): 366-72. \href{https://doi.org/10.1016/j.clae.2019.12.006}{DOI link}. 
+#' @references Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, Neus Burguera-Gimenez, Alfredo Vega-Estrada, David Pinero, and Jorge L. Alio. 2013. "Screening Subclinical Keratoconus with Placido-Based Corneal Indices." Optometry and Vision Science 90 (4): 335-43. \href{https://doi.org/10.1097/opx.0b013e3182843f2a}{DOI link}. 
+#' @references Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, David Pinero, and Jorge L. Alio. 2011. "Placido-Based Indices of Corneal Irregularity." Optometry and Vision Science 88 (10): 1220-31. \href{https://doi.org/10.1097/opx.0b013e3182279ff8}{DOI link}. 
 #' @param datasetRings A dataset containing data points of a corneal topography, as given by \link[rPACI]{readFile} or \link[rPACI]{simulateData}.
 #' @param truncateIndicesAt150 A boolean value (by default \code{TRUE}) indicating whether the primary indices should be truncated at 150 (so they are in the range 0-150) or not.
 #' @param useMaxRings A positive integer value (by default 15) to choose the maximum number of innermost rings to use (as long as there are enough).
@@ -50,7 +50,8 @@
 #' @importFrom stats lm pnorm sd
 #' @export
 #' @examples
-#' # Read the file 'N02.txt' which is a real corneal topography (from a normal eye) measured with a CSO device:
+#' # Read the file 'N02.txt' which is a real corneal topography (from a normal eye)
+#' # that was measured with a CSO device:
 #' dataset = readFile(system.file("extdata","N02.txt", package="rPACI"))
 #' 
 #' # Compute its Placido irregularity indices with this function:
