@@ -31,13 +31,13 @@
 #' results = analyzeFile(system.file("extdata","N01.txt", package="rPACI"))
 #' 
 #' # The previous command is equivalent to:
-#' dataset = readCSO(system.file("extdata","N01.txt", package="rPACI"))
+#' dataset = readFile(system.file("extdata","N01.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
 #' # If drawplot=TRUE, then it also performs:
 #' plotSingleCornea(dataset, results)
 analyzeFile <- function(path, drawplot=TRUE) {
   
-  data = readCSO(path)
+  data = readFile(path)
   
   result = computePlacidoIndices(data)
   
