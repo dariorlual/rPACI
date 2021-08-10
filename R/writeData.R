@@ -9,18 +9,18 @@
 #' a header, followed by a block of three separated columns, according to the usual format used by \code{rPACI}, 
 #' i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point,
 #' 
-#' If the given \code{data.frame} was produced using \link[rPACI]{simulateData}, the resulting text file will also 
-#' include in its header the \code{Parameters} attribute (\code{attr(result,'Parameters')}), i.e., the list of 
-#' parameters used for the simulation. 
+#' If the given \code{data.frame} (named \code{dataset}) was produced using \link[rPACI]{simulateData}, the resulting 
+#' text file will also include in its header the \code{Parameters} attribute (\code{attr(dataset,'Parameters')}),
+#' i.e., the list of parameters used for the simulation. 
 #' 
-#' A file stored with \code{writerPACI} can be later be read using the general reader function \link[rPACI]{readFile}
+#' A file stored with \code{writerPACI} can later be read using the general reader function \link[rPACI]{readFile}
 #' or the specific reader function \link[rPACI]{readrPACI}.
 #' 
 #' See more details about the file structure in \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
 #' about the usage of \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}},
 #' and about simulation parameters in \href{../doc/simulating.html}{\code{vignette("simulating", package = "rPACI")}}.
 #' 
-#' @param df A \code{data.frame} containing the corneal topography points, with columns:
+#' @param dataset A \code{data.frame} containing the corneal topography points, with columns:
 #' \tabular{lll}{
 #'   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr
 #'   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
@@ -38,9 +38,9 @@
 #' writerPACI(dataset, "datasetFile.txt")
 #' 
 #' # The file will include as a header the parameters used in simulation
-writerPACI <- function(df, filename, sep = ","){
+writerPACI <- function(dataset, filename, sep = ","){
   # Get parameters (if param is not NULL, df comes from the simulateData function)
-  param = attr(df, 'Parameters')
+  param = attr(dataset, 'Parameters')
   
   if(!is.null(param)){
     cat(paste('Dataset simulated by rPACI on', date()),'\n', file = filename)
@@ -54,7 +54,7 @@ writerPACI <- function(df, filename, sep = ","){
   }
   
   suppressWarnings({
-    write.table(df, file = filename, append = T, sep = sep, row.names = F)
+    write.table(dataset, file = filename, append = T, sep = sep, row.names = F)
   })
   
 }
