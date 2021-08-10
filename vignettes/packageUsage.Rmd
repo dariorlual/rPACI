@@ -160,7 +160,28 @@ head(dataset3)
 ```
 
 ## Saving data
+This function writes to disk a corneal topography dataset in the format used by rPACI. The file will be saved in structured plain text. The saved file will possibly have
+a header, followed by a block of three separated columns, according to the usual format used by `rPACI`,
+i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point.
 
+If the given `data.frame` (named `dataset`) was produced using the function `simulateData()`, the resulting
+text file will also include the `Parameters` attribute (`attr(dataset,'Parameters')`) in its header,
+i.e., the list of parameters used for the simulation.
+
+A file stored with `writerPACI()` can later be read using the general reader function `readFile()`
+or the specific reader function `readrPACI()`.
+
+The following piece of code shows how to use the `writerPACI()` function. 
+
+````{r, eval = F}
+# Simulating an elliptic dataset, with ellipses axis ratio of 0.8 and an orientation of 45 degrees.
+dataset = simulateData(rings = 18, pointsPerRing = 300, ellipticAxesRatio = 0.8, ellipticRotation = 45)
+
+# Now the dataset can be saved to file using 'writerPACI' (check the working directory before saving):
+writerPACI(dataset, "datasetFile.txt")
+````
+
+See more details about the file structure in the [Corneal topographers and data format](topographersDataFormat.html) vignette and about simulation parameters in the [Simulating corneal datasets](simulating.html) vignette. 
 
 ## Computing the Placido irregularity indices
 
