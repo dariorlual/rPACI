@@ -18,7 +18,7 @@
 #' processes the file and identifies the size and the header,  without assuming a fixed structure or having to 
 #' specify its size as a parameter.
 #' 
-#' This function produces a \code{data.frame} in the usual format used by \code{rPACI}, i.e., a list with three 
+#' This function produces a \code{data.frame} in the usual format used by \code{rPACI}, i.e., a data frame with three 
 #' columns (x and y coordinates of each point and its ring index) and a row per data point, according to the 
 #' function parameters (by default, 24*256 = 6144 rows or data points).
 #' 
@@ -337,7 +337,6 @@ checkDataset <- function(dataset){
 #' @references Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \href{https://doi.org/10.3109/08820538.2013.835844}{DOI link}.
 #' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
 #' @param filepath A file path to a corneal topography file in any supported format.
-#' @param sep The character used as column separator in the file (by default, ",").
 #' @param ... Optional arguments of any of the reading functions.
 #' @return A \code{data.frame} containing the corneal topography points, with columns:
 #' \tabular{lll}{
@@ -354,7 +353,7 @@ checkDataset <- function(dataset){
 #  # Read another example file "ds2.txt" (this file is in the rPACI file format)
 #' dataset2 = readFile(system.file("extdata","ds2.txt", package="rPACI"))
 
-readFile <- function(filepath, sep = ",", ...){
+readFile <- function(filepath,...){
  
   # Open file and extract its lines
   connection=file(filepath,open="r")
@@ -362,7 +361,14 @@ readFile <- function(filepath, sep = ",", ...){
   connection=file(filepath,open="r")
   file_lines=readLines(connection, warn=FALSE)
   close(connection)
-  
+
+
+  args = list(...)
+  if(is.null(args[['sep']])){
+    sep = ','
+  }else{
+    sep = args[['sep']]
+  }
   
   linesToDrop = 0
   headerEnd = FALSE
@@ -396,7 +402,7 @@ readFile <- function(filepath, sep = ",", ...){
   # check which read function should be used
   row1 = strsplit(numeric_lines[1], split = sep)[[1]]
   if(length(row1)== 3){
-    df = readrPACI(filepath = filepath, sep = sep)
+    df = readrPACI(filepath = filepath, ...)
   }else if(length(row1)<3){
     df = readCSO(filepath = filepath, ...)
   }else{
