@@ -108,13 +108,58 @@ library("rPACI")
 library("rPACI")
 source("../R/readData.R")
 ```
+
 ## Reading data
-In order to begin with the analysis, the data exported by a [typical commercial Placido disk topographer](topographersDataFormat.html) can be loaded using the function `readCSO()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:
+The package includes three functions to read data: `readCSO()`, `readrPACI()` and `readFile()`. The two former ones read data in specific formats (explained below), while the latter one is a wrapper function able to read both formats. In general, we recommend to use the more general wrapper function `readFile()` to read any file format.
+
+### readCSO()
+To begin with, external files with a corneal topography in the format exported by some Placido disk topographers, especially those from CSO (a commercial brand), can be loaded using the function `readCSO()`. We recommend reading the [Corneal topographers and data format](topographersDataFormat.html) vignette. 
+This reading function allows to specify different parameters: 
+<!-- the amount of rings available (`ringsTotal`), the number of points per ring (`pointsPerRings`), and rings to use (`ringsToUse`), whether to use or not only complete rings (`onlyCompleteRings`), and the value(s) encoding NAs (missing data) in the file (`NAvalues`).  -->
+<!-- In the following example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used: -->
+
+* `filepath`: The name of the file to be read.
+* `ringsTotal`: The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24).
+* `pointsPerRings`: The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256).
+* `ringsToUse`: The effective number of innermost rings to use (as long as they are complete if `onlyCompleteRings = TRUE`, otherwise it will be the actual number of complete rings; by default 15).
+* `onlyCompleteRings`: A boolean value indicating whether to use only rings with complete data or not (by default, TRUE).
+* `NAvalues`: A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000)).
+
+In the following example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:
+<!-- In order to begin with the analysis, the data exported by [some commercial Placido disk topographer](topographersDataFormat.html) can be loaded using the function `readCSO()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used: -->
 
 ```{r, eval = T}
-dataset_N = readCSO(system.file("extdata","N01.txt", package="rPACI"))
+dataset1 = readCSO(system.file("extdata","N01.txt", package="rPACI"))
 ```
-This function returns a `data.frame` [conveniently formatted](indicesDefinition.html) to be used in the next step of the analysis.
+<!-- This function returns a `data.frame` [conveniently formatted](indicesDefinition.html) to be used in the next step of the analysis. -->
+
+This function produces a `data.frame` in the usual format used by `rPACI`, i.e., a data frame with three columns (x and y coordinates of each point and its ring index) and a row per data point, according to the function parameters (by default, 24*256 = 6144 rows or data points).
+
+```{r, eval = T}
+head(dataset1)
+```
+
+### readrPACI()
+On the other hand, external files with a corneal topography in the format exported by rPACI can also be loaded using the function `readrPACI()`. This function has two arguments: the path to the file (`filepath`) and the character used as column separator in the file (`sep`). 
+In the following example, a sample file with the rPACI format is loaded: 
+
+```{r, eval = F}
+dataset2 = readrPACI(system.file("extdata","ds1.txt", package="rPACI"))
+```
+
+This function returns a `data.frame` with the same characteristics as `readCSO()`.
+
+### readFile()
+Finally, the general wrapper function `readFile()` can be used to read any of the aforementioned file formats. Internally, it determines the format of the specified file, and applies either `readCSO()` or `readrPACI()` if possible, or else it throws an error (if none can be applied, which occurs when the file format does not fit any of these two available formats). This is the reading function recommended by default, as it is able to read any supported file format.
+The `readFile()` function can take any of the arguments available for the other two reading functions. As a result, this function creates a `data.frame` in the usual format used by `rPACI`, as the other two functions do.
+In the following example, a sample file included in the package is loaded using the `readFile()` wapper function:
+```{r, eval = T}
+dataset3 = readFile(system.file("extdata","N01.txt", package="rPACI"))
+
+head(dataset3)
+```
+
+## Saving data
 
 
 ## Computing the Placido irregularity indices
@@ -123,7 +168,7 @@ We can now compute the [Placido irregularity indices](indicesDefinition.html) of
 <!-- (see this [vignette](indicesDefinition.html) for a detailed definition of the indices) -->
 
 ```{r, eval = T}
-results_N = computePlacidoIndices(dataset_N)
+results_N = computePlacidoIndices(dataset1)
 results_N
 ```
 
@@ -136,10 +181,10 @@ The results of the analysis can be plotted using function `plotSingleCornea()`, 
 
 
 ```{r, eval = T, fig.width = 7, fig.height = 4}
-  plotSingleCornea(dataset_N, results_N, filename = "N01.txt")
+  plotSingleCornea(dataset1, results_N, filename = "N01.txt")
 ```
 
-The left-hand side of the figure shows the input data, whereas the right-hand side shows two charts: the GLPI index plot, which visually indicates the value taken by this index on a colored scale of possible values, and the PI indices distribution, which shows the distribution of the GLPI, PI-1, PI-2 and PI-3 indices in a boxplot placed on a scale of possible values. The color of the charts indicate whether the indices fall within the *normal cornea* region (green color), *suspicious cornea* region (orange color), or *irregular cornea* region (red color). In the example shown, we can clearly see that the eye is diagnosed as normal.
+The left-hand side of the figure shows the input data, whereas the right-hand side shows two charts: the GLPI index plot, which visually indicates the value taken by this index on a colored scale of possible values, and the PI indices distribution, which shows the distribution of the $PI_1$, $PI_2$, $PI_3$ and $SL$ indices in a boxplot placed on a scale of possible values. The color of the charts indicate whether the indices fall within the *normal cornea* region (green color), *suspicious cornea* region (orange color), or *irregular cornea* region (red color). In the example shown, we can clearly see that the eye is diagnosed as normal.
 
 ## Using the wrapper function to analyze one file
 Alternatively to the aforementioned 3 functions, the wrapper function `analyzeFile()` can be used instead, which takes 2 arguments: `path`, which is a character element indicating the location of the corneal topography file, and `drawplot`, which is a logical argument indicating whether the results should be plotted or not.
