@@ -275,7 +275,7 @@ This Bayesian network is a conditional linear Gaussian (CLG) network, with its r
 
 Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling (@cheng2000). Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For a deeper explanation, we refer the readers to @castroluna2020.
 
-Thus, the posterior probability estimation can be computed efficiently with several approaches. In **rPACI**, we make use of the R package [**bnlearn**](https://cran.r-project.org/web/packages/bnlearn/index.html)  (@scutari2010), which includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the primary indices values of the bottom nodes.
+Thus, the posterior probability estimation can be computed efficiently with several approaches. In **rPACI**, we make use of the R package [**bnlearn**](https://cran.r-project.org/package=bnlearn)  (@scutari2010), which includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the primary indices values of the bottom nodes.
 
 ## References
 
