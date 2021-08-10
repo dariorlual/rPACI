@@ -9,7 +9,7 @@ analyzeFile(path, drawplot = TRUE)
 \arguments{
 \item{path}{A corneal topography file, as exported by a Placido disk corneal topographer.}
 
-\item{drawplot}{An optional parameter indicating whether a plot of results should be displayed or not (by default, TRUE).}
+\item{drawplot}{An optional parameter indicating whether a plot of results should be displayed or not (by default, \code{TRUE}).}
 }
 \value{
 A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with a single row and columns:
@@ -30,12 +30,13 @@ A \code{data.frame} containing the Placido irregularity indices as well as the d
 }
 \description{
 Analyze a corneal topography file. This function combines together the three operations performed
-by the functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices},
+by the functions \link[rPACI]{readFile}, \link[rPACI]{computePlacidoIndices},
 and \link[rPACI]{plotSingleCornea}.
-The result is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+The result is a \code{data.frame} in the same format given by \link[rPACI]{computePlacidoIndices}.
  
 More details about supported file formats can be found in 
-\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }
 \examples{
 # Read the file, compute the indices and show results in one step with:

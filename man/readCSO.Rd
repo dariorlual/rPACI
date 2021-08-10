@@ -18,13 +18,13 @@ readCSO(
 
 \item{ringsTotal}{The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24)}
 
+\item{pointsPerRing}{The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)}
+
 \item{ringsToUse}{The effective number of innermost rings to use (as long as they are complete if \code{onlyCompleteRings = TRUE}, otherwise it will be the actual number of complete rings; by default 15)}
 
 \item{onlyCompleteRings}{A boolean value indicating whether to use only rings with complete data or not (by default, TRUE)}
 
 \item{NAvalues}{A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000))}
-
-\item{pointsPerRings}{The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)}
 }
 \value{
 A \code{data.frame} containing the corneal topography points, with columns:

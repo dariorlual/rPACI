@@ -7,20 +7,28 @@
 analyzeDataset(dataset, drawplot = TRUE)
 }
 \arguments{
-\item{drawplot}{An optional parameter indicating whether a plot of results should be displayed or not.}
+\item{dataset}{A corneal topography dataset, loaded from a file using the function \link[rPACI]{readFile}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).}
 
-\item{path}{A corneal topography datatset, loaded from a file using the function \link[rPACI]{readCSO}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).}
+\item{drawplot}{An optional parameter indicating whether a plot of results should be displayed or not (by default, \code{TRUE}).}
 }
 \description{
-Analyze a corneal topography dataset This function combines the three operations of functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
+Analyze a corneal topography dataset (a \code{data.frame} in the rPACI format). This function combines the two
+operations of functions \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}. It assumes a valid 
+rPACI \code{data.set} is already available on memory.
 }
 \details{
-The dataset must contain 3 columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, …). 
-The ring index column must contain integer numbers. 
-The dataset must not contain NA values. 
-Finally, all the rings must contain the same number of data points.
+The dataset is checked to verify it matches the rPACI format: it must contain 3 columns: x, y (with the X and Y Cartesian
+coordinates of data points) and ring index (1, 2, ...). The ring index column must contain positive integer numbers. 
+The dataset must not contain \code{NA} values. Finally, all the rings must contain the same number of data points.
+
+More details about supported file formats can be found in 
+\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }
 \examples{
+# Generate a sample dataset
 dataset = simulateData(rings = 15, ringRadiiPerturbation = 0.7)
+
+# Analyze this dataset:
 analyzeDataset(dataset)
 }

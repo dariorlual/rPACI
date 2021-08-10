@@ -14,7 +14,7 @@ analyzeFolder(
 \arguments{
 \item{path}{The path of a folder which contains corneal topography files, as exported by Placido disks corneal topographers.}
 
-\item{fileExtension}{The file extension of the corneal topography files in the folder ('.txt' by default).}
+\item{fileExtension}{The file extension of the corneal topography files in the folder ("txt" by default).}
 
 \item{individualPlots}{An optional logical parameter (by default, FALSE) indicating whether the plot for each file should be displayed or not.}
 
@@ -42,13 +42,18 @@ This function analyze all corneal topography files that are stored in a common f
 equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results.
 }
 \details{
-It assumes all files in the folder that have the given extension ('.txt' by default) are corneal topography files.
-The result, for each file, is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+This function assumes all files in the folder that have the extension given by the argument \code{fileExtension} 
+("txt", by default) are corneal topography files and are to be processed. 
+The result is a \code{data.frame} in the same format yield by \link[rPACI]{computePlacidoIndices} or \link[rPACI]{analyzeFile},
+but with as many rows as matching files were found in the folder.
 
 More details about supported file formats can be found in 
-\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
+\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }
 \examples{
 # This analyzes together all the corneal topography example files included in rPACI:
+\dontrun{
 analyzeFolder(system.file("extdata",package="rPACI"))
+}
 }

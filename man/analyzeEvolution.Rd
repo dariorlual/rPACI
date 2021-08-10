@@ -2,32 +2,36 @@
 % Please edit documentation in R/wrapperFunctions.R
 \name{analyzeEvolution}
 \alias{analyzeEvolution}
-\title{Analysis of repeated measures of the same patient over time
-Analyze the evolution of a patient over time. This function returns the Placido irregularity indices per time step
-and two temporal plots.}
+\title{Analysis of repeated measures of the same patient over time}
 \usage{
-analyzeEvolution(data, fileExtension = NULL)
+analyzeEvolution(data, fileExtension = "txt")
 }
 \arguments{
 \item{data}{Either 1) the path of a folder that contains corneal topography files, 
 as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data
-(loaded from a file using the function \link[rPACI]{readCSO}, 
+(loaded from a file using the function \link[rPACI]{readFile}, 
 simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).}
 
 \item{fileExtension}{If data is a path, specify the file extension of the corneal topography files 
-in the folder. It assumes all files with the given extension are corneal topography files of a single patient.}
+in the folder. It assumes all files with the given extension are corneal topography files of a single patient 
+(by default, "txt").}
 }
 \description{
-Analysis of repeated measures of the same patient over time
 Analyze the evolution of a patient over time. This function returns the Placido irregularity indices per time step
 and two temporal plots.
 }
 \details{
-If the data are loaded from a folder, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
-Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
-Moreover, the folder should contain data measures of one patient only since the function 
-will read all the files (with the given extension) of the specified folder.
-On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of the dataset in the list.
+If the data are loaded from a folder, it will assume that the temporal arrangement is the alphabetical order
+of the files' name. Therefore, it is advised to use proper file names, for instance using this date format: 
+'YYYY-MM-DD.txt'.
+
+Moreover, the folder should contain data measures of just one patient, since the function will read all the files
+(with the given extension) of the specified folder. On the other hand, if the data are stored in a list, it will
+be assumed that the temporal order corresponds with the index of the dataset in the list.
+
+#' More details about supported file formats can be found in 
+\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
+and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }
 \examples{
 # EXAMPLE 1
@@ -48,5 +52,5 @@ analyzeEvolution(data)
 
 # EXAMPLE 2
 # Specify a folder path to analyze a patient's evolution over time
-analyzeEvolution(system.file("extdata", package="rPACI"), fileExtension = 'txt')
+analyzeEvolution(paste(system.file("extdata", package="rPACI"),"/temporal/",sep=""))
 }
