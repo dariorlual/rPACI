@@ -2,7 +2,7 @@
 % Please edit documentation in R/readData.R
 \name{readCSO}
 \alias{readCSO}
-\title{Read a Placido disk corneal topography file}
+\title{Read a corneal topography file in CSO format}
 \usage{
 readCSO(
   filepath,
@@ -14,26 +14,65 @@ readCSO(
 )
 }
 \arguments{
-\item{filepath}{A file path to a corneal topography file exported by a Placido disk corneal topographer.}
+\item{filepath}{A file path to a corneal topography file exported by a Placido disk corneal topographer, in the format used by CSO.}
+
+\item{ringsTotal}{The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24)}
+
+\item{ringsToUse}{The effective number of innermost rings to use (as long as they are complete if \code{onlyCompleteRings = TRUE}, otherwise it will be the actual number of complete rings; by default 15)}
+
+\item{onlyCompleteRings}{A boolean value indicating whether to use only rings with complete data or not (by default, TRUE)}
+
+\item{NAvalues}{A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000))}
+
+\item{pointsPerRings}{The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)}
 }
 \value{
-A dataset containing the read corneal topography.
+A \code{data.frame} containing the corneal topography points, with columns:
+\tabular{lll}{
+  \code{x}   \tab\tab The X Cartesian coordinates of sampled points\cr
+  \code{y}   \tab\tab The Y Cartesian coordinates of sampled points\cr
+  \code{ring index}  \tab\tab Number or index of the ring from which each point is sampled\cr
+}
 }
 \description{
-Read corneal topography files as exported by Placido disk corneal topographer.
-A corneal topographer is an ophthalmic clinical device that obtains measurements
-in the cornea (the anterior part of the eye). A Placido disk corneal topographer
-makes use of the Placido disk (see references), which produce a circular pattern of
-measurement nodes.
-This function assumes a file structure of 24 rings * 256 angles per ring,
-which is the typical distribution of commercial Placido disk topographers.
+This function is intended to read external files with a corneal topography in the format that is exported 
+by some Placido disk topographers, especially those from CSO (a commercial brand).  
+In general, we recommend to use the more general wrapper function \link[rPACI]{readFile} to read any file format.
+}
+\details{
+A corneal topographer is an ophthalmic clinical device that obtains measurements in the cornea (the anterior
+part of the eye). A Placido disk corneal topographer makes use of the Placido disk (see references and the 
+vignette linked below), which  produce a circular pattern of measurement nodes.
+
+The \link[rPACI]{readCSO} function is able to read a raw Placido disk corneal topography from a file that has been
+exported by certain corneal topographers. It has been especially designed for the file format exported from
+topographers manufactured by \href{https://www.csoitalia.it}{CSO} (Firenze, Italy).
+
+This reading function has been designed to be more flexible than the CSO format, allowing to specify different
+parameters: the amounts of rings available, points per ring, and rings to use, whether to use or not only 
+complete rings, and the value(s) encoding NAs (missing data) in the file. In addition, this function automatically 
+processes the file and identifies the size and the header,  without assuming a fixed structure or having to 
+specify its size as a parameter.
+
+This function produces a \code{data.frame} in the usual format used by \code{rPACI}, i.e., a list with three 
+columns (x and y coordinates of each point and its ring index) and a row per data point, according to the 
+function parameters (by default, 24*256 = 6144 rows or data points).
+
+See more details about corneal topographers and the file structure in \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
 }
 \examples{
+# Read the example file "N01.txt" included with rPACI (a real CSO exported file)
+# It corresponds to a normal eye
 datasetN = readCSO(system.file("extdata","N01.txt", package="rPACI"))
-datasetK = readCSO(system.file("extdata","K04.txt", package="rPACI"))
+
+# Read the example file "K03.txt" included with rPACI (a real CSO exported file) 
+# It corresponds to a keratoconic eye
+datasetK = readCSO(system.file("extdata","K03.txt", package="rPACI"))
 }
 \references{
-Rowsey, J. J., Reynolds, A. E., & Brown, R. (1981). Corneal topography: corneascope. Archives of Ophthalmology, 99(6), 1093-1100
+Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \href{https://doi.org/10.1001/archopht.1981.03930011093022}{DOI link}.
 
-Rand, R. H., Howland, H. C., & Applegate, R. A. (1997). Keratometer and Its Implications for Recovery of Corneal Topography. Optometry and vision science, 74(11).
+Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \href{https://doi.org/10.3109/08820538.2013.835844}{DOI link}.
+
+Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
 }
