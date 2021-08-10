@@ -127,7 +127,7 @@ references:
   container-title: Seminars in Ophthalmology
   volume: 30
   URL: 'https://doi.org/10.3109/08820538.2013.835844'
-  DOI: 10.3109/08820538.2013.83584
+  DOI: 10.3109/08820538.2013.835844
   issue: 3
   page: 161-170
   type: article-journal
