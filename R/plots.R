@@ -1,18 +1,44 @@
-#' Summary plot of the Placido irregularity indices
+#' Plot the corneal topography and a summary plot of the Placido irregularity indices
 #'
-#' Draw a three-part plot summarizing the corneal topography analysis, based on the Placido irregularity indices calculated by the function \link[rPACI]{computePlacidoIndices}.
-#' @param dataset A dataset containing the read corneal topography.
+#' Draw a three-part plot summarizing the corneal topography analysis, based on the Placido irregularity
+#' indices calculated by the function \link[rPACI]{computePlacidoIndices}
+#' 
+#' This function draws a 3-column plot, with the corneal topography in \code{dataset} plotted on the left, 
+#' the value of index GLPI taken from \code{PlacidoIndices} on the middle, and a boxplot of some of the 
+#' Placido indices on the right (with the values of PI_1, PI_2, PI_3 and SL) taken from \code{PlacidoIndices}.
+#' 
+#' For the two latter columns, the ranges of values that should be considered normal, suspect or irregular
+#' have been depicted with different colors (green, orange and red respectively). The thresholds for these
+#' divisions are 30 (between normal (green) and suspect (orange) zones) and 70 (between suspect (orange) 
+#' and irregular (red) zones). 
+#' 
+#' The scales for these two plots are in general different, as GLPI ranges from 0 to 100, whereas the 
+#' primary Placido irregularity indices range from 0 to 150 by default.
+#' 
+#' Consult more information about the use of \code{rPACI}, including the available plots, 
+#' in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}},
+#'  
+#' @param dataset A \code{data.frame} containing the corneal topography points, with columns:
+#' \tabular{lll}{
+#'   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr
+#'   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
+#'   \code{ring index}  \tab\tab Number or index of the ring to which each point belongs\cr
+#' }
 #' @param PlacidoIndices A dataset of results as given by the function \link[rPACI]{computePlacidoIndices} or \link[rPACI]{analyzeFile}.
-#' @param filename An optional character argument, corresponding to the file containing the analyzed data.
-#' If specified, the filename is displayed on the plot.
+#' @param filename An optional character argument, with the file name used to read the data (by default, \code{NULL}; if specified, the filename is displayed on the plot).
 #' @importFrom graphics barplot boxplot par plot rect text
 #' @importFrom grDevices rgb
 #' @export
 #' @examples
-#' dataset = readCSO(system.file("extdata","K04.txt", package="rPACI"))
+#' # Read a corneal topography from a file
+#' dataset = readFile(system.file("extdata","K03.txt", package="rPACI"))
+#' 
+#' # Compute the Placido irregularity indices with:
 #' results = computePlacidoIndices(dataset)
+#' 
+#' # Draw the corneal topography along the results with:
 #' plotSingleCornea(dataset, results)
-plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
+plotSingleCornea <- function(dataset, PlacidoIndices, filename = NULL) {
   opar <- par(no.readonly =TRUE)
   on.exit(par(opar))
   x=dataset[,"x"]
@@ -39,7 +65,12 @@ plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {
   
   par(fig=c(7.5,10,0,10)/10)
   par(new=TRUE)
-  boxplot(as.numeric(PlacidoIndices[,3:6]), ylim=c(0,150), cex=1.5, cex.main=0.8, main="PI indices \n distribution")
+  PI1 = as.numeric(PlacidoIndices["PI_1"])
+  PI2 = as.numeric(PlacidoIndices["PI_2"])
+  PI3 = as.numeric(PlacidoIndices["PI_3"])
+  SL = as.numeric(PlacidoIndices["SL"])
+  PlacidoIndicesBoxPlot = c(PI1,PI2,PI3,SL)
+  boxplot(PlacidoIndicesBoxPlot, ylim=c(0,150), cex=1.5, cex.main=0.8, main="PI indices \n distribution")
   rect(0, -20, 2, 30, col = rgb(0,1,0,alpha=0.15), lwd=0)
   rect(0, 30, 2, 70, col = rgb(1,0.5,0,alpha=0.18), lwd=0)
   rect(0, 70, 2, 180, col = rgb(1,0,0,alpha=0.15), lwd=0)
