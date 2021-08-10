@@ -147,13 +147,13 @@ The cornea is the external (outermost) part of the eye, and it is responsible of
 
 Corneal topography refers to the measurement of the corneal surface shape using an automated device, which is called a corneal topographer. Most corneal topographers used in clinical practice rely on the Placido disk technology (either alone or in combination with others, such as the Scheimpflug camera). In a Placido disk topographer, an illuminated pattern of concentric rings (which is the actual Placido disk) is projected into the corneal surface, and its reflection on the anterior surface of the cornea is captured by a camera situated at the center of the system. The picture is then digitized along a certain number of radii at equally spaced angles. 
 
-The number of rings in the actual Placido disk $N_R$, which is projected into the eye, and the number of angles $N_A$ (or number of points per rings) in the digitization process may vary from a device to another. The coordinates of these points are the primary information given by the topographers. Afterward, they usually post-process the data to obtain altimetric (elevation) or curvature data and provide color maps and other easy-to-interpret indices to the practitioner. In some topographers, the raw measurements can be exported as a structured text file.
+There are two basic magnitudes: the number of rings in the actual Placido disk $N_R$, which is projected into the eye, and the number of angles $N_A$ (or number of points per rings) in the digitization process. These may vary from a device to another. The plain coordinates of the points (x and y) are the primary information given by the topographers. Afterward, they usually post-process the data to obtain a third coordinate (z), yielding altimetric (elevation) or curvature data, and provide color maps and other easy-to-interpret indices to the practitioner. In some topographers, the raw measurements can be exported as a structured text file.
 
 For a deeper insight about corneal topography, Placido disk technology, keratoconus, and other related concepts we refer the reader to [University of Iowa Health Care](https://webeye.ophth.uiowa.edu/eyeforum/tutorials/Corneal-Imaging/Index.htm) or [American Academy of Ophthalmology](https://eyewiki.aao.org/Corneal_Topography).
 
 ## Commercial topographers using the Placido disk 
 
-Next, we give a (non-exhaustive) list of corneal topographers that use the Placido disk technology. Some of these devices are also called aberrometers or tomographers, as they also include other technologies than the Placido-disk, or, more generically, corneal analyzers. Some manufacturers are: [CSO](https://www.csoitalia.it) (Firenze, Italy), [Gaush](http://www.gaushmedical.com/) (Beijing, China), [Topcon](https://topconhealthcare.com/) (Tokyo, Japan), [Nidek](https://www.nidek-intl.com) (Aichi, Japan), [Optikon](https://www.optikon.it) (Roma, Italy), [Zeiss](https://www.zeiss.com/corporate/int/home.html) (Oberkochen, Germany), and [Ziemer](https://www.ziemergroup.com) (Port, Switzerland). The authors do not have any commercial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated to this documentation.
+Next, we give a (non-exhaustive) list of corneal topographers that use the Placido disk technology. Some of these devices are also called aberrometers or tomographers, as they also include other technologies than the Placido-disk, or, more generically, corneal analyzers. Some manufacturers are: [CSO](https://www.csoitalia.it) (Firenze, Italy), [Gaush](http://www.gaushmedical.com/) (Beijing, China), [Nidek](https://www.nidek-intl.com) (Aichi, Japan), [Optikon](https://www.optikon.it) (Roma, Italy), [Topcon](https://topconhealthcare.com/) (Tokyo, Japan), [Zeiss](https://www.zeiss.com/corporate/int/home.html) (Oberkochen, Germany), and [Ziemer](https://www.ziemergroup.com) (Port, Switzerland). The authors do not have any commercial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated to this documentation.
 
 
 Information about the number of rings and total number of points measured is also included, when available. We also calculate or estimate the number of points per ring, as the ratio between the two previous quantities. The technical features, user operating manual, or other detailed information are generally not public for a particular topographer (sometimes, not even what kind of technology they use). Notice that the number of points per ring can be computed or estimated as the ratio between the total number of measured points and the number of Placido disk rings. The authors do not have any commercial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional topographers will be welcome and incorporated to this documentation.
@@ -182,26 +182,35 @@ It is important to notice that irregularity indices in **rPACI** requires a *raw
 
 ## Export data from a topographer
 
+In this section, we give some general hints about data exportation from a corneal topographer. Due to the lack of public documentation on the topic, the variety of topographers and manufacturers, and their use of proprietary software with copyright restrictions, giving more detailed information about the process of data exportation becomes unfeasible. If necessary, please consult the topographer's user operating manual, or ask the manufacturer’s technical support. 
+
+Most commercial topographers use proprietary, black-box software specially designed to facilitate the practitioners' work. They normally use a GUI (Graphical User Interface) to interact with the user, or more specifically, a WIMP system (from Windows, Icons, Menus, Pointer). Among the options available in the different topographer's menus, some commercial topographers offer the possibility of exporting data, previously obtained from a corneal measurement. These options may appear in the menus related to database management, data export/import, save or save as, I/O, backup, external copy, or other similar terms. If necessary, please consult the topographer's user operating manual, or ask the manufacturer’s technical support. 
+
+In the case of CSO topographers, during the raw data exportation process the user is asked whether to store altimetry/elevations, axial curvatures or diopters (z coordinate). For its use in **rPACI**, the chosen magnitude is not important, since the information required by the package are the flat positions of the measured points (2D: x and y) and the third coordinate (z) is not used.
 
 
-## Data file format read by rPACI
 
+## Data file formats read by rPACI
 
-The R package **rPACI** includes a function able to read a raw Placido-disk corneal topography from a file that has been exported by certain corneal topographers. It has been especially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
+The **rPACI** package is able to read corneal topography files in two different formats by now. It will possibly be expanded in the future allowing formats used by other manufacturers. The first file format is the one employed by [CSO](https://www.csoitalia.it) topographers. The second file format has the structure used internally by **rPACI**. It has been developed for handling datasets more flexibly, allowing to save and read data easily. These two formats are described in the next subsections.
+
+### CSO Topographers format
+
+The R package **rPACI** includes the function `readCornealTopography` which is able to read a raw Placido disk corneal topography from a file that has been exported by certain corneal topographers. It has been especially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
+
+Nevertheless, the reading function `readCornealTopography` has been designed to be more flexible, allowing to specify different parameters: the amounts of rings available, points per ring, and rings to use, whether to use or not only complete rings, and the value encoding NAs in the file. In addition, this function automatically processes the file and identifies the size and the header, without assuming a fixed structure or having to specify its size as a parameter.
  
- 
-The raw measurement file, exported by a corneal topographer, has to be in the following structure to be read by **rPACI**:
+To use **rPACI**'s `readCornealTopography`, the raw measurement file exported by a corneal topographer should have the following structure:
 
 * A header with meta-data: patient data, corneal measurements, date of exploration, etc. Its size
-depends on the device. For CSO topographers, the header typically has 24 lines. The function used in **rPACI** to read the files, `readCornealTopography`, is able to detect the header lines (those that are not convertable to real numbers) and to skip them.
+depends on the device. For CSO topographers, the header typically has 24 lines. The function used in **rPACI** to read the files, `readCornealTopography`, is able to detect the header lines (those that do not contain only real numbers) and to skip them.
 * A list of size $N_R \times N_A$ with the $\rho$ coordinate (distance to the origin in polar coordinates,
 measured in mm) of the digitized points, at equally spaced angles ($\theta$, the argument in polar coordinates). The $\theta$ coordinate is inferred from the position, as it is not explicitly given in the data file.
-* A list of size $N_R \times N_A$ with the $z$ coordinate, which can be altitude (elevation) or curvature, depending on the topographer and the exportation settings. These data are post-processed by the device,
-not directly measured, and the $z$ values are not used in **rPACI**.
+* A list of size $N_R \times N_A$ with the $z$ coordinate, which can be altitude (elevation) or curvature, depending on the topographer and the exportation settings. These data are post-processed by the device using different algorithms, not directly measured, and the $z$ values are not used in **rPACI**.
 
 More details about using `readCornealTopography` and the rest of the **rPACI** package can be found in [Workflow of the rPACI package](packageUsage.html).
 
-The next table shows the data file format required by **rPACI**, each row represents a line, and the file should be a plain text document (with any extension, not necessarily *'.txt'*). In the file, $\rho$ values will be positive real numbers, and $z$ values will be real numbers. 
+The next table shows the data file format required by **rPACI**'s `readCornealTopography`, each row represents a line, and the file should be a plain text document (with any extension, not necessarily *'.txt'*). In the file, $\rho$ values will be positive real numbers, and $z$ values will be real numbers. 
 
 | Data file format |
 | ------------- |
@@ -236,6 +245,33 @@ In the best scenario (which is not very common in the clinical practice), the $N
 The indices available in the **rPACI** package make use only of the $\rho$ and $\theta$ coordinates, discarding
 the post-processed data in $z$. Also, incomplete rings are not taken into account for the calculation of the indices by default. They can, but they are usually highly affected by noise and measurement errors, and
 their use could distort the results.
+
+### rPACI Dataset Format
+
+In addition, the R package **rPACI** includes also the functions `readDataset` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writeDataset` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCornealTopography`), or by simulation (with `simulateData`).  
+
+Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. The functions `readDataset` and `writeDataset` are more flexible, though, and they can manage datasets with incomplete rings or a different number of points in each ring.
+
+| Data file format |    |   |
+| --------- | --------- | --------- |
+| Header line 1 |   |   |
+| Header line 2 |   |   |
+| ... |   |   |
+| Header line n |   |   |
+| "x" | "y" | "ring index" |
+| $x_1$       | $y_1$       | $1$ |
+| $x_2$       | $y_2$       | $1$ |
+| $x_3$       | $y_3$       | $1$ |
+| ...         | ...         | ... |
+| $x_{N_A}$   | $y_{N_A}$   | $1$ |
+| $x_{(N_A+1)}$ | $y_{(N_A+1)}$ | $2$ |
+| $x_{(N_A+2)}$ | $y_{(N_A+2)}$ | $2$ |
+| ...         | ...         | ... |
+| $x_{(2 N_A)}$ | $y_{(2 N_A)}$ | $2$ |
+| ...         | ...         | ... |
+| $x_{((N-1) \times N_A + 1)}$ | $y_{((N-1) \times N_A + 1)}$ | $N$ |
+| ...         | ...         | ... |
+| $x_{(N \times N_A)}$ | $y_{(N \times N_A)}$ | $N$ |
 
 
 ## References
