@@ -13,7 +13,7 @@
 #' @param filename Character string naming a file (including extension).
 #' @param sep The field separator string. By default, ','.
 #' @importFrom utils write.table
-writeDataset <- function(df, filename, sep = ","){
+writerPACI <- function(df, filename, sep = ","){
   # Get parameters (if param is not NULL, df comes from the simulateData function)
   param = attr(df, 'Parameters')
   
