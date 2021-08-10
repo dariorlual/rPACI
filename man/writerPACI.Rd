@@ -25,9 +25,9 @@ three separated columns (x and y coordinates of each point and its ring index) a
 This format is returned by the functions \link[rPACI]{readFile} or \link[rPACI]{simulateData}.
 }
 \details{
-This function writes the data in a \code{data.frame} in a plain text file to disk. The file will possibly have
+This function writes the data from a \code{data.frame} to a plain text file. The file will possibly have
 a header, followed by a block of three separated columns, according to the usual format used by \code{rPACI}, 
-i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point,
+i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point.
 
 If the given \code{data.frame} (named \code{dataset}) was produced using \link[rPACI]{simulateData}, the resulting 
 text file will also include in its header the \code{Parameters} attribute (\code{attr(dataset,'Parameters')}),
