@@ -54,7 +54,7 @@ complete rings, and the value(s) encoding NAs (missing data) in the file. In add
 processes the file and identifies the size and the header,  without assuming a fixed structure or having to 
 specify its size as a parameter.
 
-This function produces a \code{data.frame} in the usual format used by \code{rPACI}, i.e., a list with three 
+This function produces a \code{data.frame} in the usual format used by \code{rPACI}, i.e., a data frame with three 
 columns (x and y coordinates of each point and its ring index) and a row per data point, according to the 
 function parameters (by default, 24*256 = 6144 rows or data points).
 

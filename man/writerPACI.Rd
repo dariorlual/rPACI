@@ -41,10 +41,13 @@ about the usage of \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignett
 and about simulation parameters in \href{../doc/simulating.html}{\code{vignette("simulating", package = "rPACI")}}.
 }
 \examples{
-# Simulating an elliptic dataset, with ellipses axis ratio of 0.8 and an orientation of 45 degrees.
-dataset = simulateData(rings = 18, pointsPerRing = 300, ellipticAxesRatio = 0.8, ellipticRotation = 45)
+# Simulating an elliptic dataset, with ellipses axis ratio of 0.8 and an orientation 
+# of 45 degrees.
+dataset = simulateData(rings = 18, pointsPerRing = 300, 
+                       ellipticAxesRatio = 0.8, ellipticRotation = 45)
 
-# Now the dataset can be saved to file using 'writerPACI' (check the working directory before saving):
+# Now the dataset can be saved to file using 'writerPACI' (check the working directory
+# before saving):
 writerPACI(dataset, "datasetFile.txt")
 
 # The file will include as a header the parameters used in simulation
