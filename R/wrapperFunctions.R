@@ -1,7 +1,7 @@
 #' Analysis of a single corneal topography file
 #'
 #' Analyze a corneal topography file. This function combines together the three operations performed
-#' by the functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices},
+#' by the functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices},
 #' and \link[rPACI]{plotSingleCornea}.
 #' The result is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
 #'  
@@ -31,13 +31,13 @@
 #' results = analyzeFile(system.file("extdata","N01.txt", package="rPACI"))
 #' 
 #' # The previous command is equivalent to:
-#' dataset = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
+#' dataset = readCSO(system.file("extdata","N01.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
 #' # If drawplot=TRUE, then it also performs:
 #' plotSingleCornea(dataset, results)
 analyzeFile <- function(path, drawplot=TRUE) {
   
-  data = readCornealTopography(path)
+  data = readCSO(path)
   
   result = computePlacidoIndices(data)
   
@@ -129,8 +129,8 @@ analyzeFolder <- function(path, fileExtension="txt", individualPlots = FALSE, su
 
 #' Analysis of a single corneal topography dataset
 #'
-#' Analyze a corneal topography dataset This function combines the three operations of functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
-#' @param path A corneal topography datatset, loaded from a file using the function \link[rPACI]{readCornealTopography}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).
+#' Analyze a corneal topography dataset This function combines the three operations of functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
+#' @param path A corneal topography datatset, loaded from a file using the function \link[rPACI]{readCSO}, simulated using \link[rPACI]{simulateData}, or by other ways (as long as it meets the dataset requirements).
 #' @param drawplot An optional parameter indicating whether a plot of results should be displayed or not.
 #' @export
 #' @details The dataset must contain 3 columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, …). 
@@ -160,7 +160,7 @@ analyzeDataset <- function(dataset, drawplot=TRUE) {
 #'
 #' @param data Either 1) the path of a folder that contains corneal topography files, 
 #' as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data
-#' (loaded from a file using the function \link[rPACI]{readCornealTopography}, 
+#' (loaded from a file using the function \link[rPACI]{readCSO}, 
 #' simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).
 #' @param fileExtension If data is a path, specify the file extension of the corneal topography files 
 #' in the folder. It assumes all files with the given extension are corneal topography files of a single patient.

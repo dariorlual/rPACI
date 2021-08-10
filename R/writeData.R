@@ -3,7 +3,7 @@
 #' Write a corneal topography dataset in the format used by rPACI.
 #' This format consists of an optional header of any length (its size is automatically detected) and afterwards, 
 #' three columns (x and y coordinates of each point and its ring index) and a row per data point.
-#' This format is returned by the functions \link[rPACI]{readCornealTopography} and \link[rPACI]{simulateData}.
+#' This format is returned by the functions \link[rPACI]{readCSO} and \link[rPACI]{simulateData}.
 #' @param df A \code{data.frame} containing the corneal topography points, with columns:
 #' \tabular{lll}{
 #'   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr

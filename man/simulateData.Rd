@@ -54,7 +54,7 @@ The resulting \code{data.frame} also includes in its \code{Parameters} attribute
 The function \code{simulateData} permits to simulate a wide variety of datasets that appear in clinical practice, as a result of measuring an individual eye with a Placido-disk corneal topographer (see vignette("topographersDataFormat.Rmd")).
 }
 \details{
-This function produces a dataset in the same format as the one read by \link[rPACI]{readCornealTopography} from a file, i.e., a list with three columns (x and y coordinates of each point and its ring index) and a row per data point, according to the function parameters (by default, 6144 rows or data points).
+This function produces a dataset in the same format as the one read by \link[rPACI]{readCSO} from a file, i.e., a list with three columns (x and y coordinates of each point and its ring index) and a row per data point, according to the function parameters (by default, 6144 rows or data points).
 
 See vignette("simulating.Rmd") for additional details. The examples included there show different ways of using \code{simulateData}, by adding different transformations or perturbations to the basic circular pattern. Some of the obtained patterns can correlate with certain clinical conditions, such as keratoconus, comma, or others.
 

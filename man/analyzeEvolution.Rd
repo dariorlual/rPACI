@@ -11,7 +11,7 @@ analyzeEvolution(data, fileExtension = NULL)
 \arguments{
 \item{data}{Either 1) the path of a folder that contains corneal topography files, 
 as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data
-(loaded from a file using the function \link[rPACI]{readCornealTopography}, 
+(loaded from a file using the function \link[rPACI]{readCSO}, 
 simulated using \link[rPACI]{simulateData}, or by other ways, as long as it meets the dataset requirements).}
 
 \item{fileExtension}{If data is a path, specify the file extension of the corneal topography files 

@@ -11,7 +11,7 @@ computePlacidoIndices(
 )
 }
 \arguments{
-\item{datasetRings}{A dataset containing data of a corneal topography, as read by \link[rPACI]{readCornealTopography}.}
+\item{datasetRings}{A dataset containing data of a corneal topography, as read by \link[rPACI]{readCSO}.}
 }
 \value{
 A dataset containg the aforementioned irregularity indices as well as the diagnose.
@@ -19,12 +19,12 @@ A dataset containg the aforementioned irregularity indices as well as the diagno
 \description{
 This function calculates the individual Placido indices of corneal irregularity PI_1, PI_2, PI_3, SL,
 AR_1, AR_2, AR_3, AR_4, AR_5, the global index GLPI, and the Naive Bayes Index (NBI) (see references). It requires a dataset in
-the format given by the function \link[rPACI]{readCornealTopography}. The results include the values
+the format given by the function \link[rPACI]{readCSO}. The results include the values
 of the indices plus a diagnose, which is either "Irregular cornea", "Suspect cornea"
 or "Normal cornea", depending on the value of the global index GLPI.
 }
 \examples{
-dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
+dataset = readCSO(system.file("extdata","N02.txt", package="rPACI"))
 results = computePlacidoIndices(dataset)
 }
 \references{

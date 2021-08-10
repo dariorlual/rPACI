@@ -9,7 +9,7 @@
 #' for more details about corneal topography and keratoconus.
 #'  
 #' The indices can be computed from a \code{data.frame} in the format given by the functions
-#' \link[rPACI]{readCornealTopography}, \link[rPACI]{readDataset} or \link[rPACI]{simulateData}.
+#' \link[rPACI]{readCSO}, \link[rPACI]{readrPACI} or \link[rPACI]{simulateData}.
 #' 
 #' The Placido irregularity indices can be split into two categories: primary and combined indices. 
 #' The primary indices are: 
@@ -26,7 +26,7 @@
 #' @references Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2020). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
 #' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with Placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
 #' @references Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Pinero, D., & Alio', J. L. (2011). Placido-based indices of corneal irregularity. Optometry and Vision Science, 88(10), 1220-1231.
-#' @param datasetRings A dataset containing data points of a corneal topography, as given by \link[rPACI]{readCornealTopography} or \link[rPACI]{simulateData}.
+#' @param datasetRings A dataset containing data points of a corneal topography, as given by \link[rPACI]{readCSO} or \link[rPACI]{simulateData}.
 #' @param truncateIndicesAt150 A boolean value (by default \code{TRUE}) indicating whether the primary indices should be truncated at 150 (so they are in the range 0-150) or not.
 #' @param useMaxRings A positive integer value (by default 15) to choose the maximum number of innermost rings to use (as long as there are enough).
 #' @return A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with columns:
@@ -48,7 +48,7 @@
 #' @importFrom stats lm pnorm sd
 #' @export
 #' @examples
-#' dataset = readCornealTopography(system.file("extdata","N02.txt", package="rPACI"))
+#' dataset = readCSO(system.file("extdata","N02.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
 computePlacidoIndices <- function(datasetRings, truncateIndicesAt150 = TRUE, useMaxRings = 15) {
   

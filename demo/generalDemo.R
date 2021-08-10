@@ -2,7 +2,7 @@ require("rPACI")
 
 ##### EXAMPLE 1: NORMAL EYE ######
 # Read an example file with the corneal topography of a normal eye, from a file exported by a typical commercial Placido disk topographer
-dataset_N = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
+dataset_N = readCSO(system.file("extdata","N01.txt", package="rPACI"))
 
 # Now compute the Placido irregularity indices in Ramos-Lopez et al. (2013), <doi:10.1097/OPX.0b013e3182843f2a>
 results_N = computePlacidoIndices(dataset_N)

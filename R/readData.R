@@ -13,9 +13,9 @@
 #' @return A dataset containing the read corneal topography.
 #' @export
 #' @examples
-#' datasetN = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
-#' datasetK = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
-readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, onlyCompleteRings = TRUE, NAvalues=c(-1,-1000)) {
+#' datasetN = readCSO(system.file("extdata","N01.txt", package="rPACI"))
+#' datasetK = readCSO(system.file("extdata","K04.txt", package="rPACI"))
+readCSO <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse = 15, onlyCompleteRings = TRUE, NAvalues=c(-1,-1000)) {
   
   if (!file.exists(filepath)) {
     stop("The specified file does not exist or the path is invalid.")
@@ -121,7 +121,7 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #'
 #' Read a corneal topography dataset from a file, assuming it has the format used in rPACI. This function
 #' is useful to read datasets that have been saved with \link[rPACI]{writeDataset} after they were simulated using
-#' \link[rPACI]{simulateData} or previously read using \link[rPACI]{readCornealTopography}. 
+#' \link[rPACI]{simulateData} or previously read using \link[rPACI]{readCSO}. 
 #' This format consists of an optional header of any length (its size is automatically detected) and afterwards, 
 #' three tab-separated columns (x and y coordinates of each point and its ring index) and a row per data point.
 #'  
@@ -137,11 +137,11 @@ readCornealTopography <- function(filepath, ringsTotal = 24, pointsPerRing = 256
 #' @examples
 #' # A dataset that was read from a corneal topographer file was later saved in the rPACI format.
 #' # It can be read with:
-#' dataset1 = readDataset(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
+#' dataset1 = readrPACI(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
 #' 
 #  # Another dataset (simulated and saved in the rPACI format) can be read with: 
-#' dataset2 = readDataset(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
-readDataset <- function(filepath, sep = ",") {
+#' dataset2 = readrPACI(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
+readrPACI <- function(filepath, sep = ",") {
   
   if (!file.exists(filepath)) {
     stop("The specified file does not exist or the path is invalid.")

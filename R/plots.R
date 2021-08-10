@@ -9,7 +9,7 @@
 #' @importFrom grDevices rgb
 #' @export
 #' @examples
-#' dataset = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
+#' dataset = readCSO(system.file("extdata","K04.txt", package="rPACI"))
 #' results = computePlacidoIndices(dataset)
 #' plotSingleCornea(dataset, results)
 plotSingleCornea <- function(dataset, PlacidoIndices, filename=NULL) {

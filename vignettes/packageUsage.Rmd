@@ -108,17 +108,17 @@ library("rPACI")
 library("rPACI")
 ```
 ## Reading data
-In order to begin with the analysis, the data exported by a [typical commercial Placido disk topographer](topographersDataFormat.html) can be loaded using the function `readCornealTopography()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:
+In order to begin with the analysis, the data exported by a [typical commercial Placido disk topographer](topographersDataFormat.html) can be loaded using the function `readCSO()`. In this example, a sample file with the corneal topography of a normal eye (included in the package as `N01.txt`) is used:
 
 ```{r, eval = T}
-dataset_N = readCornealTopography(system.file("extdata","N01.txt", package="rPACI"))
+dataset_N = readCSO(system.file("extdata","N01.txt", package="rPACI"))
 ```
 This function returns a `data.frame` [conveniently formatted](indicesDefinition.html) to be used in the next step of the analysis.
 
 
 ## Computing the Placido irregularity indices
 
-We can now compute the [Placido irregularity indices](indicesDefinition.html) of this data set by calling function `computePlacidoIndices()`, which takes the object returned by `readCornealTopography()` as its only argument:
+We can now compute the [Placido irregularity indices](indicesDefinition.html) of this data set by calling function `computePlacidoIndices()`, which takes the object returned by `readCSO()` as its only argument:
 <!-- (see this [vignette](indicesDefinition.html) for a detailed definition of the indices) -->
 
 ```{r, eval = T}
@@ -131,7 +131,7 @@ The first column of the returned `data.frame` is the diagnosis, based on the GLP
 <!-- (see definitions in the previous sections). -->
 
 ## Plotting the results
-The results of the analysis can be plotted using function `plotSingleCornea()`, which takes 3 arguments: `dataset`, a `data.frame` containing the corneal topography data, i.e., the object returned by `readCornealTopography()`; `PlacidoIndices`, a `data.frame` containing the computed Placido indices, i.e., the object returned by `computePlacidoIndices()`; and, optionally, `filename`, a character vector to be displayed on the plot (for instance, the filename of the corneal topography dataset).
+The results of the analysis can be plotted using function `plotSingleCornea()`, which takes 3 arguments: `dataset`, a `data.frame` containing the corneal topography data, i.e., the object returned by `readCSO()`; `PlacidoIndices`, a `data.frame` containing the computed Placido indices, i.e., the object returned by `computePlacidoIndices()`; and, optionally, `filename`, a character vector to be displayed on the plot (for instance, the filename of the corneal topography dataset).
 
 
 ```{r, eval = T, fig.width = 7, fig.height = 4}
@@ -179,7 +179,7 @@ Note that the rows are sorted from *Irregular* to *Normal* cornea. In this examp
 
 
 ## Analyzing one patient over time
-Suppose you need to examine the evolution of one patient. The function `analizeEvolution()` can be used for this purpose. This function takes two arguments: `data`, which can be either 1) the path of a folder that contains corneal topography files, as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data (loaded from a file using the function `readCornealTopography`, simulated using `simulateData`, or by other ways, as long as it meets the dataset requirements). If `data` is a path to a folder, the second argument, `fileExtension`, must be specified and all the files (with the given extension) in that folder will be assumed to be corneal topography files of one patient and, therefore, will be loaded.
+Suppose you need to examine the evolution of one patient. The function `analizeEvolution()` can be used for this purpose. This function takes two arguments: `data`, which can be either 1) the path of a folder that contains corneal topography files, as exported by Placido disks corneal topographers, or 2) a list containing properly formatted data (loaded from a file using the function `readCSO`, simulated using `simulateData`, or by other ways, as long as it meets the dataset requirements). If `data` is a path to a folder, the second argument, `fileExtension`, must be specified and all the files (with the given extension) in that folder will be assumed to be corneal topography files of one patient and, therefore, will be loaded.
 Moreover, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
 Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
 On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of each dataset in the list.

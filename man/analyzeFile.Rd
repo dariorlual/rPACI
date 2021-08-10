@@ -12,7 +12,7 @@ analyzeFile(path, drawplot = TRUE)
 \item{drawplot}{An optional parameter indicating whether a plot of results should be displayed or not.}
 }
 \description{
-Analyze a corneal topography file. This function combines the three operations of functions \link[rPACI]{readCornealTopography}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
+Analyze a corneal topography file. This function combines the three operations of functions \link[rPACI]{readCSO}, \link[rPACI]{computePlacidoIndices} and \link[rPACI]{plotSingleCornea}.
 }
 \examples{
 analyzeFile(system.file("extdata","N01.txt", package="rPACI"))

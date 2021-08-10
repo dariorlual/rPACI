@@ -196,21 +196,21 @@ The **rPACI** package is able to read corneal topography files in two different 
 
 ### CSO Topographers format
 
-The R package **rPACI** includes the function `readCornealTopography` which is able to read a raw Placido disk corneal topography from a file that has been exported by certain corneal topographers. It has been especially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
+The R package **rPACI** includes the function `readCSO` which is able to read a raw Placido disk corneal topography from a file that has been exported by certain corneal topographers. It has been especially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
 
-Nevertheless, the reading function `readCornealTopography` has been designed to be more flexible, allowing to specify different parameters: the amounts of rings available, points per ring, and rings to use, whether to use or not only complete rings, and the value encoding NAs in the file. In addition, this function automatically processes the file and identifies the size and the header, without assuming a fixed structure or having to specify its size as a parameter.
+Nevertheless, the reading function `readCSO` has been designed to be more flexible, allowing to specify different parameters: the amounts of rings available, points per ring, and rings to use, whether to use or not only complete rings, and the value encoding NAs in the file. In addition, this function automatically processes the file and identifies the size and the header, without assuming a fixed structure or having to specify its size as a parameter.
  
-To use **rPACI**'s `readCornealTopography`, the raw measurement file exported by a corneal topographer should have the following structure:
+To use **rPACI**'s `readCSO`, the raw measurement file exported by a corneal topographer should have the following structure:
 
 * A header with meta-data: patient data, corneal measurements, date of exploration, etc. Its size
-depends on the device. For CSO topographers, the header typically has 24 lines. The function used in **rPACI** to read the files, `readCornealTopography`, is able to detect the header lines (those that do not contain only real numbers) and to skip them.
+depends on the device. For CSO topographers, the header typically has 24 lines. The function used in **rPACI** to read the files, `readCSO`, is able to detect the header lines (those that do not contain only real numbers) and to skip them.
 * A list of size $N_R \times N_A$ with the $\rho$ coordinate (distance to the origin in polar coordinates,
 measured in mm) of the digitized points, at equally spaced angles ($\theta$, the argument in polar coordinates). The $\theta$ coordinate is inferred from the position, as it is not explicitly given in the data file.
 * A list of size $N_R \times N_A$ with the $z$ coordinate, which can be altitude (elevation) or curvature, depending on the topographer and the exportation settings. These data are post-processed by the device using different algorithms, not directly measured, and the $z$ values are not used in **rPACI**.
 
-More details about using `readCornealTopography` and the rest of the **rPACI** package can be found in [Workflow of the rPACI package](packageUsage.html).
+More details about using `readCSO` and the rest of the **rPACI** package can be found in [Workflow of the rPACI package](packageUsage.html).
 
-The next table shows the data file format required by **rPACI**'s `readCornealTopography`, each row represents a line, and the file should be a plain text document (with any extension, not necessarily *'.txt'*). In the file, $\rho$ values will be positive real numbers, and $z$ values will be real numbers. 
+The next table shows the data file format required by **rPACI**'s `readCSO`, each row represents a line, and the file should be a plain text document (with any extension, not necessarily *'.txt'*). In the file, $\rho$ values will be positive real numbers, and $z$ values will be real numbers. 
 
 | Data file format |
 | ------------- |
@@ -236,7 +236,7 @@ The next table shows the data file format required by **rPACI**'s `readCornealTo
 | $z_{(N_R \times N_A)}$ |
 
 
-In the best scenario (which is not very common in the clinical practice), the $N_R$ rings are fully available, with $N_A$ points each, giving a total of $N_R \times N_A$ data points. However, many points are often missing, especially those corresponding to outermost rings (as they could not be digitized properly). Missing data are generally codified in the file with a specific number (such as "-1" or "-1000") in the data file. Thus, these values do not correspond to real measurements and should be removed. These values are substituted by `NA` when reading the file using **rPACI**'s `readCornealTopography`. 
+In the best scenario (which is not very common in the clinical practice), the $N_R$ rings are fully available, with $N_A$ points each, giving a total of $N_R \times N_A$ data points. However, many points are often missing, especially those corresponding to outermost rings (as they could not be digitized properly). Missing data are generally codified in the file with a specific number (such as "-1" or "-1000") in the data file. Thus, these values do not correspond to real measurements and should be removed. These values are substituted by `NA` when reading the file using **rPACI**'s `readCSO`. 
 
 <!-- available, being NR = 24 -->
 <!-- and NA = 256 typical values, yielding a maximum of 6144 data points. We assume these values from -->
@@ -248,9 +248,9 @@ their use could distort the results.
 
 ### rPACI Dataset Format
 
-In addition, the R package **rPACI** includes also the functions `readDataset` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writeDataset` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCornealTopography`), or by simulation (with `simulateData`).  
+In addition, the R package **rPACI** includes also the functions `readrPACI` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writeDataset` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCSO`), or by simulation (with `simulateData`).  
 
-Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. The functions `readDataset` and `writeDataset` are more flexible, though, and they can manage datasets with incomplete rings or a different number of points in each ring.
+Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. The functions `readrPACI` and `writeDataset` are more flexible, though, and they can manage datasets with incomplete rings or a different number of points in each ring.
 
 | Data file format |    |   |
 | --------- | --------- | --------- |

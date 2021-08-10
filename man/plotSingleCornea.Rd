@@ -18,7 +18,7 @@ If specified, the filename is displayed on the plot.}
 Draw a three-part plot summarizing the corneal topography analysis, based on the Placido irregularity indices calculated by the function \link[rPACI]{computePlacidoIndices}.
 }
 \examples{
-dataset = readCornealTopography(system.file("extdata","K04.txt", package="rPACI"))
+dataset = readCSO(system.file("extdata","K04.txt", package="rPACI"))
 results = computePlacidoIndices(dataset)
 plotSingleCornea(dataset, results)
 }
