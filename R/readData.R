@@ -22,7 +22,7 @@ readCSO <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse =
   }
   
   if (ringsToUse>ringsTotal) {
-    stop("Number of rings to use must be less or equan than the total number of rings.")  
+    stop("Number of rings to use must be less or equal than the total number of rings.")  
   }
   
   if (round(ringsTotal)!=ringsTotal || ringsTotal<=0) {
@@ -161,7 +161,7 @@ readrPACI <- function(filepath, sep = ",") {
   headerEnd = FALSE
   j = 1
   while(linesToDrop < length(file_lines) && headerEnd == FALSE) {
-    lineNumeric = suppressWarnings(as.numeric(strsplit(file_lines[j], split=",")[[1]]))
+    lineNumeric = suppressWarnings(as.numeric(strsplit(file_lines[j], split = sep)[[1]]))
     if (any(is.na(lineNumeric)) || !is.numeric(lineNumeric) || length(lineNumeric)!=3) {
       linesToDrop = linesToDrop+1
     }
@@ -254,3 +254,66 @@ checkDataset <- function(dataset){
   
   return(TRUE)
 }
+
+readFile <- function(filepath, sep = ",", ...){
+ 
+  # Open file and extract its lines
+  connection=file(filepath,open="r")
+  close(connection)
+  connection=file(filepath,open="r")
+  file_lines=readLines(connection, warn=FALSE)
+  close(connection)
+  
+  
+  linesToDrop = 0
+  headerEnd = FALSE
+  j = 1
+
+  while(linesToDrop < length(file_lines) && headerEnd == FALSE) {
+    lineNumeric1 = suppressWarnings(as.numeric(gsub(",",".", file_lines)[j]))
+    lineNumeric2 = suppressWarnings(as.numeric(strsplit(file_lines[j], split=sep)[[1]]))
+    
+    
+    if ((any(is.na(lineNumeric2)) || !is.numeric(lineNumeric2) || length(lineNumeric2)!=3) && is.na(lineNumeric1)) {
+      linesToDrop = linesToDrop+1
+    }
+    else {
+      headerEnd = TRUE
+    }
+    j=j+1
+  }
+  
+  
+  if (linesToDrop == length(file_lines)) {
+    stop("The dataset could not be read properly. Please revise its format.")
+  }  
+  
+  # Save separately the lines that are convertible to numbers
+  numeric_lines = file_lines
+  if (linesToDrop>0) {
+    numeric_lines = file_lines[-c(1:linesToDrop)]
+  }
+  
+  # check which read function should be used
+  row1 = strsplit(numeric_lines[1], split = sep)[[1]]
+  if(length(row1)== 3){
+    df = readrPACI(filepath = filepath, ...)
+  }else{
+    df = readCSO(filepath = filepath, ...)
+  }
+  
+  return(df)
+}
+
+# readFile <- function(filepath,...){
+#   # args <- list(...)
+#   # browser()
+#   df = tryCatch({readCSO(filepath = filepath, ...)}, error = function(e){NULL})
+#   if(is.null(df)){
+#     df = tryCatch({readrPACI(filepath = filepath, ...)}, error = function(e){NULL})
+#   }
+#   if(is.null(df)){
+#     stop("The dataset could not be read properly. Please revise its format.")
+#   }
+#   return(df)
+# }
