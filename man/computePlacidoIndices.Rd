@@ -11,7 +11,7 @@ computePlacidoIndices(
 )
 }
 \arguments{
-\item{datasetRings}{A dataset containing data points of a corneal topography, as given by \link[rPACI]{readCSO} or \link[rPACI]{simulateData}.}
+\item{datasetRings}{A dataset containing data points of a corneal topography, as given by \link[rPACI]{readFile} or \link[rPACI]{simulateData}.}
 
 \item{truncateIndicesAt150}{A boolean value (by default \code{TRUE}) indicating whether the primary indices should be truncated at 150 (so they are in the range 0-150) or not.}
 
@@ -35,38 +35,44 @@ A \code{data.frame} containing the Placido irregularity indices as well as the d
 }
 }
 \description{
-This function computes a set of indices or metrics from a dataset which contains points measured from the cornea,
-and which is usually read from a corneal topographer file. 
-These indices allow to discriminate between normal and irregular corneas. They were introduced and 
-validated with real datasets in 3 scientific papers (see the references below). In these papers,
-all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
-See \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}
-for more details about corneal topography and keratoconus.
- 
-The indices can be computed from a \code{data.frame} in the format given by the functions
-\link[rPACI]{readCSO}, \link[rPACI]{readrPACI} or \link[rPACI]{simulateData}.
+This function computes a set of indices or metrics from a \code{data.frame} which contains points measured from 
+the cornea. The dataset may have been obtained reading from a corneal topography file with \link[rPACI]{readFile} 
+or simulated with \link[rPACI]{simulateData}. These indices allow to discriminate between normal and irregular 
+corneas. For more information on the indices and their precise mathematical definitions, see 
+\href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the references below.
 }
 \details{
-The Placido irregularity indices can be split into two categories: primary and combined indices. 
-The primary indices are: 
-$PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain 
-geometrical properties of the data distribution. Based on them, other combined indices are 
-computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
-For more information on the indices and their precise mathematical definitions, see 
-\href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the papers
-in the references below.
+The Placido irregularity indices can be computed from a \code{data.frame} in the format given by the functions
+\link[rPACI]{readFile} (also with \link[rPACI]{readCSO} or \link[rPACI]{readrPACI}) or \link[rPACI]{simulateData}.
 
-The results include the values of the indices plus a diagnose, which is either "Irregular cornea", 
-"Suspect cornea" or "Normal cornea", depending on the value of the global index GLPI.
+These irregularity indices can be split into two categories: primary and combined indices. 
+The primary indices are: **PI_1**, **PI_2**, **PI_3**, **SL**, **AR_1**, **AR_2**, **AR_3**, **AR_4**, **AR_5**.
+They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are 
+computed: **GLPI** (a generalized linear model) and **NBI** (naive Bayes index).
+
+For more information on these indices and their precise mathematical definitions, see 
+\href{../doc/indicesDefinition.html}{\code{vignette("indicesDefinition", package = "rPACI")}} or the references below.
+
+They were introduced and validated with real datasets in 3 scientific papers (see the references below). In these 
+papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease. For more
+details about corneal topography and keratoconus, see \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}
+
+The results include the values of the indices (0 meaning normal, and a large positive value meaning irregular, 
+check the range for each index) plus a diagnose, which is either "Irregular cornea", "Suspect cornea" or 
+"Normal cornea", depending on the value of the combined index GLPI.
 }
 \examples{
-dataset = readCSO(system.file("extdata","N02.txt", package="rPACI"))
+# Read the file 'N02.txt' which is a real corneal topography (from a normal eye) measured with a CSO device:
+dataset = readFile(system.file("extdata","N02.txt", package="rPACI"))
+
+# Compute its Placido irregularity indices with this function:
 results = computePlacidoIndices(dataset)
+results
 }
 \references{
-Castro-Luna, G. M., Martinez-Finkelshtein, A.,  Ramos-Lopez, D. (2020). Robust keratoconus detection with Bayesian network classifier for Placido-based corneal indices. Contact Lens and Anterior Eye, 43(4), 366-372.
+Castro-Luna, Gracia M., Andrei Martinez-Finkelshtein, and Dario Ramos-Lopez. 2020. "Robust Keratoconus Detection with Bayesian Network Classifier for Placido Based Corneal Indices." Contact Lens and Anterior Eye 43 (4): 366-72. \href{https://doi.org/10.1016/j.clae.2019.12.006}{DOI link}.
 
-Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Burguera-Gimenez, N., Vega-Estrada, A., Pinero, D., & Alio, J. L. (2013). Screening subclinical keratoconus with Placido-based corneal indices. Optometry and Vision Science, 90(4), 335-343.
+Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, Neus Burguera-Gimenez, Alfredo Vega-Estrada, David Pinero, and Jorge L. Alio. 2013. "Screening Subclinical Keratoconus with Placido-Based Corneal Indices." Optometry and Vision Science 90 (4): 335-43. \href{https://doi.org/10.1097/opx.0b013e3182843f2a}{DOI link}.
 
-Ramos-Lopez, D., Martinez-Finkelshtein, A., Castro-Luna, G. M., Pinero, D., & Alio', J. L. (2011). Placido-based indices of corneal irregularity. Optometry and Vision Science, 88(10), 1220-1231.
+Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, David Pinero, and Jorge L. Alio. 2011. "Placido-Based Indices of Corneal Irregularity." Optometry and Vision Science 88 (10): 1220-31. \href{https://doi.org/10.1097/opx.0b013e3182279ff8}{DOI link}.
 }
