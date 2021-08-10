@@ -255,6 +255,33 @@ checkDataset <- function(dataset){
   return(TRUE)
 }
 
+#' Read a dataset in the format used by rPACI
+#'
+#' Read a corneal topography dataset from a file, assuming it has the format used in rPACI. This function
+#' is useful to read datasets that have been saved with \link[rPACI]{writerPACI} after they were simulated using
+#' \link[rPACI]{simulateData} or previously read using \link[rPACI]{readCSO}. 
+#' This format consists of an optional header of any length (its size is automatically detected) and afterwards, 
+#' three tab-separated columns (x and y coordinates of each point and its ring index) and a row per data point.
+#'  
+#' @param filepath A file path to a corneal topography dataset exported by a Placido disk corneal topographer.
+#' @param sep The field separator string. By default, ','.
+#' @param ... Optional arguments of the readCSO() function.
+#' @return A \code{data.frame} containing the corneal topography points, with columns:
+#' \tabular{lll}{
+#'   \code{x}   \tab\tab The X Cartesian coordinates of the points\cr
+#'   \code{y}   \tab\tab The Y Cartesian coordinates of the points\cr
+#'   \code{ring index}  \tab\tab Number or index of the ring to which each point belongs\cr
+#' }
+#' The resulting \code{data.frame} may also include in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation (only if it was generated with \code{simulateData} and saved with \code{writerPACI}). 
+#' @export
+#' @examples
+#' # A dataset that was read from a corneal topographer file was later saved in the rPACI format.
+#' # It can be read with:
+#' dataset1 = readFile(system.file("extdata/packageDatasets","ds1.txt", package="rPACI"))
+#' 
+#  # Another dataset (simulated and saved in the rPACI format) can be read with: 
+#' dataset2 = readFile(system.file("extdata/packageDatasets","ds2.txt", package="rPACI"))
+
 readFile <- function(filepath, sep = ",", ...){
  
   # Open file and extract its lines
@@ -297,9 +324,11 @@ readFile <- function(filepath, sep = ",", ...){
   # check which read function should be used
   row1 = strsplit(numeric_lines[1], split = sep)[[1]]
   if(length(row1)== 3){
-    df = readrPACI(filepath = filepath, ...)
-  }else{
+    df = readrPACI(filepath = filepath, sep = sep)
+  }else if(length(row1)<3){
     df = readCSO(filepath = filepath, ...)
+  }else{
+    stop("The dataset could not be read properly. Please revise its format.")
   }
   
   return(df)
