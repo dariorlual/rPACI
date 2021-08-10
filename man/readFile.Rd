@@ -4,12 +4,10 @@
 \alias{readFile}
 \title{Read a corneal topography file in any available format (recommended by default)}
 \usage{
-readFile(filepath, sep = ",", ...)
+readFile(filepath, ...)
 }
 \arguments{
 \item{filepath}{A file path to a corneal topography file in any supported format.}
-
-\item{sep}{The character used as column separator in the file (by default, ",").}
 
 \item{...}{Optional arguments of any of the reading functions.}
 }
