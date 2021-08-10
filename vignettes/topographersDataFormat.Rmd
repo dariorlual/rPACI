@@ -176,9 +176,9 @@ For a deeper insight about these and other related topics (corneal topography, P
 
 Next, we give a (non-exhaustive) list of corneal topographers that use the Placido disk technology. Some of these devices are also called aberrometers or tomographers (as they also include other technologies than the Placido-disk), or even keratometers or corneal analyzers. This list has been elaborated with publicly available information or reported in scientific papers. Some manufacturers are: [CSO](https://www.csoitalia.it) (Firenze, Italy), [Gaush](http://www.gaushmedical.com/) (Beijing, China), [Medmont](https://medmont.com.au/) (Victoria,  Australia), [Nidek](https://www.nidek-intl.com) (Aichi, Japan), [Optikon](https://www.optikon.it) (Roma, Italy), [Topcon](https://topconhealthcare.com/) (Tokyo, Japan), [Zeiss](https://www.zeiss.com/corporate/int/home.html) (Oberkochen, Germany), and [Ziemer](https://www.ziemergroup.com) (Port, Switzerland). 
 
-**Disclaimer** The authors do not have any commercial nor financial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated to this documentation.
+**Disclaimer**: The authors do not have any commercial nor financial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated to this documentation.
 
-Information about the number of rings and total number of points measured is also included, when available. We also calculate or estimate the number of points per ring, as the ratio between the two previous quantities. The technical features, user operating manual, or other detailed information are generally not public for a particular topographer (sometimes, not even what kind of technology they use). Notice that the number of points per ring can be computed or estimated as the ratio between the total number of measured points and the number of Placido disk rings. 
+Information about the number of rings and total number of points measured is also included, when available. We also calculate or estimate the number of points per ring, as the ratio between the two previous quantities, when this data was not reported directly. Notice that the technical features, user operating manual, or other detailed information are generally not public for a particular topographer (sometimes, not even what kind of technology they use).
 
  Manufacturer   | Device   | Placido disk rings | Measured points^[If both anterior (front) and posterior (rear) corneal surfaces are measured, only the anterior surface value is reported here.] |Points per ring^[Calculated or estimated from the two previous columns] 
 -------     | -------     | -------  | ------- | -------
@@ -211,11 +211,15 @@ Most commercial topographers use proprietary, black-box software, specially desi
 
 In the case of CSO topographers (this may apply to other manufacturers as well), during the raw data exportation process the user is asked whether to store altimetry/elevations, axial curvatures or diopters (z coordinate). For its use in **rPACI**, the chosen magnitude is not important, since the information required by the package are the flat positions of the measured points (2D: x and y) and the third coordinate (z) is not used (@dramoslopez2011, @dramoslopez2013).
 
-
+If you have data from another Placido-based corneal topographer that do not fit the formats explained below, you can try to convert the data to fit any of them, or ask us to make a new specific reading function for them (to contact us, please open an issue through the [**rPACI**'s GitHub repository](https://github.com/dariorlual/rPACI)).
 
 ## Data file formats read by rPACI
 
-The **rPACI** package is able to read corneal topography files in two different formats by now. It will possibly be expanded in the future allowing formats used by other manufacturers. The first file format is the one employed by [CSO](https://www.csoitalia.it) topographers. The second file format has the structure used internally by **rPACI**. It has been developed for handling datasets more flexibly, allowing to save and read data easily. These two formats are described in the next subsections.
+The **rPACI** package is able to read corneal topography files in two different formats, by now. It will possibly be expanded in the future allowing formats used by other manufacturers. The first file format is basically the one employed by [CSO](https://www.csoitalia.it) topographers, but with some more flexibility. The second file format has the structure used internally by **rPACI**. It has been developed to manage directly the datasets handled by the package, allowing to save and read data easily. These two formats are described in the next subsections.
+
+Notice that **rPACI** also includes the general function `readFile` (which is the one recommended to use by default), which can deal with both file formats. This function internally determines the format of the specified file, and then it applies either `readCSO` or `readrPACI` if possible, or else it throws an error (if none can be applied, when the file format does not fit any of these two formats). All this process is transparent to the user, so that using `readFile` with one file type or another is done in the same way, and it produces the same results.
+
+Additional details about using the **rPACI**'s reading functions can be found in [Workflow of the rPACI package](packageUsage.html).
 
 ### CSO Topographers format
 
@@ -267,9 +271,11 @@ their use could distort the results.
 
 ### rPACI Dataset Format
 
-In addition, the R package **rPACI** includes also the functions `readrPACI` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writeDataset` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCSO`), or by simulation (with `simulateData`).  
+In addition, the R package **rPACI** includes also the functions `readrPACI` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writerPACI` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCSO`), or by simulation (with `simulateData`).  
 
-Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. The functions `readrPACI` and `writeDataset` are more flexible, though, and they can manage datasets with incomplete rings or a different number of points in each ring.
+Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. If the file was saved from a dataset generated using `simulateData`, the header contains the simulation parameters, that are recovered as attributes of the `data.frame` when reading the file again.
+
+<!-- The functions `readrPACI` and `writerPACI` are more flexible, though, and they can manage datasets with incomplete rings or a different number of points in each ring. -->
 
 | Data file format |    |   |
 | --------- | --------- | --------- |
