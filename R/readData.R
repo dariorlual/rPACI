@@ -29,7 +29,7 @@
 #' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
 #' @param filepath A file path to a corneal topography file exported by a Placido disk corneal topographer, in the format used by CSO.
 #' @param ringsTotal The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24)
-#' @param pointsPerRings The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)
+#' @param pointsPerRing The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)
 #' @param ringsToUse The effective number of innermost rings to use (as long as they are complete if \code{onlyCompleteRings = TRUE}, otherwise it will be the actual number of complete rings; by default 15)
 #' @param onlyCompleteRings A boolean value indicating whether to use only rings with complete data or not (by default, TRUE)
 #' @param NAvalues A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000))
