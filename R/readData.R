@@ -191,8 +191,36 @@ readDataset <- function(filepath, sep = ",") {
   }
   colnames(result) = c("x","y","ring index")
   
-  #******** parameters as attributes *********
-  header = numeric_lines = file_lines[c(1:linesToDrop)]
+  
+  #******** save parameters as attributes *********
+  # Attribute names of simulateData function
+  args = c("rings", "pointsPerRing", "diameter", "ringRadiiPerturbation", 
+           "maximumMireDisplacement", "mireDisplacementAngle", "mireDisplacementPerturbation",
+           "ellipticAxesRatio", "ellipticRotation", "overallNoise", "seed")
+  
+  # file header
+  header = file_lines[c(1:linesToDrop)]
+  
+  index = sapply(args, grep, x = header, simplify = T)
+
+  index = unlist(index)
+
+  if(length(index)>0){
+    param = header[index]
+    param_split = strsplit(param, " = ")
+    
+    # get parameter values
+    param_values = lapply(param_split, "[[",2)
+    param_values = lapply(param_values, as.numeric)
+    
+    # get parameter names 
+    param_names = lapply(param_split, "[[",1)
+    
+    names(param_values) = param_names
+    
+    attr(result, 'Parameters') = param_values
+  }
+
   
   return(result)
 }
