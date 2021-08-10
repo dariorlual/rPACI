@@ -51,14 +51,22 @@ A \code{data.frame} with columns:
 The resulting \code{data.frame} also includes in its \code{Parameters} attribute (\code{attr(result,'Parameters')}) the list of parameters used for the simulation.
 }
 \description{
-The function \code{simulateData} permits to simulate a wide variety of datasets that appear in clinical practice, as a result of measuring an individual eye with a Placido-disk corneal topographer (see vignette("topographersDataFormat.Rmd")).
+The function \code{simulateData} permits to simulate a wide variety of datasets that appear in clinical 
+practice, as a result of measuring an individual eye with a Placido disk corneal topographer 
+(see \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}).
 }
 \details{
-This function produces a dataset in the same format as the one read by \link[rPACI]{readCSO} from a file, i.e., a list with three columns (x and y coordinates of each point and its ring index) and a row per data point, according to the function parameters (by default, 6144 rows or data points).
+This function produces a dataset in the same format as the one read by \link[rPACI]{readCSO}
+from a file, i.e., a list with three columns (x and y coordinates of each point and its ring index) and a
+row per data point, according to the function parameters (by default, 6144 rows or data points).
 
-See vignette("simulating.Rmd") for additional details. The examples included there show different ways of using \code{simulateData}, by adding different transformations or perturbations to the basic circular pattern. Some of the obtained patterns can correlate with certain clinical conditions, such as keratoconus, comma, or others.
+See \href{../doc/simulating.html}{\code{vignette("simulating", package = "rPACI")}} for additional details.
+The examples included there show different ways of using \code{simulateData}, by adding different transformations
+or perturbations to the basic circular pattern. Some of the obtained patterns can correlate with certain
+clinical conditions, such as keratoconus, comma, or others.
 
-The simulated dataset can be later used according to the package workflow explained in the \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}} vignette [Workflow of the rPACI package](../doc/packageUsage.html).
+The simulated dataset can be later used according to the package workflow explained in the
+\href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }
 \examples{
 # Simulating with default parameters

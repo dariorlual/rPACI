@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapperFunctions.R
 \name{analyzeFolder}
 \alias{analyzeFolder}
-\title{Analysis several corneal topography files in a common folder.}
+\title{Analysis of all corneal topography files in a folder}
 \usage{
 analyzeFolder(
   path,
@@ -16,14 +16,39 @@ analyzeFolder(
 
 \item{fileExtension}{The file extension of the corneal topography files in the folder ('.txt' by default).}
 
-\item{individualPlots}{An optional logical parameter indicating whether the plot for each file should be displayed or not.}
+\item{individualPlots}{An optional logical parameter (by default, FALSE) indicating whether the plot for each file should be displayed or not.}
 
-\item{summaryPlot}{An optional logical parameter indicating whether a summary plot should be displayed or not.}
+\item{summaryPlot}{An optional logical parameter (by default, FALSE) indicating whether a summary plot should be displayed or not.}
+}
+\value{
+A \code{data.frame} containing the Placido irregularity indices as well as the diagnose, with as many rows as data files in the folder, and columns:
+\tabular{lll}{
+  \code{Diagnose}   \tab\tab A text label indicating the diagnose, according to the value of GLPI\cr
+  \code{NBI}   \tab\tab The value of NBI index (in the range 0-100).\cr
+  \code{GLPI}  \tab\tab The value of GLPI index (in the range 0-100).\cr
+  \code{PI_1}  \tab\tab The value of PI_1 index (usually in the range 0-150).\cr   
+  \code{PI_2}  \tab\tab The value of PI_2 index (usually in the range 0-150).\cr   
+  \code{PI_3}  \tab\tab The value of PI_3 index (usually in the range 0-150).\cr   
+  \code{SL}  \tab\tab The value of SL index (usually in the range 0-150).\cr   
+  \code{AR_1}  \tab\tab The value of AR_1 index (usually in the range 0-150).\cr
+  \code{AR_2}  \tab\tab The value of AR_2 index (usually in the range 0-150).\cr   
+  \code{AR_3}  \tab\tab The value of AR_3 index (usually in the range 0-150).\cr   
+  \code{AR_4}  \tab\tab The value of AR_4 index (usually in the range 0-150).\cr   
+  \code{AR_5}  \tab\tab The value of AR_5 index (usually in the range 0-150).\cr      
+}
 }
 \description{
-Analyze all corneal topography files in a specific folder. It is equivalent to use \link[rPACI]{analyzeFile} for each file in the folder.
-It assumes all files with the given extension ('.txt' by defualt) are corneal topography files.
+This function analyze all corneal topography files that are stored in a common folder. It is 
+equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results.
+}
+\details{
+It assumes all files in the folder that have the given extension ('.txt' by default) are corneal topography files.
+The result, for each file, is in the same format as it would be using \link[rPACI]{computePlacidoIndices}.
+
+More details about supported file formats can be found in 
+\href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
 }
 \examples{
+# This analyzes together all the corneal topography example files included in rPACI:
 analyzeFolder(system.file("extdata",package="rPACI"))
 }
