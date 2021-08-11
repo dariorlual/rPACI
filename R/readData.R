@@ -175,9 +175,9 @@ readCSO <- function(filepath, ringsTotal = 24, pointsPerRing = 256, ringsToUse =
 #' 
 #' See more details about corneal topographers and the file structure in \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
 #'  
-#' @references Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \href{https://doi.org/10.1001/archopht.1981.03930011093022}{DOI link}.
-#' @references Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \href{https://doi.org/10.3109/08820538.2013.835844}{DOI link}.
-#' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
+#' @references Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \doi{10.1001/archopht.1981.03930011093022}.
+#' @references Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \doi{10.3109/08820538.2013.835844}.
+#' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \doi{10.1016/S0896-1549(05)70059-6}.
 #' @param filepath A file path to a corneal topography dataset exported by a Placido disk corneal topographer.
 #' @param sep The character used as column separator in the file (by default, ",").
 #' @return A \code{data.frame} containing the corneal topography points, with columns:
@@ -333,9 +333,9 @@ checkDataset <- function(dataset){
 #' 
 #' See more details about corneal topographers and the file structure in \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}.
 #'  
-#' @references Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \href{https://doi.org/10.1001/archopht.1981.03930011093022}{DOI link}.
-#' @references Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \href{https://doi.org/10.3109/08820538.2013.835844}{DOI link}.
-#' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
+#' @references Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \doi{10.1001/archopht.1981.03930011093022}.
+#' @references Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \doi{10.3109/08820538.2013.835844}.
+#' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \doi{10.1016/S0896-1549(05)70059-6}.
 #' @param filepath A file path to a corneal topography file in any supported format.
 #' @param ... Optional arguments of any of the reading functions.
 #' @return A \code{data.frame} containing the corneal topography points, with columns:
