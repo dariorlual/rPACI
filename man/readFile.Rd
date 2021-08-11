@@ -31,7 +31,7 @@ A corneal topographer is an ophthalmic clinical device that obtains measurements
 part of the eye). A Placido disk corneal topographer makes use of the Placido disk (see references and the 
 vignette linked below), which  produce a circular pattern of measurement nodes.
 
-This function internally determines the format of the specified file, and then it applies either \link[rPACI]{readCSO}
+This function internally determines the format of the specified file and then applies either \link[rPACI]{readCSO}
 or \link[rPACI]{readrPACI} if possible, or else it throws an error (if none can be applied, when the file 
 format does not fit any of these two available formats). All this process is transparent to the user, so that 
 using \code{readFile} with one file type or another is done in the same way, and it produces the same results. 

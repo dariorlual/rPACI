@@ -50,5 +50,5 @@ dataset = simulateData(rings = 18, pointsPerRing = 300,
 # before saving):
 writerPACI(dataset, "datasetFile.txt")
 
-# The file will include as a header the parameters used in simulation
+# The file will include as a header the parameters used in the simulation
 }

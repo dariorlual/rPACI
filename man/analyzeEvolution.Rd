@@ -22,14 +22,14 @@ and two temporal plots.
 }
 \details{
 If the data are loaded from a folder, it will assume that the temporal arrangement is the alphabetical order
-of the files' name. Therefore, it is advised to use proper file names, for instance using this date format: 
+of the filenames. Therefore, it is advised to use proper file names, for instance using this date format: 
 'YYYY-MM-DD.txt'.
 
 Moreover, the folder should contain data measures of just one patient, since the function will read all the files
 (with the given extension) of the specified folder. On the other hand, if the data are stored in a list, it will
 be assumed that the temporal order corresponds with the index of the dataset in the list.
 
-#' More details about supported file formats can be found in 
+More details about supported file formats can be found in 
 \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
 and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 }

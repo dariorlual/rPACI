@@ -38,7 +38,7 @@ A \code{data.frame} containing the Placido irregularity indices as well as the d
 }
 }
 \description{
-This function analyze all corneal topography files that are stored in a common folder. It is 
+This function analyzes all corneal topography files that are stored in a common folder. It is 
 equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results.
 }
 \details{
