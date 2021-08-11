@@ -1,0 +1,50 @@
+# Version 0.2.0
+
+This is a **major update**, with increased functionality and new features, easier workflow and more flexibility, improved and extended documentation, and the addition of 4 vignettes:
+
+## New features
+
+* Now the package is available also in GitHub in addition to CRAN.
+* Added support to a new file format following the rPACI's datasets structure.
+* New functions `readrPACI` and `writerPACI` to read and write rPACI's datasets to files.
+* New wrapper function `readFile`, able to read data in any supported file format (to be used by default).
+* Added a flexible, new function `simulateData` to obtain simulated corneal measurements with various parameters.
+* New function `analyzeEvolution` to analyze the temporal evolution of an eye with different measurements, including graphics.
+* Added new function `analyzeDataset`, similar to `analyzeFile`, but for data already on memory instead of on disk.
+* Added new corneal topography files in the new format (obtained by simulation).
+* Included 4 vignettes to explain in full detail the package behavior and possibilities:
+	+ Corneal topographers and data formats
+	+ Mathematical definition of the indices
+	+ Simulating corneal datasets
+	+ Workflow of the rPACI package 
+
+## Enhancements
+
+* Improved code to avoid as many hard-coded operations as possible.
+* Refactoring function name: `readCornealTopography` -> `readCSO` (as it reads a file format used by CSO topographers).
+* Reading function `readCSO` now analyzes the file and identifies its header.
+* Reading function `readCSO` is more flexible with the inclusion of many format parameters.
+* Clarified the topography files source (see vignette 'Workflow of the rPACI package').
+* Added internal function `checkDataset` to verify the consistency of a rPACI's dataset.
+
+## Bug fixes
+
+* Small bugs fixed in `computePlacidoIndices`
+* Bug fix in right-side plot of `plotSingleCornea`
+* General cleaning of code and documentation
+
+# Version 0.1.2
+
+* Added some functionality
+* Improved documentation
+* Updated references 
+* Bug fixes 
+
+# Version 0.1.1
+
+* rPACI is on CRAN! 
+* Improved documentation
+
+# Version 0.1.0
+
+* First working version of rPACI is available

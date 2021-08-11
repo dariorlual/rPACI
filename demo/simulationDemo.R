@@ -1,8 +1,9 @@
-#require("rPACI")
+require("rPACI")
+
 
 #setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-source("rPACI.R")
+#setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
+#source("rPACI.R")
 
 
 ##### EXAMPLE 1: (Default) Perfect circular pattern (24 rings * 256 points per ring, with diameter=12mm) ######
