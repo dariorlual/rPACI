@@ -29,7 +29,7 @@
 #' @references Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
 #' @param filepath A file path to a corneal topography file exported by a Placido disk corneal topographer, in the format used by CSO.
 #' @param ringsTotal The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24)
-#' @param pointsPerRing The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256)
+#' @param pointsPerRing The number of points per ring that are digitized in the measurement (it depends on the particular device; by default 256)
 #' @param ringsToUse The effective number of innermost rings to use (as long as they are complete if \code{onlyCompleteRings = TRUE}, otherwise it will be the actual number of complete rings; by default 15)
 #' @param onlyCompleteRings A boolean value indicating whether to use only rings with complete data or not (by default, TRUE)
 #' @param NAvalues A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000))
@@ -320,7 +320,7 @@ checkDataset <- function(dataset){
 #' part of the eye). A Placido disk corneal topographer makes use of the Placido disk (see references and the 
 #' vignette linked below), which  produce a circular pattern of measurement nodes.
 #' 
-#' This function internally determines the format of the specified file, and then it applies either \link[rPACI]{readCSO}
+#' This function internally determines the format of the specified file and then applies either \link[rPACI]{readCSO}
 #' or \link[rPACI]{readrPACI} if possible, or else it throws an error (if none can be applied, when the file 
 #' format does not fit any of these two available formats). All this process is transparent to the user, so that 
 #' using \code{readFile} with one file type or another is done in the same way, and it produces the same results. 
