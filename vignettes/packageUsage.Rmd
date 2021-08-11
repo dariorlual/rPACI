@@ -298,7 +298,7 @@ This other example, imports the corneal data from disk and analyzes the files:
 
 ````{r, eval = T, fig.width = 7, fig.height = 4}
 # Specify a folder path to analyze a patient's evolution over time
-analyzeEvolution(data = system.file("extdata/temporal/", package="rPACI"), fileExtension = 'txt')
+analyzeEvolution(data = system.file("extdata/evolution/", package="rPACI"), fileExtension = 'txt')
 
 ````
 
