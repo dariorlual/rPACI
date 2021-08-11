@@ -17,7 +17,7 @@
   
   The rPACI package allows the calculation of the corneal irregularity indices described in [Castro-Luna et al. (2020)](https://doi.org/10.1016%2Fj.clae.2019.12.006), [Ramos-Lopez et al. (2013)](https://doi.org/10.1097%2FOPX.0b013e3182843f2a), and [Ramos-Lopez et al. (2011)](https://doi.org/10.1097/opx.0b013e3182279ff8). It provides a simple interface to read corneal topography data files as exported by a typical Placido disk topographer, to compute the irregularity indices mentioned before, and to display summary plots that are easy to interpret for a clinician.
 
-  We encourage the users to get started by reading the package's vignettes. We recommend beginning with 'Workflow of the rPACI package' and then consulting the other vignettes for additional details.
+  **We encourage the users to get started by reading the package's vignettes. We recommend beginning with 'Workflow of the rPACI package' and then consulting the other vignettes for additional details.**
   
   ## Corneal topography
   
