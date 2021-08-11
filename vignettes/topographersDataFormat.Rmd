@@ -164,7 +164,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The cornea is the external (outermost) part of the eye, and it is responsible of most of the eye's refractive power. Given its importance, its analysis is especially important in clinical ophthalmology, since it can be affected by several diseases (e.g., keratoconus). Besides, refractive surgery to correct vision defects acts on the cornea, changing its curvature. Thus, the correct analysis and diagnose of the cornea is crucial for practitioners (@fan2018). 
+The cornea is the external (outermost) part of the eye, and it is responsible of most of the eye's refractive power. Given its importance in vision, its analysis is especially important in clinical ophthalmology, since it can be affected by several diseases (e.g., keratoconus). Besides, refractive surgery to correct vision defects acts on the cornea, changing its curvature. Thus, the correct analysis and diagnose of the cornea is crucial for practitioners (@fan2018). 
 
 Corneal topography (@rowsey1981, @pinero2015, @fan2018) refers to the measurement of the corneal surface shape using an automated device, which is called a corneal topographer. Most corneal topographers used in clinical practice rely on the Placido disk technology (either alone or in combination with others, such as the Scheimpflug camera) (@pinero2015, @samapunphong1998). In a Placido disk topographer, an illuminated pattern of concentric rings (which is the actual Placido disk) is projected into the corneal surface, and its reflection on the anterior surface of the cornea is captured by a camera situated at the center of the system. The picture is then digitized along a certain number of radii at equally spaced angles (@samapunphong1998, @espinosa2013). 
 
@@ -229,10 +229,10 @@ Nevertheless, the reading function `readCSO` has been designed to be more flexib
  
 To use **rPACI**'s `readCSO`, the raw measurement file exported by a corneal topographer should have the following structure:
 
-* A header with meta-data: patient data, corneal measurements, date of exploration, etc. Its size
+* A header with meta-data: patient data, optical measurements, date of exploration, etc. Its size
 depends on the device. For CSO topographers, the header typically has 24 lines. The function used in **rPACI** to read the files, `readCSO`, is able to detect the header lines (those that do not contain only real numbers) and to skip them.
 * A list of size $N_R \times N_A$ with the $\rho$ coordinate (distance to the origin in polar coordinates,
-measured in mm) of the digitized points, at equally spaced angles ($\theta$, the argument in polar coordinates). The $\theta$ coordinate is inferred from the position, as it is not explicitly given in the data file.
+measured in mm) of the digitized points, at equally spaced angles ($\theta$, the argument in polar coordinates). The $\theta$ coordinate is inferred from the position (assuming a uniform distribution), as it is not explicitly given in the data file.
 * A list of size $N_R \times N_A$ with the $z$ coordinate, which can be altitude (elevation) or curvature, depending on the topographer and the exportation settings. These data are post-processed by the device using different algorithms, not directly measured, and the $z$ values are not used in **rPACI**.
 
 More details about using `readCSO` and the rest of the **rPACI** package can be found in [Workflow of the rPACI package](packageUsage.html).

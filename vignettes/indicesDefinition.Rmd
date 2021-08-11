@@ -143,7 +143,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The indices computed by **rPACI** allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in scientific papers (@dramoslopez2011, @dramoslopez2013). An additional index, based in a naive Bayes classifier, was added and tested with a different database in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
+The **rPACI** package is able to read corneal topography files and then to analyze them. This analysis includes the computation of some Placido irregularity indices. The indices computed by **rPACI** allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in the scientific publications @dramoslopez2011 and @dramoslopez2013. An additional index, based in a naive Bayes classifier, was proposed later, and tested with a different database, in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
 
 The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by **rPACI**. They can be split into two categories: primary and combined indices. The primary indices are: $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
 
