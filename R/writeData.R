@@ -40,7 +40,7 @@
 #' # before saving):
 #' writerPACI(dataset, "datasetFile.txt")
 #' 
-#' # The file will include as a header the parameters used in simulation
+#' # The file will include as a header the parameters used in the simulation
 writerPACI <- function(dataset, filename, sep = ","){
   # Get parameters (if param is not NULL, df comes from the simulateData function)
   param = attr(dataset, 'Parameters')

@@ -51,7 +51,7 @@ analyzeFile <- function(path, drawplot = TRUE) {
 
 #' Analysis of all corneal topography files in a folder
 #'
-#' This function analyze all corneal topography files that are stored in a common folder. It is 
+#' This function analyzes all corneal topography files that are stored in a common folder. It is 
 #' equivalent to use \link[rPACI]{analyzeFile} on each file in the folder, and then binding the results. 
 #' 
 #' This function assumes all files in the folder that have the extension given by the argument \code{fileExtension} 
