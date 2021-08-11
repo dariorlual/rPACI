@@ -25,7 +25,7 @@ Description: Analysis of corneal data obtained from a Placido disk corneal
 	It provides a simple interface to read corneal topography data files as exported by a typical
     Placido disk topographer, to compute the irregularity indices mentioned before,
     and to display summary plots that are easy to interpret for a clinician.
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
 Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr, rlang
