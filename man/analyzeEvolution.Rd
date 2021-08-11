@@ -52,5 +52,5 @@ analyzeEvolution(data)
 
 # EXAMPLE 2
 # Specify a folder path to analyze a patient's evolution over time
-analyzeEvolution(paste(system.file("extdata", package="rPACI"),"/temporal/",sep=""))
+analyzeEvolution(system.file("extdata/evolution/", package="rPACI"))
 }
