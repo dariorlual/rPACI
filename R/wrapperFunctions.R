@@ -176,7 +176,7 @@ analyzeDataset <- function(dataset, drawplot = TRUE) {
 #' and two temporal plots.
 #'
 #' If the data are loaded from a folder, it will assume that the temporal arrangement is the alphabetical order
-#' of the files' name. Therefore, it is advised to use proper file names, for instance using this date format: 
+#' of the filenames. Therefore, it is advised to use proper file names, for instance using this date format: 
 #' 'YYYY-MM-DD.txt'.
 #' 
 #' Moreover, the folder should contain data measures of just one patient, since the function will read all the files
