@@ -32,7 +32,7 @@ The following examples show different ways of using `simulateData`, by adding di
 
 ## Example 1: Default simulation
 
-If the function is used with default parameters, the dataset simulated consists of 24 rings or mires, 256 points per ring, yielding a total of 6144 points. This are frequent values among commercial topographers. The dataset will have perfectly circular and centered mires, within an area of 12 mm of diameter. This will be a deterministic simulation (i.e., it will always produce exactly the same result). This function produces 
+If the function is used with default parameters, the dataset simulated consists of 24 rings or mires, 256 points per ring, yielding a total of 6144 points. These are frequent values among commercial topographers. The dataset will have perfectly circular and centered mires, within an area of 12 mm of diameter. This will be a deterministic simulation (i.e., it will always produce exactly the same result). This function produces 
 
 
 ```{r, echo=FALSE, warning=FALSE}
@@ -148,7 +148,7 @@ Another common measurement pattern is one consisting of elliptic, or nearly elli
 
 ## Example 6: Random Cartesian noise
 
-The function `simulateData` also permits to introduce random, white noise of a certain magnitude in the Cartesian coordinates of the sampled points. This is done with the parameter `overallNoise`. Even though these kind of pattern cannot be obtained directly by a Placido-disk topographer (since the points in each mire are sampled equiangularly by the topographer), it might be of interest for some applications.
+The function `simulateData` also permits to include random, white noise of a certain magnitude in the Cartesian coordinates of the sampled points. This is done with the parameter `overallNoise`. Even though this kind of pattern cannot be obtained directly by a Placido-disk topographer (since the points in each mire are sampled equiangularly by the topographer), it might be of interest for some applications.
 
 
 ```{r, echo=FALSE, warning=FALSE}

@@ -149,9 +149,9 @@ The purpose of this vignette is to explain the mathematical definition and the m
 
 ## Data structure
 
-First, we assume a `data.frame` with corneal data is already available, which may have been loaded from a file using the function `readCSO` (see [Workflow of rPACI pacakge](packageUsage.html)), simulated using `simulateData` (see [Simulating corneal datasets](simulating.html)), or by other ways (as long as it meets the dataset requirements below).
+First, we assume a `data.frame` with corneal data is already available, which may have been loaded from a file using the function `readFile` (see [Workflow of rPACI pacakge](packageUsage.html)), simulated using `simulateData` (see [Simulating corneal datasets](simulating.html)), or by other ways (as long as it meets the dataset requirements below).
 
-The dataset consists of three columns: x, y (with the X and Y Cartesian coordinates of data points), and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readCSO` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readCSO`, 15 by default).
+The dataset consists of three columns: x, y (with the X and Y Cartesian coordinates of data points), and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readFile` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readFile`, 15 by default).
 
 ```{r, echo=FALSE, warning=FALSE}
   library(rPACI)
@@ -190,7 +190,7 @@ $x_{((N-1) \times N_A + 1)}$ | $y_{((N-1) \times N_A + 1)}$ | $N$
 ...         | ...         | ...
 $x_{(N \times N_A)}$ | $y_{(N \times N_A)}$ | $N$
 
-There are $N_A$ rows per ring ($N$ rings), and thus, a total of $N \times N_A$ data points (in the example, $N \times N_A = 13 \times 256 = 3328$). The dataset shall not contain missing data (this is guaranteed if using `readCSO` with default parameters or `simulateData`).
+There are $N_A$ rows per ring ($N$ rings), and thus, a total of $N \times N_A$ data points (in the example, $N \times N_A = 13 \times 256 = 3328$). The dataset shall not contain missing data (this is guaranteed if using `readFile` with default parameters or `simulateData`).
 
 Thus, we have $N \times N_A$ data points corresponding to $N$ complete rings, given in Cartesian coordinates. Let us define $R_k$, the set of points belonging to the $k$-th ring/mire (from the inside out) and $k \in \{1, \dots, N\}$ is the ring index. Then, a single data point $P_j=( x_j, y_j )$ (corresponding to the j-th row of the dataframe) belongs to $R_k$, i.e., $P_j \in R_k$ if $j \in J_k$, $J_k:=\{ n_k, n_k+1, ..., n_k+(N_A-1) \}$, with $n_k = 1+N_A(k-1)$ ($J_k$ is the set of indices $j$ which correspond to the $k$-th mire $R_k$, and $n_k$ is the first (smallest) of them).
 

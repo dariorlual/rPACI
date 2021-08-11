@@ -164,7 +164,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The cornea is the external (outermost) part of the eye, and it is responsible of most of the eye's refractive power. Given its importance in vision, its analysis is especially important in clinical ophthalmology, since it can be affected by several diseases (e.g., keratoconus). Besides, refractive surgery to correct vision defects acts on the cornea, changing its curvature. Thus, the correct analysis and diagnose of the cornea is crucial for practitioners (@fan2018). 
+The cornea is the external (outermost) part of the eye, and it is responsible for most of the eye's refractive power. Given its importance in vision, its analysis is especially important in clinical ophthalmology, since it can be affected by several diseases (e.g., keratoconus). Besides, refractive surgery to correct vision defects acts on the cornea, changing its curvature. Thus, the correct analysis and diagnosis of the cornea are crucial for practitioners (@fan2018). 
 
 Corneal topography (@rowsey1981, @pinero2015, @fan2018) refers to the measurement of the corneal surface shape using an automated device, which is called a corneal topographer. Most corneal topographers used in clinical practice rely on the Placido disk technology (either alone or in combination with others, such as the Scheimpflug camera) (@pinero2015, @samapunphong1998). In a Placido disk topographer, an illuminated pattern of concentric rings (which is the actual Placido disk) is projected into the corneal surface, and its reflection on the anterior surface of the cornea is captured by a camera situated at the center of the system. The picture is then digitized along a certain number of radii at equally spaced angles (@samapunphong1998, @espinosa2013). 
 
@@ -176,9 +176,9 @@ For a deeper insight about these and other related topics (corneal topography, P
 
 Next, we give a (non-exhaustive) list of corneal topographers that use the Placido disk technology. Some of these devices are also called aberrometers or tomographers (as they also include other technologies than the Placido-disk), or even keratometers or corneal analyzers. This list has been elaborated with publicly available information or reported in scientific papers. Some manufacturers are: [CSO](https://www.csoitalia.it) (Firenze, Italy), [Gaush](http://www.gaushmedical.com/) (Beijing, China), [Medmont](https://medmont.com.au/) (Victoria,  Australia), [Nidek](https://www.nidek-intl.com) (Aichi, Japan), [Optikon](https://www.optikon.it) (Roma, Italy), [Topcon](https://topconhealthcare.com/) (Tokyo, Japan), [Zeiss](https://www.zeiss.com/corporate/int/home.html) (Oberkochen, Germany), and [Ziemer](https://www.ziemergroup.com) (Port, Switzerland). 
 
-**Disclaimer**: The authors do not have any commercial nor financial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated to this documentation.
+**Disclaimer**: The authors do not have any commercial nor financial interest in the manufacturers reported here or in any other corneal topography companies. Any reliable information about additional manufacturers or topographers will be welcome and incorporated into this documentation.
 
-Information about the number of rings and total number of points measured is also included, when available. We also calculate or estimate the number of points per ring, as the ratio between the two previous quantities, when this data was not reported directly. Notice that the technical features, user operating manual, or other detailed information are generally not public for a particular topographer (sometimes, not even what kind of technology they use).
+Information about the number of rings and the total number of points measured is also included, when available. We also calculate or estimate the number of points per ring, as the ratio between the two previous quantities, when this data was not reported directly. Notice that the technical features, user operating manual, or other detailed information are generally not public for a particular topographer (sometimes, not even what kind of technology they use).
 
  Manufacturer   | Device   | Placido disk rings | Measured points^[If both anterior (front) and posterior (rear) corneal surfaces are measured, only the anterior surface value is reported here.] |Points per ring^[Calculated or estimated from the two previous columns] 
 -------     | -------     | -------  | ------- | -------
@@ -201,7 +201,7 @@ Zeiss       | [Atlas 9000](https://www.zeiss.com/meditec/us/products/ophthalmolo
 Ziemer      | [Galilei G4](https://www.ziemergroup.com/en/products/galilei/)   | 20  | ? (up to 100000) | ? (~5000)
 Ziemer      | [Galilei G6](https://www.ziemergroup.com/en/products/galilei/)   | 20  | ? (up to 100000) | ? (~5000)
 
-It is important to notice that irregularity indices in **rPACI** requires a *raw* measurement, i.e., the data points obtained before any internal processing, interpolation or resampling. Since most technical documentation is not public, we cannot assure if all these devices allow to export the raw measurements. Please consult the user operating manual to determine it, or ask the manufacturer's technical support.
+It is important to notice that irregularity indices in **rPACI** require a *raw* measurement, i.e., the data points obtained before any internal processing, interpolation, or resampling. Since most technical documentation is not public, we cannot assure if all these devices allow exporting the raw measurements. Please consult the user operating manual to determine it, or ask the manufacturer's technical support.
 
 ## Export data from a topographer
 
@@ -209,7 +209,7 @@ In this section, we give some general hints about data exportation from a cornea
 
 Most commercial topographers use proprietary, black-box software, specially designed to facilitate the practitioners' work. They normally use a GUI (Graphical User Interface) to interact with the user, or more specifically, a WIMP system (from Windows, Icons, Menus, Pointer). Among the options available in the different topographer's menus, some commercial devices offer the possibility of exporting data, previously obtained from a corneal measurement. These options may appear in the menus related to database management, data export/import, save or save as, I/O, backup, external copy, or other similar terms. If necessary, please consult the topographer's user operating manual, or ask the manufacturer’s technical support. 
 
-In the case of CSO topographers (this may apply to other manufacturers as well), during the raw data exportation process the user is asked whether to store altimetry/elevations, axial curvatures or diopters (z coordinate). For its use in **rPACI**, the chosen magnitude is not important, since the information required by the package are the flat positions of the measured points (2D: x and y) and the third coordinate (z) is not used (@dramoslopez2011, @dramoslopez2013).
+In the case of CSO topographers (this may apply to other manufacturers as well), during the raw data exportation process, the user is asked whether to store altimetry/elevations, axial curvatures, or diopters (z coordinate). For its use in **rPACI**, the chosen magnitude is not important, since the information required by the package are the flat positions of the measured points (2D: x and y), and the third coordinate (z) is not used (@dramoslopez2011, @dramoslopez2013).
 
 If you have data from another Placido-based corneal topographer that do not fit the formats explained below, you can try to convert the data to fit any of them, or ask us to make a new specific reading function for them (to do that, please open an issue through the [**rPACI**'s GitHub repository](https://github.com/dariorlual/rPACI)).
 
@@ -223,7 +223,7 @@ Additional details about using the **rPACI**'s reading functions can be found in
 
 ### CSO Topographers format
 
-The R package **rPACI** includes the function `readCSO` which is able to read a raw Placido disk corneal topography from a file that has been exported by certain corneal topographers. It has been especially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
+The R package **rPACI** includes the function `readCSO` which is able to read a raw Placido disk corneal topography from a file that has been exported by certain corneal topographers. It has been specially designed for the file format exported from topographers manufactured by [CSO](https://www.csoitalia.it) (Firenze, Italy): EyeTop2005, Sirius, Antares, or Osiris-T, among others. 
 
 Nevertheless, the reading function `readCSO` has been designed to be more flexible, allowing to specify different parameters: the amounts of rings available, points per ring, and rings to use, whether to use or not only complete rings, and the value encoding NAs in the file. In addition, this function automatically processes the file and identifies the size and the header, without assuming a fixed structure or having to specify its size as a parameter.
  
@@ -271,7 +271,7 @@ their use could distort the results.
 
 ### rPACI Dataset Format
 
-In addition, the R package **rPACI** includes also the functions `readrPACI` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writerPACI` over an **rPACI** dataset, which may have been obtained reading data from a file in other format (e.g. using `readCSO`), or by simulation (with `simulateData`).  
+In addition, the R package **rPACI** includes also the functions `readrPACI` which is able to read a file structured in the same way as the datasets used in the package. A file of this type is built using `writerPACI` over an **rPACI** dataset, which may have been obtained reading data from a file in other formats (e.g. using `readCSO`), or by simulation (with `simulateData`).  
 
 Assuming there are $N$ full rings in the dataset and $N_A$ points in each ring, the file structure would be that of the table below. If the file was saved from a dataset generated using `simulateData`, the header contains the simulation parameters, that are recovered as attributes of the `data.frame` when reading the file again.
 
