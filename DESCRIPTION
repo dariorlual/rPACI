@@ -27,16 +27,16 @@ Description: Analysis of corneal data obtained from a Placido disk corneal
     and to display summary plots that are easy to interpret for a clinician.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Depends: R (>= 3.5.0)
 Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr, rlang
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-07-01 20:07:13 UTC; Usuario
 Author: Darío Ramos-López [aut, cre],
   Ana D. Maldonado [aut]
 Maintainer: Darío Ramos-López <dario.ramos.lopez@urjc.es>
 Repository: CRAN
+URL: https://cran.r-project.org/package=rPACI, https://github.com/dariorlual/rPACI/
+BugReports: https://github.com/dariorlual/rPACI/issues
 Date/Publication: 2020-07-02 09:20:03 UTC
 Suggests: 
     knitr,
