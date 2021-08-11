@@ -48,7 +48,8 @@ dataset = simulateData(rings = 18, pointsPerRing = 300,
 
 # Now the dataset can be saved to file using 'writerPACI' (check the working directory
 # before saving):
+\dontrun{
 writerPACI(dataset, "datasetFile.txt")
-
+}
 # The file will include as a header the parameters used in the simulation
 }

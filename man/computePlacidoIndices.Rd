@@ -72,9 +72,9 @@ results = computePlacidoIndices(dataset)
 results
 }
 \references{
-Castro-Luna, Gracia M., Andrei Martinez-Finkelshtein, and Dario Ramos-Lopez. 2020. "Robust Keratoconus Detection with Bayesian Network Classifier for Placido Based Corneal Indices." Contact Lens and Anterior Eye 43 (4): 366-72. \href{https://doi.org/10.1016/j.clae.2019.12.006}{DOI link}.
+Castro-Luna, Gracia M., Andrei Martinez-Finkelshtein, and Dario Ramos-Lopez. 2020. "Robust Keratoconus Detection with Bayesian Network Classifier for Placido Based Corneal Indices." Contact Lens and Anterior Eye 43 (4): 366-72. \doi{10.1016/j.clae.2019.12.006}.
 
-Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, Neus Burguera-Gimenez, Alfredo Vega-Estrada, David Pinero, and Jorge L. Alio. 2013. "Screening Subclinical Keratoconus with Placido-Based Corneal Indices." Optometry and Vision Science 90 (4): 335-43. \href{https://doi.org/10.1097/opx.0b013e3182843f2a}{DOI link}.
+Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, Neus Burguera-Gimenez, Alfredo Vega-Estrada, David Pinero, and Jorge L. Alio. 2013. "Screening Subclinical Keratoconus with Placido-Based Corneal Indices." Optometry and Vision Science 90 (4): 335-43. \doi{10.1097/opx.0b013e3182843f2a}.
 
-Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, David Pinero, and Jorge L. Alio. 2011. "Placido-Based Indices of Corneal Irregularity." Optometry and Vision Science 88 (10): 1220-31. \href{https://doi.org/10.1097/opx.0b013e3182279ff8}{DOI link}.
+Ramos-Lopez, Dario, Andrei Martinez-Finkelshtein, Gracia M. Castro-Luna, David Pinero, and Jorge L. Alio. 2011. "Placido-Based Indices of Corneal Irregularity." Optometry and Vision Science 88 (10): 1220-31. \doi{10.1097/opx.0b013e3182279ff8}.
 }
