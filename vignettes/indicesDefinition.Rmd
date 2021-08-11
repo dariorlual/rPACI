@@ -143,15 +143,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **rPACI** package is able to read corneal topography files and then to analyze them. This analysis includes the computation of some Placido irregularity indices. The indices computed by **rPACI** allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in the scientific publications @dramoslopez2011 and @dramoslopez2013. An additional index, based in a naive Bayes classifier, was proposed later, and tested with a different database, in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for detection of keratoconus, a corneal disease.
+The **rPACI** package can read corneal topography files and then analyze them. This analysis includes the computation of some Placido irregularity indices. The indices computed by **rPACI** allow to discriminate between normal and irregular corneas. Most of them were introduced and validated with real datasets in the scientific publications @dramoslopez2011 and @dramoslopez2013. An additional index, based on a naive Bayes classifier, was proposed later, and tested with a different database, in @castroluna2020. In these papers, all indices demonstrated a good sensitivity for the detection of keratoconus, a corneal disease.
 
 The purpose of this vignette is to explain the mathematical definition and the meaning of the indices given by **rPACI**. They can be split into two categories: primary and combined indices. The primary indices are: $PI_1$, $PI_2$, $PI_3$, $SL$, $AR_1$, $AR_2$, $AR_3$, $AR_4$, $AR_5$. They all measure certain geometrical properties of the data distribution. Based on them, other combined indices are computed: $GLPI$ (a generalized linear model) and $NBI$ (naive Bayes index).
 
 ## Data structure
 
-First, we assume a corneal dataframe is already available, which may have been loaded from a file using the function `readCSO` (see [Workflow of rPACI pacakge](packageUsage.html)), simulated using `simulateData` (see [Simulating corneal datasets](simulating.html)), or by other ways (as long as it meets the dataset requirements below).
+First, we assume a `data.frame` with corneal data is already available, which may have been loaded from a file using the function `readCSO` (see [Workflow of rPACI pacakge](packageUsage.html)), simulated using `simulateData` (see [Simulating corneal datasets](simulating.html)), or by other ways (as long as it meets the dataset requirements below).
 
-The dataset consist of three columns: x, y (with the X and Y Cartesian coordinates of data points) and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readCSO` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readCSO`, 15 by default).
+The dataset consists of three columns: x, y (with the X and Y Cartesian coordinates of data points), and ring index (1, 2, ...). The number of rows (number of data points) in the dataset depends on the data availability (`readCSO` by default only reads complete rings, and `simulateData` also simulates complete rings), and the chosen number of innermost rings to use (an optional parameter for `readCSO`, 15 by default).
 
 ```{r, echo=FALSE, warning=FALSE}
   library(rPACI)
@@ -206,7 +206,7 @@ Thus, we have $N \times N_A$ data points corresponding to $N$ complete rings, gi
 
 The first step to calculate the indices is to compute the best-fitting circle (with center $C_k$ and (average) radius $AR_k$) for each ring, with $k \in \{1, \dots, N\}$. This is done by least-squares fitting of a general circle equation to the Cartesian coordinates of data points in ring $k$ and then, the geometrical parameters (center and radius) are computed from the coefficients (see @ahn2001 and @dramoslopez2011 for more details). These centers and radii contain information about the displacement or off-centering of the mires, as well as their size and regularity. A high level of drift or variability in these parameters is a signal of corneal irregularity (@dramoslopez2011).
 
-From the best-fitting circle centers $C_k$, $k \in \{1, \dots, N\}$, a regression line can be adjusted to their coordinates ($y$ over $x$), yielding a slope $m$ and a intercept (which is not used). This line contains information about the direction of the displacement of the centers, which can be a signal of keratoconus (more specifically, the upper-bottom or north-south asymmetry is a marker for keratoconus, see @dramoslopez2013).
+From the best-fitting circle centers $C_k$, $k \in \{1, \dots, N\}$, a regression line can be adjusted to their coordinates ($y$ over $x$), yielding a slope $m$ and an intercept (which is not used). This line contains information about the direction of the displacement of the centers, which can be a signal of keratoconus (more specifically, the upper-bottom or north-south asymmetry is a marker for keratoconus, see @dramoslopez2013).
 
 One can find also the best-fitting ellipses (with centers $\tilde{C}_k$ and axis ratio $c_k$, i.e., ratio or quotient between the major and the minor axis) for each ring ($k \in \{1, \dots, N\}$). This process is also based on a least-squares fit of the general ellipse equation to the Cartesian coordinates of data points of mire $k$ (see @ahn2001 and @dramoslopez2011 for more details). A high level of variability in the axis ratio is also a signal of corneal irregularity (@dramoslopez2011).
 
@@ -235,7 +235,7 @@ Apart from these 4 indices, we also take as irregularity indices the values of $
 
 In order to obtain indices with values in the same range (more easily comparable and to prevent scale problems when combining them), a normalization of each primary index was performed (@dramoslopez2011 and @dramoslopez2013). To do it, these indices were tested on a real dataset of corneas of different conditions. Then, their values were linearly translated to $[0,100]$, so that the value corresponding to the best possible condition (less irregularity) was transformed to $0$, and the worst (more irregularity) to $100$. Therefore, in the test dataset, the values of all primary indices were between $0$ (best-case) and $100$ (worst-case). 
 
-In practice, after the transformation, most index values for any cornea will be in $[0,100]$, but in some particular cases they may be outside that interval. To facilitate their interpretation, we can assume that values below zero correspond to zero, and the maximum irregularity is attained at a certain value (e.g. 150, this value is discussed in @dramoslopez2011).
+In practice, after the transformation, most index values for any cornea will be in $[0,100]$, but in some particular cases, they may be outside that interval. To facilitate their interpretation, we can assume that values below zero correspond to zero, and the maximum irregularity is attained at a certain value (e.g. 150, this value is discussed in @dramoslopez2011).
 
 The normalization coefficients used in the previous studies (@dramoslopez2011 and @dramoslopez2013) were the following (for notation simplicity, values on the left-hand side of the expressions represent normalized values whereas values on the right-hand side are values before the normalization (as computed by their definitions above)):
 
@@ -250,7 +250,7 @@ $$ AR_3 = -486.9218093835968 AR_3 + 331.3137688964757 $$
 $$ AR_4 = -318.192614292727 AR_4 + 298.064078007947 $$
 $$ AR_5 = -288.4037960143595 AR_5 + 321.4180137915255 $$
 
-Thus, after the normalization (and possible truncation of extremely high or low values), all indices value lay in $[0,150]$, with $0$ corresponding to the most normal case and $150$ to the most irregular case. This value of $150$ is arbitrary and could be changed (increased or lowered), but we found it performed well in practice (@dramoslopez2011 and @dramoslopez2013).
+Thus, after the normalization (and possible truncation of extremely high or low values), all indices values lay in $[0,150]$, with $0$ corresponding to the most normal case and $150$ to the most irregular case. This value of $150$ is arbitrary and could be changed (increased or lowered), but we found it performed well in practice (@dramoslopez2011 and @dramoslopez2013).
 
 ## Combined indices
 
@@ -273,7 +273,7 @@ The compound index $NBI$ (from Naive Bayes Index), introduced in @castroluna2020
 
 This Bayesian network is a conditional linear Gaussian (CLG) network, with its root node ($KC$) being a discrete binary variable and the rest of the nodes (which are some of the primary indices introduced above) being continuous. The parameters of the model (their conditional probability distributions) were reported in @castroluna2020. This model can be used for predicting whether a specific cornea (whose values of the primary indices are known) is a normal cornea or a keratoconic cornea. 
 
-Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling (@cheng2000). Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For a deeper explanation, we refer the readers to @castroluna2020.
+Moreover, the probability of being one type or another can be computed as well, either using exact inference or approximate inference with algorithms such as evidence weighting, likelihood weighting, or more generally, importance sampling (@cheng2000). Even though exact inference is feasible in this case, approximate inference is easier to implement and to generalize to more complex network structures. In a nutshell, these algorithms consist of simulating a large number of samples from the network, according to the evidence (i.e., variable values that are known a priori), and averaging their likelihoods to estimate the probability of each state of the target variable (in this case, $KC$). For a deeper explanation, we refer the readers to @castroluna2020 and its references.
 
 Thus, the posterior probability estimation can be computed efficiently with several approaches. In **rPACI**, we make use of the R package [**bnlearn**](https://cran.r-project.org/package=bnlearn)  (@scutari2010), which includes an implementation of the likelihood weighting algorithm, for computing the index NBI from the primary indices values of the bottom nodes.
 
