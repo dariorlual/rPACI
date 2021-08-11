@@ -310,32 +310,34 @@ In this example, the results indicate that the patient's cornea was normal at ti
 ## Summary
 To summarize, the following description chart can help decide which function to use depending on the specific case to analyze. 
 
-````{R, echo = F, eval = T, fig.width = 4, fig.height = 4}
-library(DiagrammeR)
-DiagrammeR::grViz("digraph {
+![](diagram.png)
 
-graph [layout = dot]
-
-# define the global styles of the nodes. We can override these in box if we wish
-node [shape = rounded, style = filled, fillcolor = Pink]
-
-step1 [label = 'How many patients?', fillcolor = Beige]
-step2 [label = 'How many measures?', fillcolor = Beige]
-step3 [label =  'Data on file or \n data.frame?', fillcolor = Beige]
-leaf1 [label = 'analyzeFile()']
-leaf2 [label= 'analyzeDataset()']
-leaf3 [label = 'analyzeEvolution()']
-leaf4 [label = 'analyzeFolder()']
-
-
-# edge definitions with the node IDs
-step1 -> step2 [label='One']
-step1 -> leaf4 [label='Several']
-step2 -> step3 [label='Single']
-step2 -> leaf3 [label='Repeated']
-step3 -> leaf2 [label='Data loaded in \nglobal environment']
-step3 -> leaf1 [label='External \nfile']
-}")
+````{R, echo = F, eval = F, fig.width = 4, fig.height = 4}
+# library(DiagrammeR)
+# DiagrammeR::grViz("digraph {
+# 
+# graph [layout = dot]
+# 
+# # define the global styles of the nodes. We can override these in box if we wish
+# node [shape = rounded, style = filled, fillcolor = Pink]
+# 
+# step1 [label = 'How many patients?', fillcolor = Beige]
+# step2 [label = 'How many measures?', fillcolor = Beige]
+# step3 [label =  'Data on file or \n data.frame?', fillcolor = Beige]
+# leaf1 [label = 'analyzeFile()']
+# leaf2 [label= 'analyzeDataset()']
+# leaf3 [label = 'analyzeEvolution()']
+# leaf4 [label = 'analyzeFolder()']
+# 
+# 
+# # edge definitions with the node IDs
+# step1 -> step2 [label='One']
+# step1 -> leaf4 [label='Several']
+# step2 -> step3 [label='Single']
+# step2 -> leaf3 [label='Repeated']
+# step3 -> leaf2 [label='Data loaded in \nglobal environment']
+# step3 -> leaf1 [label='External \nfile']
+# }")
 ````
 
 ## References
