@@ -28,7 +28,7 @@ Description: Analysis of corneal data obtained from a Placido disk corneal
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
-Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr, rlang
+Imports: stats, graphics, grDevices, bnlearn, ggplot2, tidyr, ggpubr, rlang, DiagrammeR
 RoxygenNote: 7.1.1
 NeedsCompilation: no
 Author: Darío Ramos-López [aut, cre],
