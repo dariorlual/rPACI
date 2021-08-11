@@ -70,9 +70,9 @@ datasetN = readCSO(system.file("extdata","N01.txt", package="rPACI"))
 datasetK = readCSO(system.file("extdata","K03.txt", package="rPACI"))
 }
 \references{
-Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \href{https://doi.org/10.1001/archopht.1981.03930011093022}{DOI link}.
+Rowsey, J. James, A. E. Reynolds, and Randy Brown. 1981. "Corneal Topography: Corneascope." Archives of Ophthalmology 99 (6): 1093-1100. \doi{10.1001/archopht.1981.03930011093022}.
 
-Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \href{https://doi.org/10.3109/08820538.2013.835844}{DOI link}.
+Pinero, D. P. 2015. "Technologies for Anatomical and Geometric Characterization of the Corneal Structure and Anterior Segment: A Review." Seminars in Ophthalmology 30 (3): 161-70. \doi{10.3109/08820538.2013.835844}.
 
-Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \href{https://doi.org/10.1016/S0896-1549(05)70059-6}{DOI link}.
+Samapunphong, Sopit, and Dimitri Azar. 1998. "Placido and Elevation-Based Corneal Topography. A Review." Ophthalmology Clinics of North America 11 (3): 311-29. \doi{10.1016/S0896-1549(05)70059-6}.
 }
