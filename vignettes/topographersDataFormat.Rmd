@@ -1,8 +1,8 @@
 ---
-title: "Corneal topographers and data format"
+title: "Corneal topographers and data formats"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Corneal topographers and data format}
+  %\VignetteIndexEntry{Corneal topographers and data formats}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 references:

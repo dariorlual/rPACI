@@ -1,8 +1,8 @@
 ---
-title: "Mathematical definition of the indices"
+title: "Mathematical definition of the Placido irregularity indices"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Mathematical definition of the indices}
+  %\VignetteIndexEntry{Mathematical definition of the Placido irregularity indices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 references:
