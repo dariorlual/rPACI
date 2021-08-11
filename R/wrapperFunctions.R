@@ -183,7 +183,7 @@ analyzeDataset <- function(dataset, drawplot = TRUE) {
 #' (with the given extension) of the specified folder. On the other hand, if the data are stored in a list, it will
 #' be assumed that the temporal order corresponds with the index of the dataset in the list.
 #' 
-#' #' More details about supported file formats can be found in 
+#' More details about supported file formats can be found in 
 #' \href{../doc/topographersDataFormat.html}{\code{vignette("topographersDataFormat", package = "rPACI")}}, 
 #' and about using \code{rPACI} in \href{../doc/packageUsage.html}{\code{vignette("packageUsage", package = "rPACI")}}.
 #' 
