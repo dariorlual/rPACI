@@ -127,7 +127,7 @@ simulated_2020_10_31.txt | Simulated data | rPACI | system.file("extdata/evoluti
 simulated_2021_04_30.txt | Simulated data | rPACI | system.file("extdata/evolution/", package="rPACI") | Normal
 
 ## Reading data
-The package includes three functions to read data: `readCSO()`, `readrPACI()` and `readFile()`. The two former ones read data in specific formats (explained below), while the latter one is a wrapper function able to read both formats. In general, we recommend to use the more general wrapper function `readFile()` to read any file format.
+The package includes three functions to read data: `readCSO()`, `readrPACI()` and `readFile()`. The two former ones read data in specific formats (explained below), while the latter one is a wrapper function able to read both formats. In general, we recommend using the more general wrapper function `readFile()` to read any file format.
 
 ### readCSO()
 To begin with, external files with a corneal topography in the format exported by some Placido disk topographers, especially those from CSO (a commercial brand), can be loaded using the function `readCSO()`. We recommend reading the [Corneal topographers and data format](topographersDataFormat.html) vignette. 
@@ -137,7 +137,7 @@ This reading function allows to specify different parameters:
 
 * `filepath`: The name of the file to be read.
 * `ringsTotal`: The total (maximum) number of rings that may be available in the measurement (including incomplete rings or missing data; it depends on the particular device; by default 24).
-* `pointsPerRings`: The number of points per rings that are digitized in the measurement (it depends on the particular device; by default 256).
+* `pointsPerRings`: The number of points per ring that are digitized in the measurement (it depends on the particular device; by default 256).
 * `ringsToUse`: The effective number of innermost rings to use (as long as they are complete if `onlyCompleteRings = TRUE`, otherwise it will be the actual number of complete rings; by default 15).
 * `onlyCompleteRings`: A boolean value indicating whether to use only rings with complete data or not (by default, TRUE).
 * `NAvalues`: A numerical value or vector indicating how NA values are codified in the file (by default c(-1, -1000)).
@@ -167,7 +167,7 @@ dataset2 = readrPACI(filepath = system.file("extdata","ds1.txt", package="rPACI"
 This function returns a `data.frame` with the same characteristics as `readCSO()`.
 
 ### readFile()
-Finally, the general wrapper function `readFile()` can be used to read any of the aforementioned file formats. Internally, it determines the format of the specified file, and applies either `readCSO()` or `readrPACI()` if possible, or else it throws an error (if none can be applied, which occurs when the file format does not fit any of these two available formats). This is the reading function recommended by default, as it is able to read any supported file format.
+Finally, the general wrapper function `readFile()` can be used to read any of the aforementioned file formats. Internally, it determines the format of the specified file and applies either `readCSO()` or `readrPACI()` if possible, or else it throws an error (if none can be applied, which occurs when the file format does not fit any of these two available formats). This is the reading function recommended by default, as it is able to read any supported file format.
 The `readFile()` function takes the file path as a mandatory argument and, optionally, any of the arguments available for the other two reading functions. As a result, this function creates a `data.frame` in the usual format used by `rPACI`, as the other two functions do.
 In the following example, a sample file included in the package is loaded using the `readFile()` wapper function:
 ```{r, eval = T}
@@ -177,7 +177,7 @@ head(dataset3)
 ```
 
 ## Saving data
-The function `writerPACI()` writes to disk a corneal topography dataset in the format used by rPACI. The file will be saved in structured plain text, which will possibly have
+The function `writerPACI()` writes to disk a corneal topography dataset in the format used by `rPACI` The file will be saved in structured plain text, which will possibly have
 a header, followed by a block of three separated columns, according to the usual format used by `rPACI`,
 i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point.
 
@@ -223,7 +223,7 @@ The results of the previous analysis can be plotted using function `plotSingleCo
   plotSingleCornea(dataset1, results_N, filename = "N01.txt")
 ```
 
-The left-hand side of the figure shows the input data, whereas the right-hand side shows two charts: the GLPI index plot, which visually indicates the value taken by this index on a colored scale of possible values, and the PI indices distribution, which shows the distribution of the $PI_1$, $PI_2$, $PI_3$ and $SL$ indices in a boxplot placed on a scale of possible values. The color of the charts indicate whether the indices fall within the *normal cornea* region (green color), *suspicious cornea* region (orange color), or *irregular cornea* region (red color). In the example shown, we can clearly see that the eye is diagnosed as normal.
+The left-hand side of the figure shows the input data, whereas the right-hand side shows two charts: the GLPI index plot, which visually indicates the value taken by this index on a colored scale of possible values, and the PI indices distribution, which shows the distribution of the $PI_1$, $PI_2$, $PI_3$ and $SL$ indices in a boxplot placed on a scale of possible values. The colors of the charts indicate whether the indices fall within the *normal cornea* region (green color), *suspicious cornea* region (orange color), or *irregular cornea* region (red color). In the example shown, we can clearly see that the eye is diagnosed as normal.
 
 ## Using the wrapper function to analyze one external file
 Alternatively to use the `readFile()`, `computePlacidoIndices()` and `plotSingleCornea()` functions, the wrapper function `analyzeFile()` can be used instead, which takes 2 arguments: `path`, which is a character string indicating the location of the corneal topography file, and `drawplot`, which is a logical argument indicating whether the results should be plotted or not.
@@ -239,7 +239,7 @@ This function returns a `data.frame` containing the same information as the obje
 In this example, the results indicate that the patient's cornea is irregular. In this case, the plot shows a GLPI index of 100 and a distribution of PI indices ranging from 100 to 130.
 
 ## Using the wrapper function to analyze one dataset
-The function `analyzeFile()` reads a file stored in our computer. But, what if we already have a corneal dataframe loaded in our global environment? We can use the wrapper function `analyzeDataset()` instead. This function is a wrapper of `computePlacidoIndices()` and `plotSingleCornea()`, so that it returns the same objects as `analyzeFile()`. This is a convenient function, for instance, when we use the `simulateData()` function (for more details on this function, see the [Simulating corneal datasets](simulating.html) vignette) or have previously loaded the data using the `readFile()` function.
+The function `analyzeFile()` reads a file stored in our computer. But, what if we already have a corneal data frame loaded in our global environment? We can use the wrapper function `analyzeDataset()` instead. This function is a wrapper of `computePlacidoIndices()` and `plotSingleCornea()`, so that it returns the same objects as `analyzeFile()`. This is a convenient function, for instance, when we use the `simulateData()` function (for more details on this function, see the [Simulating corneal datasets](simulating.html) vignette) or have previously loaded the data using the `readFile()` function.
 
 `analyzeDataset()` takes two arguments: `dataset`, which is a corneal topography dataset in the format supported by **rPACI**; and `drawplot`, which is an optional logical parameter indicating whether a plot of results should be displayed or not (by default, TRUE).
 
@@ -252,7 +252,7 @@ res_dataset = analyzeDataset(dataset = dataset)
 res_dataset
 ```
 
-## Analyzing multiple patients simoultaneously
+## Analyzing multiple patients simultaneously
 
 So far, `analyzeFile()` and `analyzeDataset()` can only be used to analyze one dataset (i.e., one patient's eye) at a time. In order to analyze multiple files simultaneously, the function `analyzeFolder()` can be used. This function takes 4 arguments: `path`, to indicate the location of the folder containing the files; `fileExtension`, which indicates the extension of the files, is set to 'txt' by default; `individualPlots`, which is an optional logical argument indicating whether the plot for each file should be displayed or not; and `summaryPlot`, which is an optional logical argument indicating whether a summary plot of all files analyzed should be displayed or not. If the argument `summaryPlot()` is `TRUE`, then a barplot showing the absolute frequency of each possible value of diagnosis is depicted.
 
@@ -265,18 +265,18 @@ This function returns a `data.frame` containing 13 columns and as many rows as f
 ```{r, eval = T}
 resultsAll[,c(13,1)]
 ```
-Note that the rows are sorted from *Irregular* to *Normal* cornea. In this example, three eyes are diagnosed as *irregular*, one as *suspect* and four as *normal*. This is an easy and straightforward way to check if any patient potentially suffers from keratoconus.
+Note that the rows are sorted from *Irregular* to *Normal* cornea. In this example, three eyes are diagnosed as *irregular*, one as *suspect*, and four as *normal*. This is an easy and straightforward way to check if any patient potentially suffers from keratoconus.
 
 
 
 ## Analyzing one patient over time
 In order to examine the evolution of a patient's eye over time, the function `analizeEvolution()` can be used. This function takes two arguments: `data`, which can be either 1) the path of a folder that contains corneal topography files, with format supported by **rPACI**, or 2) a list containing properly formatted data (loaded from a file using the function `readFile()` (or `readCSO()` or `readrPACI()`), simulated using `simulateData()`, or by other ways, as long as it meets the dataset requirements). If `data` is a path to a folder, the second argument, `fileExtension`, must be specified and all the files (with the given extension) in that folder will be assumed to be corneal topography files of a patient's eye and, therefore, will be loaded.
 
-Moreover, it will be assumed that the temporal arrangement is the alphabetical order of the files' name. 
+Moreover, it will be assumed that the temporal arrangement is the alphabetical order of the filenames. 
 Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
 On the other hand, if the data are stored in a list, it will be assumed that the temporal order corresponds with the index of each dataset in the list.
 
-The next example simulates three patient's measurements over time using the function `simulateData()` and the analyzes these files:
+The next example simulates three patient's measurements over time using the function `simulateData()` and then analyzes these files:
 ````{r, eval = F, fig.width = 7, fig.height = 4}
 # Simulate the patient's measures over time
  dataT1 = simulateData(rings = 12, maximumMireDisplacement = 0.15, mireDisplacementAngle = 10)
@@ -294,7 +294,7 @@ data = list(
 analyzeEvolution(data = data)
 ````
 
-This other example, imports the corneal data from disk and analyzes the files:
+This other example imports the corneal data from disk and analyzes the files:
 
 ````{r, eval = T, fig.width = 7, fig.height = 4}
 # Specify a folder path to analyze a patient's evolution over time
@@ -303,9 +303,9 @@ analyzeEvolution(data = system.file("extdata/evolution/", package="rPACI"), file
 ````
 
 The `analyzeEvolution()` function returns a `data.frame` containing 13 columns and as many rows as files analyzed. The first 12 columns correspond to the diagnosis and the indices, as in the object returned by `computePlacidoIndices()`. The last column corresponds to the time step at which the measures were taken. 
-Moreover, two temporal plots are returned. The left-hand side plot shows the $GLPI$ index, represented by a red line, and the boxplots of the primary indices $PI_1$, $PI_2$, $PI_3$ and $SL$ over time. The right-hand side plot shows the times series of these five indices, $GLPI$, $PI_1$, $PI_2$, $PI_3$ and $SL$, individually. Finally, both plots present a colored background, corresponding with the final diagnosis of the patient. 
+Moreover, two temporal plots are returned. The left-hand side plot shows the $GLPI$ index, represented by a red line, and the boxplots of the primary indices $PI_1$, $PI_2$, $PI_3$, and $SL$ over time. The right-hand side plot shows the times series of these five indices, $GLPI$, $PI_1$, $PI_2$, $PI_3$, and $SL$, individually. Finally, both plots present a colored background, corresponding with the final diagnosis of the patient. 
 
-In this example, the results indicate that the patient's cornea was normal at time 1, suspected at time 2 and irregular at time 3.
+In this example, the results indicate that the patient's cornea was normal at time 1, suspected at time 2, and irregular at time 3.
 
 ## Summary
 To summarize, the following description chart can help decide which function to use depending on the specific case to analyze. 
