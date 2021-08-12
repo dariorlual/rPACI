@@ -171,7 +171,7 @@ head(dataset3)
 ```
 
 ## Saving data
-The function `writerPACI()` writes to disk a corneal topography dataset in the format used by `rPACI` The file will be saved in structured plain text, which will possibly have
+The function `writerPACI()` writes to disk a corneal topography dataset in the format used by `rPACI`. The file will be saved in structured plain text, which will possibly have
 a header, followed by a block of three separated columns, according to the usual format used by `rPACI`,
 i.e., a list with three columns (x and y coordinates of each point, and its ring index) and a row per data point.
 
@@ -264,7 +264,7 @@ Note that the rows are sorted from *Irregular* to *Normal* cornea. In this examp
 
 
 ## Analyzing one patient over time
-In order to examine the evolution of a patient's eye over time, the function `analizeEvolution()` can be used. This function takes two arguments: `data`, which can be either 1) the path of a folder that contains corneal topography files, with format supported by **rPACI**, or 2) a list containing properly formatted data (loaded from a file using the function `readFile()` (or `readCSO()` or `readrPACI()`), simulated using `simulateData()`, or by other ways, as long as it meets the dataset requirements). If `data` is a path to a folder, the second argument, `fileExtension`, must be specified and all the files (with the given extension) in that folder will be assumed to be corneal topography files of a patient's eye and, therefore, will be loaded.
+In order to examine the evolution of a patient's eye over time, the function `analyzeEvolution()` can be used. This function takes two arguments: `data`, which can be either 1) the path of a folder that contains corneal topography files, with format supported by **rPACI**, or 2) a list containing properly formatted data (loaded from a file using the function `readFile()` (or `readCSO()` or `readrPACI()`), simulated using `simulateData()`, or by other ways, as long as it meets the dataset requirements). If `data` is a path to a folder, the second argument, `fileExtension`, must be specified and all the files (with the given extension) in that folder will be assumed to be corneal topography files of a patient's eye and, therefore, will be loaded.
 
 Moreover, it will be assumed that the temporal arrangement is the alphabetical order of the filenames. 
 Therefore, it is advised to use a proper file name, for instance using this date format: 'YYYY-MM-DD.txt'.
