@@ -89,11 +89,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, echo = F, warning = F}
-library(tidyr)
-library(ggplot2)
-library(ggpubr)
-```
 The **rPACI** package is developed to facilitate the calculation and interpretation of several indices for detecting corneal irregularities, and especially keratoconus. These indices were introduced in @dramoslopez2011, @dramoslopez2013 and @castroluna2020, and proved to be effective in detecting keratoconus and early keratoconus.
 
 ## Package installation
@@ -170,7 +165,7 @@ Finally, the general wrapper function `readFile()` can be used to read any of th
 The `readFile()` function takes the file path as a mandatory argument and, optionally, any of the arguments available for the other two reading functions. As a result, this function creates a `data.frame` in the usual format used by `rPACI`, as the other two functions do.
 In the following example, a sample file included in the package is loaded using the `readFile()` wapper function:
 ```{r, eval = T}
-dataset3 = readFile(system.file("extdata","N01.txt", package="rPACI"))
+dataset3 = readFile(filepath = system.file("extdata","N01.txt", package="rPACI"))
 
 head(dataset3)
 ```
