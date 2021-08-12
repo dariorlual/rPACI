@@ -155,12 +155,6 @@ The dataset consists of three columns: x, y (with the X and Y Cartesian coordina
 
 ```{r, echo=FALSE, warning=FALSE}
   library(rPACI)
-  # setwd(paste(dirname(rstudioapi::getActiveDocumentContext()$path),"/../R", sep=""))
-  # source("simulateData.R")
-  # source("indices.R")
-  # source("plots.R")
-  # source("readData.R")
-  # source("wrapperFunctions.R")
 ```
 ```{r, eval=FALSE}
   dataset = simulateData(rings = 13)

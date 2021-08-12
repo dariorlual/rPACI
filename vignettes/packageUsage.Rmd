@@ -106,7 +106,6 @@ library("rPACI")
 ```
 ```{r, echo = F, warning = F, message=F}
 library("rPACI")
-source("../R/readData.R")
 ```
 
 ## Available datasets
