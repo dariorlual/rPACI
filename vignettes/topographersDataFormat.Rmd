@@ -197,7 +197,7 @@ Topcon | [KR-800PA](https://topconhealthcare.com/products/kr-800pa/) | 10 | 3960
 Topcon | [KR-1W](https://topconhealthcare.com/products/kr-1w/) | 19 | 6840 | 360
 Topcon | [CA-800](https://topconhealthcare.com/products/ca-800/) | 24 | 6200 | ~260
 Topcon | [Aladdin](https://topconhealthcare.com/products/aladdin-hw-3-0/) | 24 | 6200 | ~260
-Zeiss       | [Atlas 9000](https://www.zeiss.com/meditec/us/products/ophthalmology-optometry/laser-vision-correction/cornea-diagnostics/corneal-topography-system/atlas-9000.html)   | 22  | ? | ?
+Zeiss       | [Atlas 9000]   | 22  | ? | ?
 Ziemer      | [Galilei G4](https://www.ziemergroup.com/en/products/galilei/)   | 20  | ? (up to 100000) | ? (~5000)
 Ziemer      | [Galilei G6](https://www.ziemergroup.com/en/products/galilei/)   | 20  | ? (up to 100000) | ? (~5000)
 
