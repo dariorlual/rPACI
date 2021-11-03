@@ -1,6 +1,6 @@
 Package: rPACI
 Title: Placido Analysis of Corneal Irregularity
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
     person(given = "Darío",
            family = "Ramos-López",
