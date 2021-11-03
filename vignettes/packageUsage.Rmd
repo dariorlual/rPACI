@@ -163,7 +163,7 @@ This function returns a `data.frame` with the same characteristics as `readCSO()
 ### readFile()
 Finally, the general wrapper function `readFile()` can be used to read any of the aforementioned file formats. Internally, it determines the format of the specified file and applies either `readCSO()` or `readrPACI()` if possible, or else it throws an error (if none can be applied, which occurs when the file format does not fit any of these two available formats). This is the reading function recommended by default, as it is able to read any supported file format.
 The `readFile()` function takes the file path as a mandatory argument and, optionally, any of the arguments available for the other two reading functions. As a result, this function creates a `data.frame` in the usual format used by `rPACI`, as the other two functions do.
-In the following example, a sample file included in the package is loaded using the `readFile()` wapper function:
+In the following example, a sample file included in the package is loaded using the `readFile()` wrapper function:
 ```{r, eval = T}
 dataset3 = readFile(filepath = system.file("extdata","N01.txt", package="rPACI"))
 
@@ -241,7 +241,7 @@ The function `analyzeFile()` reads a file stored in our computer. But, what if w
 # Generate a sample dataset
 dataset = simulateData(rings = 12, maximumMireDisplacement = 0.2, mireDisplacementAngle = 50)
 
-# Analyze the datatset
+# Analyze the dataset
 res_dataset = analyzeDataset(dataset = dataset)
 res_dataset
 ```
