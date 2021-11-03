@@ -6,7 +6,7 @@
 
   ## Contributors
   The contributors/developers of this project are:
-  * Darío Ramos-López,  Rey Juan Carlos University, Spain.  dario.ramos.lopez at urjc.es
+  * Darío Ramos-López, University of Almería, Spain. dramoslopez at ual.es
   * Ana D. Maldonado, University of Almería, Spain. ana.d.maldonado at ual.es
   
   To contribute to the package, report a bug, or any other issues, please use our [GitHub repository rPACI](https://github.com/dariorlual/rPACI).
